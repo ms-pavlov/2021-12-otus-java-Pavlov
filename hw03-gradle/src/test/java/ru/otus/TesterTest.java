@@ -75,6 +75,7 @@ public class TesterTest {
                 .isEqualTo(prepMsg("test", "isAbsent", "ru.otus.TestList1"));
     }
 
+
     @Test
     @DisplayName("Проверяем, метод makeStatistics")
     void statistics() {

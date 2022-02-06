@@ -20,42 +20,49 @@ hw04-gradle - Определение нужного размера хипа
 	spend msec:21464, sec:21
 	spend msec:21800, sec:21
 	spend msec:22127, sec:22
+    156 стабатываний GC
 
 -Xms640m -Xmx640m
 
 	spend msec:21770, sec:21
 	spend msec:21822, sec:21
 	spend msec:22107, sec:22
+    115 стабатывание GC
 
 -Xms704m -Xmx704m
 
     spend msec:20745, sec:20
     spend msec:20934, sec:20
     spend msec:21006, sec:21
+    92 стабатывания GC
 
 -Xms768m -Xmx768m
 
 	spend msec:19986, sec:19
 	spend msec:20505, sec:20
 	spend msec:20100, sec:20
+    78 срабатываний GC
 
 -Xms896m -Xmx896m
 
 	spend msec:20761, sec:20
 	spend msec:20306, sec:20
 	spend msec:20557, sec:20
+    72 стабатывания GC
 
 -Xms1G -Xmx1G
 
     spend msec:20712, sec:20
     spend msec:20120, sec:20
     spend msec:19648, sec:19
+    60 срабатываний GC
 
 -Xms2G -Xmx2G
 
 	spend msec:20784, sec:20
 	spend msec:19705, sec:19
 	spend msec:20556, sec:20
+    49 срабатываний GC
 
 #После оптимизации
 
@@ -84,18 +91,21 @@ hw04-gradle - Определение нужного размера хипа
 	spend msec:7955, sec:7
 	spend msec:8038, sec:8
 	spend msec:7904, sec:7
+    15 срабатываний GC
 
 -Xms2G -Xmx2G
 
 	spend msec:8046, sec:8
 	spend msec:7755, sec:7
 	spend msec:7738, sec:7
+    14 срабатываний GC 
 
 -Xms2176m -Xmx2176m
 
 	spend msec:8128, sec:8
 	spend msec:7932, sec:7
 	spend msec:8045, sec:8
+    13 срабатываний GC
 
 -Xms2560m -Xmx2560m
 

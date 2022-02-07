@@ -66,52 +66,31 @@ hw04-gradle - Определение нужного размера хипа
 
 #После оптимизации
 
-Оптимальный размер хипа 2G
+Оптимальный размер хипа 2m
+
+-Xms2m -Xmx2m
+
+	spend msec:1777, sec:1
+	spend msec:1775, sec:1
+	spend msec:1776, sec:1
+
+-Xms16m -Xmx16m
+
+	spend msec:1773, sec:1
+	spend msec:1777, sec:1
+	spend msec:1776, sec:1
+
+-Xms64m -Xmx64m
+
+	spend msec:1789, sec:1
+	spend msec:1788, sec:1
+	spend msec:1779, sec:1
 
 -Xms256m -Xmx256m
 
-    spend msec:12789, sec:12
-    spend msec:12684, sec:12
-    spend msec:12706, sec:12
-
--Xms1G -Xmx1G
-
-	spend msec:10500, sec:10
-	spend msec:10522, sec:10
-	spend msec:10485, sec:10
-
--Xms1536m -Xmx1536m
-
-	spend msec:9021, sec:9
-	spend msec:9017, sec:9
-	spend msec:8995, sec:8
-
--Xms1920m -Xmx1920m
-
-	spend msec:7955, sec:7
-	spend msec:8038, sec:8
-	spend msec:7904, sec:7
-    15 срабатываний GC
-
--Xms2G -Xmx2G
-
-	spend msec:8046, sec:8
-	spend msec:7755, sec:7
-	spend msec:7738, sec:7
-    14 срабатываний GC 
-
--Xms2176m -Xmx2176m
-
-	spend msec:8128, sec:8
-	spend msec:7932, sec:7
-	spend msec:8045, sec:8
-    13 срабатываний GC
-
--Xms2560m -Xmx2560m
-
-	spend msec:8013, sec:8
-	spend msec:7976, sec:7
-	spend msec:8007, sec:8
+    spend msec:1772, sec:1
+    spend msec:1765, sec:1
+    spend msec:1773, sec:1
 
 Домашнее задание.
 

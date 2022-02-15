@@ -7,12 +7,15 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.otus.helpers.ReflectionHelper.toClass;
 import static ru.otus.helpers.TestHelper.*;
+import static ru.otus.helpers.TestHelper.checkElseMethods;
 
-public class MyClassFactoryTest {
-    public static final String CLASS_NAME = "ru.otus.MyClassFactory";
-    public static final String[] STATIC_METHODS = {"createMyClass" };
+class LogInvocationHandlerTest {
+    public static final String CLASS_NAME = "ru.otus.LogInvocationHandler";
+    public static final String[] PUBLIC_METHODS = {"invoke"};
+    public static final String[] PRIVAPE_METHODS = {"doLog" };
 
     @Test
     @DisplayName("Проверяем, что класс " + CLASS_NAME + " существует")
@@ -21,22 +24,21 @@ public class MyClassFactoryTest {
     }
 
     @Test
-    @DisplayName("Проверяем, что класс " + CLASS_NAME + " имеет публичный конструктор")
-    void hasConstructors() throws ClassNotFoundException {
-        checkConstructors(CLASS_NAME, false);
-    }
-
-    @Test
     @DisplayName("Проверяем, что у класса " + CLASS_NAME + " все в порядке с методами")
     void hasMethods() throws ClassNotFoundException {
         Class<?> clazz = toClass(CLASS_NAME);
         String msg = "";
-        msg += checkMethodsExist(clazz, List.of(STATIC_METHODS), Modifier.STATIC|Modifier.PUBLIC, "noPublicMethods");
-        msg += checkElseMethods(clazz, List.of(STATIC_METHODS), Modifier.PUBLIC, "hasExcessMethods");
+        msg += checkMethodsExist(clazz, List.of(PUBLIC_METHODS), Modifier.PUBLIC, "noPublicMethods");
+        msg += checkMethodsExist(clazz, List.of(PRIVAPE_METHODS), Modifier.PRIVATE, "noPrivateMethods");
+        msg += checkElseMethods(clazz, List.of(PUBLIC_METHODS), Modifier.PUBLIC, "hasExcessMethods");
+        msg += checkElseMethods(clazz, List.of(PRIVAPE_METHODS), Modifier.PRIVATE, "hasExcessMethods");
 
         if (msg.length() > 0) {
             fail(msg);
         }
     }
 
+    @Test
+    void invoke() {
+    }
 }

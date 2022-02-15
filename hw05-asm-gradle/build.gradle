@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    implementation project(':hw03-gradle')
+    implementation 'org.assertj:assertj-core'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.assertj:assertj-core'
+}
+
+shadowJar {
+    archiveBaseName.set('hw05-asm-gradle')
+    archiveVersion.set('0.1')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.App'
+    }
+}
+
+test {
+    testLogging.showStandardStreams = true
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}

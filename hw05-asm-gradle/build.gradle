@@ -8,17 +8,19 @@ targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     implementation project(':hw03-gradle')
+    implementation 'org.ow2.asm:asm-commons'
+
     implementation 'org.assertj:assertj-core'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.assertj:assertj-core'
 }
 
 shadowJar {
-    archiveBaseName.set('hw05-asm-gradle')
+    archiveBaseName.set('hw05-agent')
     archiveVersion.set('0.1')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'ru.otus.App'
+        attributes 'Premain-Class': 'ru.otus.Agent'
     }
 }
 

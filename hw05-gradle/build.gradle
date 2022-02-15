@@ -13,11 +13,11 @@ dependencies {
 }
 
 shadowJar {
-    archiveBaseName.set('hw05-asm-gradle')
+    archiveBaseName.set('hw05-gradle')
     archiveVersion.set('0.1')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'ru.otus.App'
+        attributes 'Main-Class': 'ru.otus.Main'
     }
 }
 

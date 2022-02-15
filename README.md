@@ -13,3 +13,12 @@ hw02-gradle -
 
 hw03-gradle -
 Аннотации. ДЗ
+
+hw04-gradle -
+Сборщик мусора. ДЗ
+
+hw05-proxy-gradle -
+Автоматическое логирование. AOP реализация через Proxy
+
+hw05-gradle, hw05-asm-gradle -
+Автоматическое логирование. AOP с использованием ASM

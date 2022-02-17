@@ -7,13 +7,13 @@ import java.util.List;
 public interface ATM {
     Issuing giveMoney(float count) throws ATMExceptions;
 
-    void takeMoney(Banknotes banknote) throws ATMExceptions;
+    void takeMoney(Banknotes banknote, int count) throws ATMExceptions;
 
-    double getMoneyInfo();
+    double getMoneyInfo() throws ATMExceptions;
 
     void addCells(List<ATMCells> cellsList) throws ATMExceptions;
 
     void removeCell(int cellIndex) throws ATMExceptions;
 
-    List<ATMCells> getCellsInfo();
+    List<ATMCellsInfo> getCellsInfo();
 }

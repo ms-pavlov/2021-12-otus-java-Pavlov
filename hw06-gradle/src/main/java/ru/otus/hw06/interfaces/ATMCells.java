@@ -7,11 +7,13 @@ import java.util.Map;
 
 public interface ATMCells {
 
-    Banknotes getBanknotesInfo();
+    Banknotes getBanknotesInfo() throws ATMCellsExceptions;
 
-    int getBanknotesCount();
+    double getBanknotesNaminal () throws ATMCellsExceptions;
 
-    double getMoneyInfo();
+    int getBanknotesCount() throws ATMCellsExceptions;
+
+    double getMoneyInfo() throws ATMCellsExceptions;
 
     int giveBanknotes(int count) throws ATMCellsExceptions;
 

@@ -1,81 +1,37 @@
 package ru.otus.hw06.impl;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.otus.hw06.exceptions.ATMCellsExceptions;
-import ru.otus.hw06.exceptions.ATMFactoryExceptions;
-import ru.otus.hw06.exceptions.BanknotesNominalExceptions;
 import ru.otus.hw06.interfaces.ATMCells;
-import ru.otus.hw06.interfaces.ATMFactory;
 import ru.otus.hw06.interfaces.Banknotes;
 
-import static ru.otus.helpers.PropertiesHelper.*;
-import static ru.otus.helpers.ReflectionHelper.setFieldValue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class WhiteCellsTest {
-    ATMFactory atmFactory;
-
-    @BeforeEach
-    void before() {
-        atmFactory = new WhiteATMFactory();
-    }
 
     @Test
-    void getBanknotesInfo() throws ATMCellsExceptions, ATMFactoryExceptions {
-
-        ATMCells cell = atmFactory.createATMCell(new SameBanknotes(100), 0);
-        Banknotes banknotes = cell.getBanknotesInfo();
-
-        setFieldValue(banknotes, "nominal", 1000);
-
-        Assertions.assertNotEquals(banknotes, cell.getBanknotesInfo(),
-                testMessage("atmCellsNotImmutableBanknotes"));
+    void getBanknotesInfo() {
+        Banknotes banknotes = new SameBanknotes(100);
+        ATMCells cell = new WhiteCells(banknotes);
+        Assertions.assertEquals(banknotes, cell.getBanknotesInfo(), "Возвращает не копию Banknotes");
 
     }
 
     @Test
-    void getBanknotesCount() throws ATMCellsExceptions, ATMFactoryExceptions {
-        double nominal = 100;
-        int count = 10;
-        ATMCells cell = atmFactory.createATMCell(new SameBanknotes(nominal), count);
-        Assertions.assertEquals(count, cell.getBanknotesCount(), testMessage("atmCellsBanknotesCount"));
-
+    void getBanknotesCount() {
     }
 
     @Test
-    void getMoneyInfo() throws ATMCellsExceptions, ATMFactoryExceptions {
-        double nominal = 100;
-        int count = 10;
-        ATMCells cell = atmFactory.createATMCell(new SameBanknotes(nominal), count);
-
-        Assertions.assertEquals(nominal*count, cell.getMoneyInfo(), testMessage("atmCellsMoneyInfoError"));
+    void getMoneyInfo() {
     }
 
     @Test
-    void giveBanknotes() throws ATMCellsExceptions, ATMFactoryExceptions {
-        double nominal = 100;
-        int count = 10;
-
-        ATMCells cell = atmFactory.createATMCell(new SameBanknotes(nominal), count);
-
-        Assertions.assertThrows(ATMCellsExceptions.class,
-                () -> cell.giveBanknotes(count+1),
-                testMessage( "atmCellsToLowCount"));
-
-        cell.giveBanknotes(count);
-        Assertions.assertEquals(0,
-                cell.getBanknotesCount(),
-                testMessage( "atmCellsGiveBanknotes"));
+    void giveBanknotes() {
     }
 
     @Test
-    void takeBanknotes() throws ATMFactoryExceptions {
-        ATMCells cell = atmFactory.createATMCell(new SameBanknotes(100), 0);
+    void takeBanknotes() {
+        ATMCells cell = new WhiteCells(new SameBanknotes(100));
 
-        ATMCellsExceptions atmCellsExceptions = Assertions.assertThrows(ATMCellsExceptions.class,
-                () -> cell.takeBanknotes(WhiteCells.MAX_COUNT+1), testMessage("atmCellsToLowCell"));
-
-        Assertions.assertEquals(errorMessage( "atmCellFull"), atmCellsExceptions.getMessage());
     }
 }

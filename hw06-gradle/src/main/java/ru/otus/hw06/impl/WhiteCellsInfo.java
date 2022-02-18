@@ -11,7 +11,7 @@ public class WhiteCellsInfo implements ATMCellsInfo {
     private final int count;
 
     public WhiteCellsInfo(ATMCells atmCells) throws ATMCellsExceptions {
-        this.nominal = atmCells.getNominal();
+        this.nominal = atmCells.getBanknotesNaminal();
         this.count = atmCells.getBanknotesCount();
     }
 

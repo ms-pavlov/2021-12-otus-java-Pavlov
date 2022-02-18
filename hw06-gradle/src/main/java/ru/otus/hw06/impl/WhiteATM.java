@@ -19,13 +19,11 @@ public class WhiteATM implements ATM {
 
     @Override
     public Issuing giveMoney(float count) throws ATMExceptions {
-        atmCells.iterator()
         return null;
     }
 
     @Override
     public void takeMoney(Banknotes banknote, int count) throws ATMExceptions {
-
 
     }
 
@@ -52,19 +50,11 @@ public class WhiteATM implements ATM {
     }
 
     @Override
-    public List<ATMCellsInfo> getCellsInfo() throws ATMExceptions {
-        List<ATMCellsInfo> cellsInfo = new ArrayList<>();
-        for (ATMCells atmCell : atmCells) {
-            try {
-                cellsInfo.add(new WhiteCellsInfo(atmCell));
-            } catch (ATMCellsExceptions e) {
-                e.printStackTrace();
-                throw new ATMExceptions(errorMessage("atmBanknotesError")
-                        .replaceAll("%name%", Integer.toString(atmCells.indexOf(atmCell))));
-            }
-        }
+    public List<ATMCellsInfo> getCellsInfo() {
+        List<ATMCellsInfo> cellsInfos = new ArrayList<>();
+        atmCells.forEach(cell -> cellsInfos.add(new WhiteCellsInfo(cell)));
 
-        return cellsInfo;
+        return null;
     }
 
     private void checkCellsPlaces(List<ATMCells> cellsList) throws ATMExceptions {
@@ -80,8 +70,7 @@ public class WhiteATM implements ATM {
                 sum += atmCell.getMoneyInfo();
             } catch (ATMCellsExceptions e) {
                 e.printStackTrace();
-                throw new ATMExceptions(errorMessage("atmBanknotesError")
-                        .replaceAll("%name%", Integer.toString(atmCells.indexOf(atmCell))));
+                throw new ATMExceptions(errorMessage("atmBanknotesError").replaceAll("%name%", String.valueOf(atmCell)));
             }
         }
         return sum;

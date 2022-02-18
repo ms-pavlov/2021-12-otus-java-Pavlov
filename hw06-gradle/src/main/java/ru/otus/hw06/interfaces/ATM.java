@@ -15,5 +15,5 @@ public interface ATM {
 
     void removeCell(int cellIndex) throws ATMExceptions;
 
-    List<ATMCellsInfo> getCellsInfo() throws ATMExceptions;
+    List<ATMCellsInfo> getCellsInfo();
 }

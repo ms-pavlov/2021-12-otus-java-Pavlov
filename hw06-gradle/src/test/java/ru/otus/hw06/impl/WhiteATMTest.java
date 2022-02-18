@@ -3,7 +3,6 @@ package ru.otus.hw06.impl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.exceptions.ATMExceptions;
 import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 import ru.otus.hw06.interfaces.ATM;
@@ -11,7 +10,6 @@ import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
 import ru.otus.hw06.interfaces.Banknotes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +29,16 @@ class WhiteATMTest {
 
 
     @Test
-    void giveMoney() {
+    void giveMoney() throws ATMFactoryExceptions {
+
+        Map<Banknotes, Integer> map = Map.ofEntries(entry(new SameBanknotes(100.0), 10),
+                entry(new SameBanknotes(60.0), 10),
+                entry(new SameBanknotes(10.0), 10));
+
+        ATM atm = atmFactory.createATM(atmFactory.createATMCells(map));
+
+
+
     }
 
     @Test
@@ -39,8 +46,8 @@ class WhiteATMTest {
     }
 
     @Test
-    void getMoneyInfo() throws ATMCellsExceptions, ATMExceptions, ATMFactoryExceptions {
-        Map<Banknotes, Integer> nominal = new HashMap();
+    void getMoneyInfo() throws ATMExceptions, ATMFactoryExceptions {
+        Map<Banknotes, Integer> nominal = new HashMap<>();
         double sum = 0;
         for (var i = 0; i < 5; i++) {
             nominal.put(new SameBanknotes(i + 1.0), i + 1);
@@ -60,13 +67,13 @@ class WhiteATMTest {
         setFieldValue(banknotes, "nominal", -10);
         setFieldValue(atmCells, "banknote", banknotes);
 
-        Assertions.assertThrows(ATMExceptions.class, () -> atm.getMoneyInfo());
+        Assertions.assertThrows(ATMExceptions.class, atm::getMoneyInfo);
 
     }
 
     @Test
-    void addCells() throws ATMExceptions, ATMFactoryExceptions {
-        Map<Banknotes, Integer> nominal = new HashMap();
+    void addCells() throws ATMFactoryExceptions {
+        Map<Banknotes, Integer> nominal = new HashMap<>();
         for (var i = 0; i < 12; i++) {
             nominal.put(new SameBanknotes(100), i);
         }
@@ -88,11 +95,12 @@ class WhiteATMTest {
     }
 
     @Test
-    void getCellsInfo() throws ATMExceptions, ATMCellsExceptions, ATMFactoryExceptions {
+    void getCellsInfo() throws ATMExceptions, ATMFactoryExceptions {
         Map<Banknotes, Integer> map = Map.ofEntries(entry(new SameBanknotes(100.0), 1));
         ATM atm = atmFactory.createATM(atmFactory.createATMCells(map));
+        Assertions.assertEquals(100, atm.getMoneyInfo());
 
-        setFieldValue(atm.getCellsInfo().get(0), "banknote", new SameBanknotes(10));
+        setFieldValue(atm.getCellsInfo().get(0), "nominal", 10);
 
         Assertions.assertEquals(100, atm.getMoneyInfo());
 

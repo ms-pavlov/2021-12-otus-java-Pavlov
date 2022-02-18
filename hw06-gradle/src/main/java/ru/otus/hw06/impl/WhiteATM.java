@@ -19,7 +19,7 @@ public class WhiteATM implements ATM {
 
     @Override
     public Issuing giveMoney(float count) throws ATMExceptions {
-        atmCells.iterator()
+        atmCells.iterator();
         return null;
     }
 

@@ -6,6 +6,3 @@ include 'hw04-gradle'
 include 'hw05-gradle'
 include 'hw05-asm-gradle'
 include 'hw05-proxy-gradle'
-include 'hw06-gradle'
-include 'utils'
-

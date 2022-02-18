@@ -6,9 +6,4 @@ public class ATMFactoryExceptions extends Throwable {
     public ATMFactoryExceptions(String msg) {
         this.message = msg;
     }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
 }

@@ -6,9 +6,4 @@ public class BanknotesNominalExceptions extends Exception{
     public BanknotesNominalExceptions(String msg) {
         this.message = msg;
     }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
 }

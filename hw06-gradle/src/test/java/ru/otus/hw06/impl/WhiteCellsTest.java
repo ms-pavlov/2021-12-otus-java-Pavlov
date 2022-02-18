@@ -5,12 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.exceptions.ATMFactoryExceptions;
+import ru.otus.hw06.exceptions.BanknotesNominalExceptions;
 import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
 import ru.otus.hw06.interfaces.Banknotes;
 
-import static ru.otus.helpers.PropertiesHelper.errorMessage;
-import static ru.otus.helpers.PropertiesHelper.testMessage;
+import static ru.otus.helpers.PropertiesHelper.*;
 import static ru.otus.helpers.ReflectionHelper.setFieldValue;
 
 class WhiteCellsTest {
@@ -49,7 +49,7 @@ class WhiteCellsTest {
         int count = 10;
         ATMCells cell = atmFactory.createATMCell(new SameBanknotes(nominal), count);
 
-        Assertions.assertEquals(nominal * count, cell.getMoneyInfo(), testMessage("atmCellsMoneyInfoError"));
+        Assertions.assertEquals(nominal*count, cell.getMoneyInfo(), testMessage("atmCellsMoneyInfoError"));
     }
 
     @Test
@@ -60,13 +60,13 @@ class WhiteCellsTest {
         ATMCells cell = atmFactory.createATMCell(new SameBanknotes(nominal), count);
 
         Assertions.assertThrows(ATMCellsExceptions.class,
-                () -> cell.giveBanknotes(count + 1),
-                testMessage("atmCellsToLowCount"));
+                () -> cell.giveBanknotes(count+1),
+                testMessage( "atmCellsToLowCount"));
 
-        var banknotes = cell.giveBanknotes(count);
+        cell.giveBanknotes(count);
         Assertions.assertEquals(0,
                 cell.getBanknotesCount(),
-                testMessage("atmCellsGiveBanknotes"));
+                testMessage( "atmCellsGiveBanknotes"));
     }
 
     @Test
@@ -74,8 +74,8 @@ class WhiteCellsTest {
         ATMCells cell = atmFactory.createATMCell(new SameBanknotes(100), 0);
 
         ATMCellsExceptions atmCellsExceptions = Assertions.assertThrows(ATMCellsExceptions.class,
-                () -> cell.takeBanknotes(WhiteCells.MAX_COUNT + 1), testMessage("atmCellsToLowCell"));
+                () -> cell.takeBanknotes(WhiteCells.MAX_COUNT+1), testMessage("atmCellsToLowCell"));
 
-        Assertions.assertEquals(errorMessage("atmCellFull"), atmCellsExceptions.getMessage());
+        Assertions.assertEquals(errorMessage( "atmCellFull"), atmCellsExceptions.getMessage());
     }
 }

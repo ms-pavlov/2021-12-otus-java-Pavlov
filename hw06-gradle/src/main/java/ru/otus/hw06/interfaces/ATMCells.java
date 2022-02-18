@@ -9,7 +9,7 @@ public interface ATMCells {
 
     Banknotes getBanknotesInfo() throws ATMCellsExceptions;
 
-    double getNominal() throws ATMCellsExceptions;
+    double getBanknotesNaminal () throws ATMCellsExceptions;
 
     int getBanknotesCount() throws ATMCellsExceptions;
 

@@ -29,16 +29,6 @@ public class WhiteCells implements ATMCells {
     }
 
     @Override
-    public double getNominal() throws ATMCellsExceptions {
-        try {
-            return banknote.getNominal();
-        } catch (BanknotesNominalExceptions e) {
-            e.printStackTrace();
-            throw new ATMCellsExceptions(errorMessage("atmCellBanknotesError"));
-        }
-    }
-
-    @Override
     public int getBanknotesCount() {
         return this.count;
     }

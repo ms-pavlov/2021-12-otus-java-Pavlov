@@ -4,7 +4,13 @@ import java.util.Map;
 
 public interface Issuing {
 
-    void addCash (Map<Banknotes, Integer> cash);
+    void addCash(Map<Double, Integer> cash);
 
-    Map<Banknotes, Integer> getCash ();
+    void addCash(double nominal, int count);
+
+    Map<Double, Integer> getCash();
+
+    double getSum();
+
+    int getBanknotesCount();
 }

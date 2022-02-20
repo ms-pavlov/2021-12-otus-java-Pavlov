@@ -30,6 +30,14 @@ public class PropertiesHelper {
         return ResourceBundle.getBundle(getErrorConfig()).getString(errorMessageName);
     }
 
+    public static String errorMessage(String errorMessageName, String name, String value) {
+        return ResourceBundle
+                .getBundle(getErrorConfig())
+                .getString(errorMessageName)
+                .replaceAll("%name%", name)
+                .replaceAll("%value%", value);
+    }
+
     public static String testMessage(String testMessageName) {
         return ResourceBundle.getBundle(getTestConfig()).getString(testMessageName);
     }

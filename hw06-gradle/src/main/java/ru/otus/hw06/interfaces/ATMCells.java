@@ -2,20 +2,17 @@ package ru.otus.hw06.interfaces;
 
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
 
-import java.util.List;
-import java.util.Map;
-
 public interface ATMCells {
 
-    Banknotes getBanknotesInfo() throws ATMCellsExceptions;
+    double getNominal();
 
-    double getNominal() throws ATMCellsExceptions;
+    int getBanknotesCount();
 
-    int getBanknotesCount() throws ATMCellsExceptions;
+    int getBanknotesFreeCount();
 
-    double getMoneyInfo() throws ATMCellsExceptions;
+    double getMoneyInfo();
 
-    int giveBanknotes(int count) throws ATMCellsExceptions;
+    void giveBanknotes(int count) throws ATMCellsExceptions;
 
     void takeBanknotes(int count) throws ATMCellsExceptions;
 

@@ -11,8 +11,6 @@ public interface ATMFactory {
 
     ATM createATM(List<ATMCells> cellsList) throws ATMFactoryExceptions;
 
-    ATMCells createATMCell(Banknotes banknotes, int count) throws ATMFactoryExceptions;
-
-    List<ATMCells> createATMCells(Map<Banknotes, Integer> banknotesMap) throws ATMFactoryExceptions;
+    ATMCells createATMCell(Double nominal, int count) throws ATMFactoryExceptions;
 
 }

@@ -6,7 +6,6 @@ import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 import ru.otus.hw06.interfaces.ATM;
 import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
-import ru.otus.hw06.interfaces.Banknotes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,24 +29,17 @@ public class WhiteATMFactory implements ATMFactory {
         return atm;
     }
 
+
     @Override
-    public ATMCells createATMCell(Banknotes banknotes, int count) throws ATMFactoryExceptions {
-        ATMCells cell = new WhiteCells(banknotes);
+    public ATMCells createATMCell(Double nominal, int count) throws ATMFactoryExceptions {
+        ATMCells cell;
         try {
+            cell = new WhiteCells(nominal);
             cell.takeBanknotes(count);
         } catch (ATMCellsExceptions e) {
             e.printStackTrace();
-            throw new ATMFactoryExceptions("");
+            throw new ATMFactoryExceptions(e.getMessage());
         }
         return cell;
-    }
-
-    @Override
-    public List<ATMCells> createATMCells(Map<Banknotes, Integer> nominalMap) throws ATMFactoryExceptions {
-        List<ATMCells> atmCells = new ArrayList<>();
-        for (var entry : nominalMap.entrySet()) {
-            atmCells.add(createATMCell(entry.getKey(), entry.getValue()));
-        }
-        return atmCells;
     }
 }

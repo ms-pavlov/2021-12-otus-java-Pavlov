@@ -5,15 +5,17 @@ import ru.otus.hw06.exceptions.ATMExceptions;
 import java.util.List;
 
 public interface ATM {
-    Issuing giveMoney(float count) throws ATMExceptions;
+    Issuing giveMoney(double sum) throws ATMExceptions;
 
-    void takeMoney(Banknotes banknote, int count) throws ATMExceptions;
+    void takeMoney(double nominal, int count) throws ATMExceptions;
 
-    double getMoneyInfo() throws ATMExceptions;
+    double getMoneyInfo();
+
+    List<ATMCellsInfo> getCellsInfo();
 
     void addCells(List<ATMCells> cellsList) throws ATMExceptions;
 
     void removeCell(int cellIndex) throws ATMExceptions;
 
-    List<ATMCellsInfo> getCellsInfo() throws ATMExceptions;
+    void removeAll();
 }

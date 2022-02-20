@@ -107,8 +107,7 @@ public class WhiteATM implements ATM {
     }
 
     private Issuing findIssuing(double sum) throws ATMExceptions {
-        double allMoney = getMoneyInfo();
-        if (allMoney < sum) {
+        if (getMoneyInfo() < sum) {
             throw new ATMExceptions(errorMessage("atmLowCount"));
         }
         return findIssuing(getNominalMap(sum), sum);

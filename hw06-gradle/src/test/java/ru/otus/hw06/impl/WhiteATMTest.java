@@ -8,6 +8,7 @@ import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 import ru.otus.hw06.interfaces.ATM;
 import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
+import ru.otus.hw06.interfaces.ATMVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,12 +36,13 @@ class WhiteATMTest {
                 atmFactory.createATMCell(10.0, 10));
 
         ATM atm = atmFactory.createATM(cellsList);
+        ATMVisitor atmVisitor = new SimpleATMVisitor();
 
         Assertions.assertThrows(ATMExceptions.class,
-                () -> atm.giveMoney(10000),
+                () -> atm.giveMoney(atmVisitor,10000),
                 testMessage("atmLowCount"));
 
-//        Assertions.assertEquals(1700,  atm.giveMoney(1700).getSum());
+//        Assertions.assertEquals(1700,  atm.giveMoney(atmVisitor,1700).getSum());
 
         atm.removeCell(0);
         atm.removeCell(0);
@@ -48,20 +50,21 @@ class WhiteATMTest {
 
         atm.addCells(cellsList);
 
-        Assertions.assertEquals(100,  atm.giveMoney(100).getSum());
-        Assertions.assertEquals(60,  atm.giveMoney(60).getSum());
-        Assertions.assertEquals(10,  atm.giveMoney(10).getSum());
+
+        Assertions.assertEquals(100,  atm.giveMoney(atmVisitor, 100).getSum());
+        Assertions.assertEquals(60,  atm.giveMoney(atmVisitor,60).getSum());
+        Assertions.assertEquals(10,  atm.giveMoney(atmVisitor,10).getSum());
 
         Assertions.assertEquals(9, atm.getCellsInfo().get(1).getBanknotesCount());
         Assertions.assertEquals(9, atm.getCellsInfo().get(0).getBanknotesCount());
         Assertions.assertEquals(9, atm.getCellsInfo().get(2).getBanknotesCount());
 
-        System.out.println(atm.giveMoney(120).getCash());
+        System.out.println(atm.giveMoney(atmVisitor,120).getCash());
 
-        Assertions.assertEquals(120,  atm.giveMoney(120).getSum());
-        Assertions.assertEquals(2,  atm.giveMoney(120).getBanknotesCount());
+        Assertions.assertEquals(120,  atm.giveMoney(atmVisitor,120).getSum());
+        Assertions.assertEquals(2,  atm.giveMoney(atmVisitor,120).getBanknotesCount());
 
-        Assertions.assertThrows(ATMExceptions.class, ()->atm.giveMoney(5));
+        Assertions.assertThrows(ATMExceptions.class, ()->atm.giveMoney(atmVisitor,5));
     }
 
     @Test

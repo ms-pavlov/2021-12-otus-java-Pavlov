@@ -21,6 +21,12 @@ class WhiteCellsTest {
 
 
     @Test
+    void create() {
+        Assertions.assertThrows(ATMCellsExceptions.class, () ->new WhiteCells(0));
+        Assertions.assertThrows(ATMCellsExceptions.class, () ->new WhiteCells(-1));
+    }
+
+    @Test
     void getBanknotesCount() throws ATMFactoryExceptions {
         double nominal = 100;
         int count = 10;

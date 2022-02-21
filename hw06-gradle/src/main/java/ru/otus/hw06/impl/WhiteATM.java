@@ -21,8 +21,8 @@ public class WhiteATM implements ATM {
     }
 
     @Override
-    public Issuing giveMoney(double sum) throws ATMExceptions {
-        return giveIssuing(findIssuing(sum));
+    public Issuing giveMoney(ATMVisitor atmVisitor, double sum) throws ATMExceptions {
+        return giveIssuing(atmVisitor.findIssuing(this, sum));
 
     }
 
@@ -94,55 +94,6 @@ public class WhiteATM implements ATM {
         if (cellsList.size() + atmCells.size() > CELLS_COUNT) {
             throw new ATMExceptions(errorMessage("atmFull"));
         }
-    }
-
-    private Map<Double, Integer> getNominalMap(double sum) {
-        Map<Double, Integer> nominalMap = new TreeMap<>();
-        for (var cell : atmCells) {
-            double nominal = cell.getNominal();
-            if (cell.getBanknotesCount() > 0) {
-                if (nominal <= sum) {
-                    nominalMap.put(cell.getNominal(), cell.getBanknotesCount());
-                }
-            }
-        }
-        return nominalMap;
-    }
-
-    private Issuing findIssuing(double sum) throws ATMExceptions {
-        if (getMoneyInfo() < sum) {
-            throw new ATMExceptions(errorMessage("atmLowCount"));
-        }
-        return findIssuing(getNominalMap(sum), sum);
-    }
-
-    private Issuing findIssuing(Map<Double, Integer> nominalMap, double sum) {
-        int min = nominalMap.values().stream().mapToInt(value -> value).sum();
-        Issuing result = null;
-        for (Map.Entry<Double, Integer> entry : nominalMap.entrySet()) {
-            Double nominal = entry.getKey();
-            Integer banknoteCount = entry.getValue();
-            if (banknoteCount > 0) {
-                if (nominal == sum) {
-                    return (new WhiteIssuingBuilder()).addBanknotes(nominal, 1).build();
-                }
-                if (nominal < sum) {
-                    nominalMap.put(nominal, banknoteCount - 1);
-                    Issuing issuing = findIssuing(nominalMap, sum - nominal);
-                    nominalMap.put(nominal, banknoteCount);
-                    if (null != issuing) {
-                        int count = issuing.getBanknotesCount();
-                        if (count < min) {
-                            issuing.addCash(nominal, 1);
-                            min = count;
-                            result = issuing;
-                        }
-                    }
-                }
-            }
-        }
-
-        return result;
     }
 
     private Issuing giveIssuing(Issuing issuing) throws ATMExceptions {

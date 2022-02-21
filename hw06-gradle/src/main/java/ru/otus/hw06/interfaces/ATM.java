@@ -5,7 +5,7 @@ import ru.otus.hw06.exceptions.ATMExceptions;
 import java.util.List;
 
 public interface ATM {
-    Issuing giveMoney(double sum) throws ATMExceptions;
+    Issuing giveMoney(ATMVisitor atmVisitor, double sum) throws ATMExceptions;
 
     void takeMoney(double nominal, int count) throws ATMExceptions;
 

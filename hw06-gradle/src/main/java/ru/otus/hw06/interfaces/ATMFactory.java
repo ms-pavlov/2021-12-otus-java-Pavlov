@@ -3,7 +3,6 @@ package ru.otus.hw06.interfaces;
 import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ATMFactory {
 

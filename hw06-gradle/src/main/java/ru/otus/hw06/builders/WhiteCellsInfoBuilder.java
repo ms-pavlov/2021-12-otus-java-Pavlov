@@ -1,6 +1,5 @@
 package ru.otus.hw06.builders;
 
-import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.impl.WhiteCellsInfo;
 import ru.otus.hw06.interfaces.ATMCellsInfo;
 import ru.otus.hw06.interfaces.ATMCellsInfoBuilder;
@@ -9,8 +8,7 @@ public class WhiteCellsInfoBuilder implements ATMCellsInfoBuilder {
     private double nominal;
     private int count;
 
-    @Override
-    public ATMCellsInfoBuilder builder() {
+    public static ATMCellsInfoBuilder builder() {
         return new WhiteCellsInfoBuilder();
     }
 

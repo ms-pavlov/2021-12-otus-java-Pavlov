@@ -7,8 +7,6 @@ import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 import ru.otus.hw06.interfaces.ATM;
 import ru.otus.hw06.interfaces.ATMFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class WhiteATMFactoryTest {
 
     ATMFactory atmFactory;

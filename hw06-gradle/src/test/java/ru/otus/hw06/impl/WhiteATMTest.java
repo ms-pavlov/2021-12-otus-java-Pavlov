@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Map.entry;
 import static ru.otus.helpers.PropertiesHelper.testMessage;
 import static ru.otus.helpers.ReflectionHelper.setFieldValue;
 
@@ -101,7 +100,6 @@ class WhiteATMTest {
     @Test
     void addCells() throws ATMFactoryExceptions {
         List<ATMCells> cellsList = new ArrayList<>();
-        Map<Double, Integer> nominal = new HashMap<>();
         for (var i = 0; i < 12; i++) {
             cellsList.add(atmFactory.createATMCell(100.0, i+1));
         }

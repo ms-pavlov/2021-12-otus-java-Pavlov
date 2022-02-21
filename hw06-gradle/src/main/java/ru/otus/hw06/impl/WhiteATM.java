@@ -1,12 +1,10 @@
 package ru.otus.hw06.impl;
 
+import ru.otus.hw06.builders.WhiteCellsInfoBuilder;
 import ru.otus.hw06.builders.WhiteIssuingBuilder;
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.exceptions.ATMExceptions;
-import ru.otus.hw06.interfaces.ATM;
-import ru.otus.hw06.interfaces.ATMCells;
-import ru.otus.hw06.interfaces.ATMCellsInfo;
-import ru.otus.hw06.interfaces.Issuing;
+import ru.otus.hw06.interfaces.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,7 +72,12 @@ public class WhiteATM implements ATM {
 
     @Override
     public List<ATMCellsInfo> getCellsInfo() {
-        return atmCells.stream().map(WhiteCellsInfo::new).collect(Collectors.toList());
+        return atmCells.stream()
+                .map(cell -> WhiteCellsInfoBuilder.builder()
+                        .banknotes(cell.getNominal())
+                        .count(cell.getBanknotesCount())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     private void checkCapacity(double nominal, int count) throws ATMExceptions {

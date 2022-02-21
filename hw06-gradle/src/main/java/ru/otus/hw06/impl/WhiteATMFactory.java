@@ -7,9 +7,7 @@ import ru.otus.hw06.interfaces.ATM;
 import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class WhiteATMFactory implements ATMFactory {
     @Override

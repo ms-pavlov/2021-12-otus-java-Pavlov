@@ -67,5 +67,13 @@ class WhiteCellsTest {
         Assertions.assertThrows(ATMCellsExceptions.class, () -> cell.takeBanknotes(-1));
     }
 
+    @Test
+    void equalsTest() throws ATMFactoryExceptions {
+        ATMCells cell1 = atmFactory.createATMCell(100.0, 1);
+        ATMCells cell2 = atmFactory.createATMCell(100.0, 10);
+
+        Assertions.assertEquals(cell1, cell2);
+    }
+
 
 }

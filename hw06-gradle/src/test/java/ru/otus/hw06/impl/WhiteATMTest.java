@@ -11,12 +11,9 @@ import ru.otus.hw06.interfaces.ATMFactory;
 import ru.otus.hw06.interfaces.ATMVisitor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static ru.otus.helpers.PropertiesHelper.testMessage;
-import static ru.otus.helpers.ReflectionHelper.setFieldValue;
 
 class WhiteATMTest {
 
@@ -31,40 +28,44 @@ class WhiteATMTest {
     @Test
     void giveMoney() throws ATMFactoryExceptions, ATMExceptions {
 
-        List<ATMCells> cellsList = List.of(atmFactory.createATMCell(100.0, 10),
+        ATM atm = atmFactory.createATM(List.of(atmFactory.createATMCell(100.0, 10),
                 atmFactory.createATMCell(60.0, 10),
-                atmFactory.createATMCell(10.0, 10));
+                atmFactory.createATMCell(10.0, 10)));
 
-        ATM atm = atmFactory.createATM(cellsList);
         ATMVisitor atmVisitor = new SimpleATMVisitor();
 
         Assertions.assertThrows(ATMExceptions.class,
-                () -> atm.giveMoney(atmVisitor,10000),
+                () -> atm.giveMoney(atmVisitor, 10000),
                 testMessage("atmLowCount"));
 
-//        Assertions.assertEquals(1700,  atm.giveMoney(atmVisitor,1700).getSum());
+        Assertions.assertEquals(1700,  atm.giveMoney(atmVisitor,1700).getSum());
 
-        atm.removeCell(0);
-        atm.removeCell(0);
-        atm.removeCell(0);
+        atm.removeAll();
 
-        atm.addCells(cellsList);
+        atm.addCells(List.of(atmFactory.createATMCell(100.0, 10),
+                atmFactory.createATMCell(60.0, 10),
+                atmFactory.createATMCell(10.0, 10)));
 
+        Assertions.assertEquals(1000,  atm.giveMoney(atmVisitor,1000).getSum());
 
-        Assertions.assertEquals(100,  atm.giveMoney(atmVisitor, 100).getSum());
-        Assertions.assertEquals(60,  atm.giveMoney(atmVisitor,60).getSum());
-        Assertions.assertEquals(10,  atm.giveMoney(atmVisitor,10).getSum());
+        atm.removeAll();
+
+        atm.addCells(List.of(atmFactory.createATMCell(100.0, 10),
+                atmFactory.createATMCell(60.0, 10),
+                atmFactory.createATMCell(10.0, 10)));
+
+        Assertions.assertEquals(100, atm.giveMoney(atmVisitor, 100).getSum());
+        Assertions.assertEquals(60, atm.giveMoney(atmVisitor, 60).getSum());
+        Assertions.assertEquals(10, atm.giveMoney(atmVisitor, 10).getSum());
 
         Assertions.assertEquals(9, atm.getCellsInfo().get(1).getBanknotesCount());
         Assertions.assertEquals(9, atm.getCellsInfo().get(0).getBanknotesCount());
         Assertions.assertEquals(9, atm.getCellsInfo().get(2).getBanknotesCount());
 
-        System.out.println(atm.giveMoney(atmVisitor,120).getCash());
+        Assertions.assertEquals(120, atm.giveMoney(atmVisitor, 120).getSum());
+        Assertions.assertEquals(2, atm.giveMoney(atmVisitor, 120).getBanknotesCount());
 
-        Assertions.assertEquals(120,  atm.giveMoney(atmVisitor,120).getSum());
-        Assertions.assertEquals(2,  atm.giveMoney(atmVisitor,120).getBanknotesCount());
-
-        Assertions.assertThrows(ATMExceptions.class, ()->atm.giveMoney(atmVisitor,5));
+        Assertions.assertThrows(ATMExceptions.class, () -> atm.giveMoney(atmVisitor, 5));
     }
 
     @Test
@@ -104,7 +105,7 @@ class WhiteATMTest {
     void addCells() throws ATMFactoryExceptions {
         List<ATMCells> cellsList = new ArrayList<>();
         for (var i = 0; i < 12; i++) {
-            cellsList.add(atmFactory.createATMCell(100.0, i+1));
+            cellsList.add(atmFactory.createATMCell(100.0, i + 1));
         }
         ATM atm = atmFactory.createATM();
 
@@ -113,8 +114,6 @@ class WhiteATMTest {
         Assertions.assertThrows(ATMExceptions.class,
                 () -> atm.addCells(cellsList),
                 testMessage("atmFull"));
-
-
     }
 
     @Test

@@ -1,7 +1,7 @@
 package ru.otus.hw06.builders;
 
 import ru.otus.hw06.impl.WhiteIssuing;
-import ru.otus.hw06.interfaces.ATMCells;
+import ru.otus.hw06.interfaces.ATMCellsInfo;
 import ru.otus.hw06.interfaces.Issuing;
 import ru.otus.hw06.interfaces.IssuingBuilder;
 
@@ -12,8 +12,12 @@ import java.util.Map;
 public class WhiteIssuingBuilder implements IssuingBuilder {
     private final Map<Double, Integer> cash;
 
-    public WhiteIssuingBuilder() {
+    private WhiteIssuingBuilder() {
         this.cash = new HashMap<>();
+    }
+
+    public static  IssuingBuilder builder() {
+        return new WhiteIssuingBuilder();
     }
 
     @Override
@@ -29,9 +33,9 @@ public class WhiteIssuingBuilder implements IssuingBuilder {
     }
 
     @Override
-    public IssuingBuilder addCash(List<ATMCells> cellsList) {
-        for (ATMCells atmCells : cellsList) {
-            this.cash.put(atmCells.getNominal(), atmCells.getBanknotesCount());
+    public IssuingBuilder addCash(List<ATMCellsInfo> cellsList) {
+        for (ATMCellsInfo atmCells : cellsList) {
+            this.cash.put(atmCells.getNominalInfo(), atmCells.getBanknotesCount());
         }
         return this;
     }

@@ -9,7 +9,7 @@ public interface IssuingBuilder {
 
     IssuingBuilder addCash(Map<Double, Integer> cash);
 
-    IssuingBuilder addCash(List<ATMCells> cellsList);
+    IssuingBuilder addCash(List<ATMCellsInfo> cellsList);
 
     Issuing build();
 }

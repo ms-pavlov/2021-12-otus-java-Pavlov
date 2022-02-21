@@ -69,4 +69,11 @@ public class WhiteCells implements ATMCells {
         return Objects.equals(nominal, that.getNominal());
     }
 
+    @Override
+    public String toString() {
+        return "WhiteCells{" +
+                "nominal=" + nominal +
+                ", count=" + count +
+                '}';
+    }
 }

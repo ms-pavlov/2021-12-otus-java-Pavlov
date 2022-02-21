@@ -8,6 +8,9 @@ public class WhiteCellsInfoBuilder implements ATMCellsInfoBuilder {
     private double nominal;
     private int count;
 
+    private WhiteCellsInfoBuilder() {
+    }
+
     public static ATMCellsInfoBuilder builder() {
         return new WhiteCellsInfoBuilder();
     }

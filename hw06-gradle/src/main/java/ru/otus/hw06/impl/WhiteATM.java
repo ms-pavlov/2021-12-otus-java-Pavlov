@@ -23,7 +23,6 @@ public class WhiteATM implements ATM {
     @Override
     public Issuing giveMoney(ATMVisitor atmVisitor, double sum) throws ATMExceptions {
         return giveIssuing(atmVisitor.findIssuing(this, sum));
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.otus.hw06.impl;
 
+import ru.otus.hw06.assertions.ATMAssertions;
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.interfaces.ATMCells;
 
@@ -14,9 +15,7 @@ public class WhiteCells implements ATMCells {
 
 
     public WhiteCells(double nominal) throws ATMCellsExceptions {
-        if (nominal <= 0) {
-            throw new ATMCellsExceptions(errorMessage("atmCellBanknotesError"));
-        }
+        ATMAssertions.assertFalseATMCells(nominal <= 0, errorMessage("atmCellBanknotesError"));
         this.nominal = nominal;
         this.count = 0;
     }
@@ -43,21 +42,14 @@ public class WhiteCells implements ATMCells {
 
     @Override
     public void giveBanknotes(int count) throws ATMCellsExceptions {
-        if (count > this.count) {
-            throw new ATMCellsExceptions(errorMessage("atmCellsToLowCount"));
-        }
+        ATMAssertions.assertFalseATMCells(count > this.count, errorMessage("atmCellsToLowCount"));
         this.count -= count;
     }
 
     @Override
     public void takeBanknotes(int count) throws ATMCellsExceptions {
-        if (MAX_COUNT < this.count + count) {
-            throw new ATMCellsExceptions(errorMessage("atmCellFull"));
-        }
-        if (0 >= count) {
-            throw new ATMCellsExceptions(errorMessage("atmCellWrongCount"));
-        }
-
+        ATMAssertions.assertFalseATMCells(MAX_COUNT < this.count + count, errorMessage("atmCellFull"));
+        ATMAssertions.assertFalseATMCells(0 >= count, errorMessage("atmCellWrongCount"));
         this.count += count;
     }
 
@@ -69,11 +61,4 @@ public class WhiteCells implements ATMCells {
         return Objects.equals(nominal, that.getNominal());
     }
 
-    @Override
-    public String toString() {
-        return "WhiteCells{" +
-                "nominal=" + nominal +
-                ", count=" + count +
-                '}';
-    }
 }

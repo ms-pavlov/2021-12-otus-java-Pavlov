@@ -1,5 +1,6 @@
 package ru.otus.hw06.impl;
 
+import ru.otus.hw06.assertions.ATMAssertions;
 import ru.otus.hw06.builders.WhiteIssuingBuilder;
 import ru.otus.hw06.exceptions.ATMExceptions;
 import ru.otus.hw06.interfaces.ATM;
@@ -16,16 +17,11 @@ import static ru.otus.helpers.PropertiesHelper.errorMessage;
 public class SimpleATMVisitor implements ATMVisitor {
     @Override
     public Issuing findIssuing(ATM atm, double sum) throws ATMExceptions {
-        if (0 >= sum) {
-            throw new ATMExceptions(errorMessage("atmSumError"));
-        }
-        if (atm.getMoneyInfo() < sum) {
-            throw new ATMExceptions(errorMessage("atmLowCount"));
-        }
-        if (atm.getMoneyInfo() == sum) {
-            return WhiteIssuingBuilder.builder().addCash(atm.getCellsInfo()).build();
-        }
-        return findIssuing(getNominalMap(sum, atm.getCellsInfo()), sum, getMaxCount(atm.getCellsInfo()));
+        ATMAssertions.assertFalseATM(0 >= sum, errorMessage("atmSumError"));
+        ATMAssertions.assertFalseATM(atm.getMoneyInfo() < sum, errorMessage("atmLowCount"));
+        return atm.getMoneyInfo() == sum ?
+                WhiteIssuingBuilder.builder().addCash(atm.getCellsInfo()).build() :
+                findIssuing(getNominalMap(sum, atm.getCellsInfo()), sum, getMaxCount(atm.getCellsInfo()));
     }
 
     private Issuing findIssuing(Map<Double, Integer> nominalMap, double sum, int min) {
@@ -39,11 +35,10 @@ public class SimpleATMVisitor implements ATMVisitor {
                     int banknoteCount = nominalMap.get(nominal);
                     nominalMap.put(nominal, banknoteCount - 1);
                     Issuing issuing = findIssuing(nominalMap, sum - nominal, min - 1);
-
                     nominalMap.put(nominal, banknoteCount);
                     if (null != issuing) {
-                        issuing.addCash(nominal, 1);
-                        if (issuing.getBanknotesCount() < min) {
+                        if (issuing.getBanknotesCount() < min - 1) {
+                            issuing.addCash(nominal, 1);
                             min = issuing.getBanknotesCount();
                             result = issuing;
                         }
@@ -51,7 +46,6 @@ public class SimpleATMVisitor implements ATMVisitor {
                 }
             }
         }
-
         return result;
     }
 
@@ -59,8 +53,8 @@ public class SimpleATMVisitor implements ATMVisitor {
     private Map<Double, Integer> getNominalMap(double sum, List<ATMCellsInfo> atmCells) {
         Map<Double, Integer> nominalMap = new TreeMap<>();
         for (var cell : atmCells) {
-            double nominal = cell.getNominalInfo();
             if (cell.getBanknotesCount() > 0) {
+                double nominal = cell.getNominalInfo();
                 if (nominal <= sum) {
                     nominalMap.put(nominal, nominalMap.containsKey(nominal) ? cell.getBanknotesCount() + nominalMap.get(nominal) : cell.getBanknotesCount());
                 }

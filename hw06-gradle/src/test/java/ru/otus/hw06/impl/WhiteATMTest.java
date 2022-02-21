@@ -3,12 +3,9 @@ package ru.otus.hw06.impl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.exceptions.ATMExceptions;
-import ru.otus.hw06.exceptions.ATMFactoryExceptions;
-import ru.otus.hw06.interfaces.ATM;
-import ru.otus.hw06.interfaces.ATMCells;
-import ru.otus.hw06.interfaces.ATMFactory;
-import ru.otus.hw06.interfaces.ATMVisitor;
+import ru.otus.hw06.interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,7 @@ class WhiteATMTest {
 
 
     @Test
-    void giveMoney() throws ATMFactoryExceptions, ATMExceptions {
+    void giveMoney() throws ATMExceptions, ATMCellsExceptions {
 
         ATM atm = atmFactory.createATM(List.of(atmFactory.createATMCell(100.0, 10),
                 atmFactory.createATMCell(60.0, 10),
@@ -69,7 +66,7 @@ class WhiteATMTest {
     }
 
     @Test
-    void takeMoney() throws ATMFactoryExceptions, ATMExceptions {
+    void takeMoney() throws ATMExceptions, ATMCellsExceptions {
         List<ATMCells> atmCells = List.of(atmFactory.createATMCell(100.0, 1),
                 atmFactory.createATMCell(100.0, 1));
         ATM atm = atmFactory.createATM(atmCells);
@@ -84,10 +81,11 @@ class WhiteATMTest {
         Assertions.assertThrows(ATMExceptions.class, () -> atm.takeMoney(100.0, 150));
         Assertions.assertThrows(ATMExceptions.class, () -> atm.takeMoney(100.0, 0));
         Assertions.assertThrows(ATMExceptions.class, () -> atm.takeMoney(100.0, -1));
+        Assertions.assertThrows(ATMExceptions.class, () -> atm.takeMoney(-100.0, 1));
     }
 
     @Test
-    void getMoneyInfo() throws ATMFactoryExceptions {
+    void getMoneyInfo() throws ATMExceptions, ATMCellsExceptions {
         List<ATMCells> cellsList = new ArrayList<>();
         double sum = 0;
         for (var i = 0; i < 5; i++) {
@@ -102,7 +100,7 @@ class WhiteATMTest {
     }
 
     @Test
-    void addCells() throws ATMFactoryExceptions {
+    void addCells() throws ATMCellsExceptions {
         List<ATMCells> cellsList = new ArrayList<>();
         for (var i = 0; i < 12; i++) {
             cellsList.add(atmFactory.createATMCell(100.0, i + 1));
@@ -123,7 +121,7 @@ class WhiteATMTest {
     }
 
     @Test
-    void removeAll() throws ATMFactoryExceptions {
+    void removeAll() throws ATMCellsExceptions, ATMExceptions {
         List<ATMCells> atmCells = List.of(atmFactory.createATMCell(100.0, 1));
         ATM atm = atmFactory.createATM(atmCells);
         atm.removeAll();
@@ -131,11 +129,11 @@ class WhiteATMTest {
     }
 
     @Test
-    void getCellsInfo() throws ATMFactoryExceptions {
+    void getCellsInfo() throws ATMCellsExceptions, ATMExceptions {
 
         List<ATMCells> atmCells = List.of(atmFactory.createATMCell(100.0, 1));
         ATM atm = atmFactory.createATM(atmCells);
-        Assertions.assertEquals(100, atm.getMoneyInfo());
+        Assertions.assertEquals(atm.getMoneyInfo(), atm.getCellsInfo().stream().mapToDouble(ATMCellsInfo::getMoneyInfo).sum());
 
     }
 

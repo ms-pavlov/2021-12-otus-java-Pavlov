@@ -1,12 +1,15 @@
 package ru.otus.hw06.impl;
 
+import ru.otus.hw06.assertions.ATMAssertions;
 import ru.otus.hw06.builders.WhiteCellsInfoBuilder;
-import ru.otus.hw06.builders.WhiteIssuingBuilder;
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
 import ru.otus.hw06.exceptions.ATMExceptions;
 import ru.otus.hw06.interfaces.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.otus.helpers.PropertiesHelper.errorMessage;
@@ -39,7 +42,7 @@ public class WhiteATM implements ATM {
                     break;
                 }
             } catch (ATMCellsExceptions e) {
-                throw new ATMExceptions(errorMessage("atmCellIndex", String.valueOf(atmCells.indexOf(cell)), e.getMessage()));
+                ATMAssertions.failATM(errorMessage("atmCellIndex", String.valueOf(atmCells.indexOf(cell)), e.getMessage()));
             }
         }
     }
@@ -60,7 +63,7 @@ public class WhiteATM implements ATM {
         try {
             atmCells.remove(cellIndex);
         } catch (IndexOutOfBoundsException e) {
-            throw new ATMExceptions(errorMessage("atmNoSuchCell"));
+            ATMAssertions.failATM( errorMessage("atmNoSuchCell"));
         }
     }
 
@@ -80,19 +83,16 @@ public class WhiteATM implements ATM {
     }
 
     private void checkCapacity(double nominal, int count) throws ATMExceptions {
-        if (count <= 0) {
-            throw new ATMExceptions(errorMessage("atmCellWrongCount"));
-        }
-        var capacity = atmCells.stream().filter(cell -> cell.getNominal() == nominal).mapToInt(ATMCells::getBanknotesFreeCount).sum();
-        if (capacity < count) {
-            throw new ATMExceptions(errorMessage("atmToMany"));
-        }
+        ATMAssertions.assertFalseATM(count <= 0, errorMessage("atmCellWrongCount"));
+        ATMAssertions.assertFalseATM(
+                count > atmCells.stream().filter(cell -> cell.getNominal() == nominal).mapToInt(ATMCells::getBanknotesFreeCount).sum(),
+                errorMessage("atmToMany"));
     }
 
     private void checkCellsPlaces(List<ATMCells> cellsList) throws ATMExceptions {
-        if (cellsList.size() + atmCells.size() > CELLS_COUNT) {
-            throw new ATMExceptions(errorMessage("atmFull"));
-        }
+        ATMAssertions.assertFalseATM(
+                cellsList.size() + atmCells.size() > CELLS_COUNT,
+                errorMessage("atmFull"));
     }
 
     private Issuing giveIssuing(Issuing issuing) throws ATMExceptions {
@@ -117,7 +117,7 @@ public class WhiteATM implements ATM {
                     break;
                 }
             } catch (ATMCellsExceptions e) {
-                throw new ATMExceptions(errorMessage("atmCellIndex", String.valueOf(atmCells.indexOf(cell)), e.getMessage()));
+                ATMAssertions.failATM(errorMessage("atmCellIndex", String.valueOf(atmCells.indexOf(cell)), e.getMessage()));
             }
         }
 

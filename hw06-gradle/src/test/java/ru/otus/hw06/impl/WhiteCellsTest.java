@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.hw06.exceptions.ATMCellsExceptions;
-import ru.otus.hw06.exceptions.ATMFactoryExceptions;
 import ru.otus.hw06.interfaces.ATMCells;
 import ru.otus.hw06.interfaces.ATMFactory;
 
@@ -27,7 +26,7 @@ class WhiteCellsTest {
     }
 
     @Test
-    void getBanknotesCount() throws ATMFactoryExceptions {
+    void getBanknotesCount() throws ATMCellsExceptions {
         double nominal = 100;
         int count = 10;
         ATMCells cell = atmFactory.createATMCell(nominal, count);
@@ -36,7 +35,7 @@ class WhiteCellsTest {
     }
 
     @Test
-    void getMoneyInfo() throws ATMFactoryExceptions {
+    void getMoneyInfo() throws ATMCellsExceptions {
         double nominal = 100;
         int count = 10;
         ATMCells cell = atmFactory.createATMCell(nominal, count);
@@ -45,7 +44,7 @@ class WhiteCellsTest {
     }
 
     @Test
-    void giveBanknotes() throws ATMCellsExceptions, ATMFactoryExceptions {
+    void giveBanknotes() throws ATMCellsExceptions {
         double nominal = 100;
         int count = 10;
 
@@ -62,7 +61,7 @@ class WhiteCellsTest {
     }
 
     @Test
-    void takeBanknotes() throws ATMFactoryExceptions {
+    void takeBanknotes() throws ATMCellsExceptions {
         ATMCells cell = atmFactory.createATMCell(100.0, 1);
 
         ATMCellsExceptions atmCellsExceptions = Assertions.assertThrows(ATMCellsExceptions.class,
@@ -74,7 +73,7 @@ class WhiteCellsTest {
     }
 
     @Test
-    void equalsTest() throws ATMFactoryExceptions {
+    void equalsTest() throws ATMCellsExceptions {
         ATMCells cell1 = atmFactory.createATMCell(100.0, 1);
         ATMCells cell2 = atmFactory.createATMCell(100.0, 10);
 

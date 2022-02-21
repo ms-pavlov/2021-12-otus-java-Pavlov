@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow'
 }
 
 group 'ru.otus'
@@ -20,15 +19,6 @@ dependencies {
     testImplementation ('org.mockito:mockito-junit-jupiter')
 }
 
-shadowJar {
-    archiveBaseName.set('hw06-gradle')
-    archiveVersion.set('0.1')
-    archiveClassifier.set('')
-    manifest {
-        attributes 'Main-Class': 'ru.otus.Main'
-    }
-}
-
 test {
     testLogging.showStandardStreams = true
     useJUnitPlatform()
@@ -36,8 +26,6 @@ test {
         events "passed", "skipped", "failed"
     }
 }
-
-tasks.build.dependsOn tasks.shadowJar
 
 tasks.withType(JavaCompile) {
     options.with {

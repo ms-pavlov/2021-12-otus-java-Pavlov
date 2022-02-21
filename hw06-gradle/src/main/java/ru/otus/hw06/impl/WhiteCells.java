@@ -13,7 +13,6 @@ public class WhiteCells implements ATMCells {
     private final double nominal;
     private int count;
 
-
     public WhiteCells(double nominal) throws ATMCellsExceptions {
         ATMAssertions.assertFalseATMCells(nominal <= 0, errorMessage("atmCellBanknotesError"));
         this.nominal = nominal;

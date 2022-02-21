@@ -55,6 +55,10 @@ public class WhiteATM implements ATM {
     @Override
     public void addCells(List<ATMCells> cellsList) throws ATMExceptions {
         checkCellsPlaces(cellsList);
+        ATMAssertions.assertFalseATM(
+                cellsList.stream()
+                        .anyMatch(cells -> (0 >= cells.getNominal()) || (0 >= cells.getBanknotesCount())),
+                errorMessage("atmWrongCellsList"));
         atmCells.addAll(cellsList);
     }
 
@@ -106,7 +110,7 @@ public class WhiteATM implements ATM {
     }
 
     private void giveFromCells(double nominal, int count) throws ATMExceptions {
-
+        ATMAssertions.assertFalseATM( 0 >= count, errorMessage("atmCellWrongCount"));
         for (ATMCells cell : atmCells.stream().filter(cell -> (cell.getNominal() == nominal) && (cell.getBanknotesCount() > 0)).toList()) {
             try {
                 if (cell.getBanknotesCount() < count) {

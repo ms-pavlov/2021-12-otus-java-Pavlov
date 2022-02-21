@@ -20,11 +20,7 @@ public class WhiteIssuing implements Issuing {
 
     @Override
     public void addCash(double nominal, int count) {
-        if (cash.containsKey(nominal)) {
-            cash.put(nominal, count + cash.get(nominal));
-        } else {
-            cash.put(nominal, count);
-        }
+        cash.put(nominal, cash.containsKey(nominal) ? count + cash.get(nominal) : count);
     }
 
     @Override

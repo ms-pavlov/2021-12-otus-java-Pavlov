@@ -22,3 +22,6 @@ hw05-proxy-gradle -
 
 hw05-gradle, hw05-asm-gradle -
 Автоматическое логирование. AOP с использованием ASM
+
+hw06-gradle -
+Концепты проектирования ООП. ДЗ

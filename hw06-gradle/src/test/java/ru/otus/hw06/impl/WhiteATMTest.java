@@ -135,10 +135,6 @@ class WhiteATMTest {
         ATM atm = atmFactory.createATM(atmCells);
         Assertions.assertEquals(100, atm.getMoneyInfo());
 
-        setFieldValue(atm.getCellsInfo().get(0), "nominal", 10);
-
-        Assertions.assertEquals(100, atm.getMoneyInfo());
-
     }
 
 

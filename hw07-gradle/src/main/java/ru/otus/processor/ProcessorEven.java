@@ -6,7 +6,7 @@ import ru.otus.model.MessageSnapshot;
 
 import java.util.Optional;
 
-public class ProcessorEven implements Processor, MementoMessage {
+public class ProcessorEven implements Processor {
     private MessageSnapshot snapshot;
 
     @Override
@@ -21,14 +21,12 @@ public class ProcessorEven implements Processor, MementoMessage {
         return message;
     }
 
-    @Override
     public Long getId() {
         return Optional.ofNullable(snapshot)
                 .map(MessageSnapshot::getId)
                 .orElse(null);
     }
 
-    @Override
     public Long getSnapshotDate() {
         return Optional.ofNullable(snapshot)
                 .map(MessageSnapshot::getSnapshotDate)

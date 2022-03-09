@@ -1,6 +1,7 @@
 package ru.otus.model;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Message implements MessagePrototype {
     private final long id;
@@ -38,13 +39,14 @@ public class Message implements MessagePrototype {
     }
 
     public Message copy() {
-        ObjectForMessage copyField13 = Optional
-                .ofNullable(field13)
-                .map(objectForMessage -> new ObjectForMessage(field13
-                        .getData()
-                        .stream()
-                        .toList()))
-                .orElse(null);
+        ObjectForMessage copyField13 = null;
+        if (null != field13) {
+            copyField13 = new ObjectForMessage();
+            List<String> data = field13.getData();
+            if (null != data) {
+                copyField13.setData(new ArrayList<>(data));
+            }
+        }
         return toBuilder().field13(copyField13).build();
     }
 

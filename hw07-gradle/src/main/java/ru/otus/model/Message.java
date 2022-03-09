@@ -2,6 +2,7 @@ package ru.otus.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Message implements MessagePrototype {
     private final long id;
@@ -39,15 +40,7 @@ public class Message implements MessagePrototype {
     }
 
     public Message copy() {
-        ObjectForMessage copyField13 = null;
-        if (null != field13) {
-            copyField13 = new ObjectForMessage();
-            List<String> data = field13.getData();
-            if (null != data) {
-                copyField13.setData(new ArrayList<>(data));
-            }
-        }
-        return toBuilder().field13(copyField13).build();
+        return toBuilder().field13(new ObjectForMessage(field13)).build();
     }
 
     public MessageSnapshot createSnapshot(Long snapshotTime) {

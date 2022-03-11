@@ -1,7 +1,5 @@
 package ru.otus.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class Message implements MessagePrototype {
@@ -40,7 +38,9 @@ public class Message implements MessagePrototype {
     }
 
     public Message copy() {
-        return toBuilder().field13(new ObjectForMessage(field13)).build();
+        var builder = toBuilder();
+        Optional.ofNullable(field13).ifPresent(field13 -> builder.field13(field13.copy()));
+        return builder.build();
     }
 
     public MessageSnapshot createSnapshot(Long snapshotTime) {

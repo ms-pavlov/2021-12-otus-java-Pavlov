@@ -4,19 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ObjectForMessage {
+public class ObjectForMessage implements MessagePrototype {
     private List<String> data;
-
-    public ObjectForMessage() {
-        this.data = new ArrayList<>();
-    }
-
-    public ObjectForMessage(ObjectForMessage object) {
-        this.data = new ArrayList<>(Optional
-                .ofNullable(object)
-                .map(ObjectForMessage::getData)
-                .orElse(new ArrayList<>()));
-    }
 
     public List<String> getData() {
         return data;
@@ -29,5 +18,12 @@ public class ObjectForMessage {
     @Override
     public String toString() {
         return "{" + data + "}";
+    }
+
+    @Override
+    public ObjectForMessage copy() {
+        ObjectForMessage result = new ObjectForMessage();
+        Optional.ofNullable(data).ifPresent(data -> result.setData(data.stream().toList()));
+        return result;
     }
 }

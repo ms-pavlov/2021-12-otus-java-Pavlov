@@ -13,7 +13,7 @@ class ProcessorSwapTest {
     private static final String F11 = "field11";
     private static final String F12 = "field12";
     @Test
-    @DisplayName("Тестируем обмен значений местами")
+    @DisplayName("Тестируем обмен значениями")
     void process() {
         var swap = new ProcessorSwap();
 

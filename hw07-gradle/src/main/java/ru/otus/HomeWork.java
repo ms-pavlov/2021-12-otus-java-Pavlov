@@ -1,10 +1,10 @@
 package ru.otus;
 
 import ru.otus.handler.ComplexProcessor;
-import ru.otus.listener.ListenerPrinterConsole;
 import ru.otus.listener.homework.HistoryListener;
 import ru.otus.model.Message;
 import ru.otus.model.ObjectForMessage;
+import ru.otus.processor.CurrentTime;
 import ru.otus.processor.LoggerProcessor;
 import ru.otus.processor.ProcessorEven;
 import ru.otus.processor.ProcessorSwap;
@@ -34,7 +34,7 @@ public class HomeWork {
 
     public static void main(String[] args) {
         var processors = List.of(new ProcessorSwap(),
-                new LoggerProcessor(new ProcessorEven()));
+                new LoggerProcessor(new ProcessorEven(new CurrentTime())));
 
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
         var historyListener = new HistoryListener();

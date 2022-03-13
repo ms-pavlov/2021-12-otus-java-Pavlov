@@ -15,11 +15,16 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public void onUpdated(Message msg) {
-        history.put(System.nanoTime(), msg.copy());
+        history.put(msg.getId(), msg.copy());
     }
 
+    /**
+     * Возвращает ранее сохраненое сообщение в виде Optional<Message> по идентификатору.
+     * @param id идентификатор сообщения
+     * @return Возращает Optional<Message>, как это заявлено в интерфейсе HistoryReader.
+     */
     @Override
     public Optional<Message> findMessageById(long id) {
-        return history.values().stream().filter(message -> message.getId() == id).findFirst();
+        return Optional.ofNullable(history.get(id));
     }
 }

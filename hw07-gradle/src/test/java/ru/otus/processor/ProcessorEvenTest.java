@@ -1,5 +1,6 @@
 package ru.otus.processor;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
@@ -21,10 +22,7 @@ class ProcessorEvenTest {
         try {
             even.process(message);
         } catch (RuntimeException ex) {
-            if ((even.getSnapshotDate() & 1) == 0) {
-                System.out.println("Чет");
-                assertThat(ex.getMessage()).isEqualTo("Четная секунда");
-            }
+            assertThat(ex.getMessage()).isEqualTo("Четная секунда");
         }
     }
 
@@ -37,10 +35,7 @@ class ProcessorEvenTest {
         var message = new Message.Builder(1L)
                 .build();
         even.process(message);
-        if ((even.getSnapshotDate() & 1) == 1) {
-            System.out.println("Нечет");
-            assertThat(even.getId()).isEqualTo(message.getId());
-        }
 
+        assertThat(even.getCurrentTime() & 1).isEqualTo(1);
     }
 }

@@ -1,6 +1,7 @@
 package ru.otus.processor;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 import ru.otus.model.ObjectForMessage;
@@ -12,6 +13,7 @@ class ProcessorSwapTest {
     private static final String F11 = "field11";
     private static final String F12 = "field12";
     @Test
+    @DisplayName("Тестируем обмен значений местами")
     void process() {
         var swap = new ProcessorSwap();
 

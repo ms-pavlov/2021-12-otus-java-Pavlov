@@ -1,6 +1,7 @@
 package ru.otus.processor;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
@@ -11,31 +12,28 @@ import static org.mockito.Mockito.when;
 class ProcessorEvenTest {
 
     @Test
-    void process() {
+    @DisplayName("Тестируем вызовы в четную секунду")
+    void processEven() {
         TimeStrategy timeStrategy = mock(TimeStrategy.class);
-        when(timeStrategy.getCurrentTime()).thenReturn(2L);
+        when(timeStrategy.getTime()).thenReturn(2L);
         var even = new ProcessorEven(timeStrategy);
 
         var message = new Message.Builder(1L)
                 .build();
-
-        try {
-            even.process(message);
-        } catch (RuntimeException ex) {
-            assertThat(ex.getMessage()).isEqualTo("Четная секунда");
-        }
+        var msg = Assertions.assertThrows(RuntimeException.class, () -> even.process(message)).getMessage();
+        assertThat(msg).isEqualTo("Четная секунда");
     }
 
     @Test
-    void getId() {
+    @DisplayName("Тестируем вызовы в нечетную секунду")
+    void processOdd() {
         TimeStrategy timeStrategy = mock(TimeStrategy.class);
-        when(timeStrategy.getCurrentTime()).thenReturn(1L);
+        when(timeStrategy.getTime()).thenReturn(1L);
         var even = new ProcessorEven(timeStrategy);
 
         var message = new Message.Builder(1L)
                 .build();
         even.process(message);
-
-        assertThat(even.getCurrentTime() & 1).isEqualTo(1);
+        Assertions.assertDoesNotThrow(() -> even.process(message));
     }
 }

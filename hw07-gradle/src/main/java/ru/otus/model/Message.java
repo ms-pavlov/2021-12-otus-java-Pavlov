@@ -43,10 +43,6 @@ public class Message implements MessagePrototype {
         return builder.build();
     }
 
-    public MessageSnapshot createSnapshot(Long snapshotTime) {
-        return new MessageSnapshot(copy(), snapshotTime);
-    }
-
     public long getId() {
         return id;
     }

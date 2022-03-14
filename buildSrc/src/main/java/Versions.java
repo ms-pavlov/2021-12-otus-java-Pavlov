@@ -3,4 +3,6 @@ public interface Versions {
     String icu4j = "70.1";
     String asm = "9.2";
     String lombok = "1.18.22";
+    String glassfishJson = "1.1.4";
+    String protobuf = "3.19.4";
 }

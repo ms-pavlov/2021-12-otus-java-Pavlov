@@ -2,8 +2,6 @@ package ru.otus.dataprocessor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;

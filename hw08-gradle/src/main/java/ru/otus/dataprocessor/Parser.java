@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public interface Parser<M>{
-    M parse(InputStream inputStream) throws IOException, FileProcessException;
+    M parse(InputStream inputStream) throws FileProcessException;
 }

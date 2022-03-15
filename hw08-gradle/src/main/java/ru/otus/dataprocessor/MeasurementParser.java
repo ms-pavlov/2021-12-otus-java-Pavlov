@@ -1,6 +1,8 @@
 package ru.otus.dataprocessor;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.otus.model.Measurement;
 
@@ -16,7 +18,7 @@ public class MeasurementParser implements Parser<List<Measurement>> {
     private static final String VALUE_FIELD = "value";
 
     @Override
-    public List<Measurement> parse(InputStream inputStream) throws IOException, FileProcessException {
+    public List<Measurement> parse(InputStream inputStream) throws FileProcessException {
         return read(inputStream)
                 .stream()
                 .map(MeasurementParser::parseFieldsToMeasurement)
@@ -28,11 +30,16 @@ public class MeasurementParser implements Parser<List<Measurement>> {
      *
      * @param inputStream входной поток.
      * @return набот пар ключ-значение List<Map<String, String>>.
-     * @throws IOException исключение если файл не доступен для чтения
+     * @throws FileProcessException исключение если поток не доступен для чтения или содержит не валидные данные
      */
-    private List<Map<String, String>> read(InputStream inputStream) throws IOException {
-        return this.mapper.readValue(inputStream, new TypeReference<>() {
-        });
+    private List<Map<String, String>> read(InputStream inputStream) throws FileProcessException {
+        try {
+            return this.mapper.readValue(inputStream, new TypeReference<>() {});
+        } catch (JsonParseException | JsonMappingException exception) {
+            throw FileProcessException.makeException("jsonParserError");
+        } catch (IOException | IllegalArgumentException exception) {
+            throw FileProcessException.makeException("ioError");
+        }
     }
 
     /**
@@ -45,10 +52,7 @@ public class MeasurementParser implements Parser<List<Measurement>> {
         try {
             return new Measurement(fields.get(NAME_FIELD), Double.parseDouble(fields.get(VALUE_FIELD)));
         } catch (NumberFormatException exception) {
-            throw new FileProcessException(ResourceBundle
-                    .getBundle("messages")
-                    .getString("wrongNumberFormat")
-                    .replaceAll("%value%", fields.get(VALUE_FIELD)));
+            throw FileProcessException.makeException("wrongNumberFormat", fields.get(VALUE_FIELD));
         }
     }
 }

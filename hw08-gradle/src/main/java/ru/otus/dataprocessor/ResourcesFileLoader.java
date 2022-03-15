@@ -15,7 +15,7 @@ public class ResourcesFileLoader implements Loader {
     /**
      * читает файл, парсит и возвращает результат
      *
-     * @return возвращает результат в виде List<Measurement>, если файл не доступен возвращает null
+     * @return возвращает результат в виде List<Measurement>, если файл не доступен или содержимое не валидно возвращает null
      */
     @Override
     public List<Measurement> load() {

@@ -19,10 +19,10 @@ public class ResourcesFileLoader implements Loader {
      */
     @Override
     public List<Measurement> load() {
-        try (var resourceInputFile = ResourcesFileLoader.class
+        try (var resourceInputFileStream = ResourcesFileLoader.class
                 .getClassLoader()
                 .getResourceAsStream(this.fileName)) {
-            return ParserFactory.getMeasurementParser().parse(resourceInputFile);
+            return ParserFactory.getMeasurementParser().parse(resourceInputFileStream);
         } catch (IOException exception) {
             exception.printStackTrace();
         }

@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-public class MeasurementParser implements Parser<List<Measurement>> {
+import static ru.otus.helpers.PropertiesHelper.*;
+
+public class SimpleMeasurementJsonParser implements Parser<List<Measurement>> {
     private final ObjectMapper mapper = new ObjectMapper();
     private static final String NAME_FIELD = "name";
     private static final String VALUE_FIELD = "value";
@@ -21,7 +22,7 @@ public class MeasurementParser implements Parser<List<Measurement>> {
     public List<Measurement> parse(InputStream inputStream) throws FileProcessException {
         return read(inputStream)
                 .stream()
-                .map(MeasurementParser::parseFieldsToMeasurement)
+                .map(SimpleMeasurementJsonParser::parseFieldsToMeasurement)
                 .toList();
     }
 
@@ -36,9 +37,13 @@ public class MeasurementParser implements Parser<List<Measurement>> {
         try {
             return this.mapper.readValue(inputStream, new TypeReference<>() {});
         } catch (JsonParseException | JsonMappingException exception) {
-            throw FileProcessException.makeException("jsonParserError");
+            throw new FileProcessException(errorMessage("jsonParserError",
+                    exception.getClass().getName(),
+                    exception.getMessage()));
         } catch (IOException | IllegalArgumentException exception) {
-            throw FileProcessException.makeException("ioError");
+            throw new FileProcessException(errorMessage("ioError",
+                    exception.getClass().getName(),
+                    exception.getMessage()));
         }
     }
 
@@ -52,7 +57,8 @@ public class MeasurementParser implements Parser<List<Measurement>> {
         try {
             return new Measurement(fields.get(NAME_FIELD), Double.parseDouble(fields.get(VALUE_FIELD)));
         } catch (NumberFormatException exception) {
-            throw FileProcessException.makeException("wrongNumberFormat", fields.get(VALUE_FIELD));
+            throw new FileProcessException(errorMessage("wrongNumberFormat")
+                    .replaceAll("%value%", fields.get(VALUE_FIELD)));
         }
     }
 }

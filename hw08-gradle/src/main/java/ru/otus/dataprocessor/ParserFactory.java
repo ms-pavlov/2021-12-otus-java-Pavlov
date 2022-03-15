@@ -6,6 +6,6 @@ import java.util.List;
 
 public class ParserFactory {
     public static Parser<List<Measurement>> getMeasurementParser() {
-        return new MeasurementParser();
+        return new SimpleMeasurementJsonParser();
     }
 }

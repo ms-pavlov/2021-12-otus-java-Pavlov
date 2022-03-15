@@ -23,7 +23,7 @@ public class ResourcesFileLoader implements Loader {
                 .getClassLoader()
                 .getResourceAsStream(this.fileName)) {
             return ParserFactory.getMeasurementParser().parse(resourceInputFileStream);
-        } catch (IOException exception) {
+        } catch (IOException | FileProcessException exception) {
             exception.printStackTrace();
         }
         return null;

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class MeasurementParser implements Parser<List<Measurement>> {
     private final ObjectMapper mapper = new ObjectMapper();
@@ -15,7 +16,7 @@ public class MeasurementParser implements Parser<List<Measurement>> {
     private static final String VALUE_FIELD = "value";
 
     @Override
-    public List<Measurement> parse(InputStream inputStream) throws IOException {
+    public List<Measurement> parse(InputStream inputStream) throws IOException, FileProcessException {
         return read(inputStream)
                 .stream()
                 .map(MeasurementParser::parseFieldsToMeasurement)
@@ -30,7 +31,8 @@ public class MeasurementParser implements Parser<List<Measurement>> {
      * @throws IOException исключение если файл не доступен для чтения
      */
     private List<Map<String, String>> read(InputStream inputStream) throws IOException {
-        return this.mapper.readValue(inputStream, new TypeReference<>() {});
+        return this.mapper.readValue(inputStream, new TypeReference<>() {
+        });
     }
 
     /**
@@ -39,7 +41,14 @@ public class MeasurementParser implements Parser<List<Measurement>> {
      * @param fields набор ключ-значение Map<String, String>.
      * @return возвращает Measurement.
      */
-    private static Measurement parseFieldsToMeasurement(Map<String, String> fields) {
-        return new Measurement(fields.get(NAME_FIELD), Double.parseDouble(fields.get(VALUE_FIELD)));
+    private static Measurement parseFieldsToMeasurement(Map<String, String> fields) throws FileProcessException {
+        try {
+            return new Measurement(fields.get(NAME_FIELD), Double.parseDouble(fields.get(VALUE_FIELD)));
+        } catch (NumberFormatException exception) {
+            throw new FileProcessException(ResourceBundle
+                    .getBundle("messages")
+                    .getString("wrongNumberFormat")
+                    .replaceAll("%value%", fields.get(VALUE_FIELD)));
+        }
     }
 }

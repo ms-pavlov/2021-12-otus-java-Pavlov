@@ -25,3 +25,9 @@ hw05-gradle, hw05-asm-gradle -
 
 hw06-gradle -
 Концепты проектирования ООП. ДЗ
+
+hw07-gradle -
+Structural patterns. ДЗ
+
+hw08-gradle -
+Сериализация. ДЗ 

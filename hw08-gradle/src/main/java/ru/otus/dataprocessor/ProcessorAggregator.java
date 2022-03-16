@@ -3,6 +3,7 @@ package ru.otus.dataprocessor;
 import ru.otus.model.Measurement;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProcessorAggregator implements Processor {
     /**
@@ -13,12 +14,7 @@ public class ProcessorAggregator implements Processor {
      */
     @Override
     public Map<String, Double> process(List<Measurement> data) {
-        Map<String, Double> result = new TreeMap<>();
-        data.forEach(measurement -> result.put(
-                measurement.getName(),
-                Optional.ofNullable(result.get(measurement.getName()))
-                        .map(currentValue -> currentValue + measurement.getValue())
-                        .orElse(measurement.getValue())));
-        return result;
+        return new TreeMap<>(data.stream()
+                .collect(Collectors.groupingBy(Measurement::getName, Collectors.summingDouble(Measurement::getValue))));
     }
 }

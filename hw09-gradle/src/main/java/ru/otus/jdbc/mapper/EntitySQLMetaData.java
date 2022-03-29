@@ -8,9 +8,9 @@ import ru.otus.jdbc.mapper.sql.SQLParameter;
 public interface EntitySQLMetaData {
     String getSelectAllSql();
 
-    String getSelectByIdSql(SQLParameter id);
+    String getSelectByIdSql();
 
     String getInsertSql();
 
-    String getUpdateSql(SQLParameter id);
+    String getUpdateSql();
 }

@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
 import ru.otus.jdbc.mapper.sql.ParameterOperators;
 import ru.otus.jdbc.mapper.sql.QueryParameter;
-import ru.otus.jdbc.mapper.sql.SQLRequestsFactory;
-import ru.otus.jdbc.mapper.sql.SimpleRequestsFactory;
+import ru.otus.jdbc.mapper.sql.RequestFields;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -14,15 +13,19 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleCRUDSQLRequestTest {
+class EntitySQLMetaDataImplTest {
 
     EntitySQLMetaData crud;
 
     @BeforeEach
     void before() {
-        var fields = Arrays.stream(Client.class.getDeclaredFields()).map(Field::getName).toList();
-        var tableName = Client.class.getSimpleName().toLowerCase(Locale.ROOT);
-        crud = new SimpleCRUDSQLRequest(fields, tableName);
+        var entityClassMetaData = new EntityClassMetaDataImpl<Client>(Id.class) {
+            @Override
+            public Class<Client> getEntityClass() {
+                return Client.class;
+            }
+        };
+        crud = new EntitySQLMetaDataImpl(entityClassMetaData);
     }
 
     @Test
@@ -33,17 +36,17 @@ class SimpleCRUDSQLRequestTest {
     @Test
     void getSelectByIdSql() {
         var param = new QueryParameter("id", ParameterOperators.EQUAL);
-        assertEquals("select id, name from client where id = ?", crud.getSelectByIdSql(param));
+        assertEquals("select id, name from client where id = ?", crud.getSelectByIdSql());
     }
 
     @Test
     void getInsertSql() {
-        assertEquals("insert into client (id, name) values (?, ?)", crud.getInsertSql());
+        assertEquals("insert into client (name) values (?)", crud.getInsertSql());
     }
 
     @Test
     void getUpdateSql() {
         var param = new QueryParameter("id", ParameterOperators.EQUAL);
-        assertEquals("update client set name = ? where id = ?", crud.getUpdateSql(param));
+        assertEquals("update client set name = ? where id = ?", crud.getUpdateSql());
     }
 }

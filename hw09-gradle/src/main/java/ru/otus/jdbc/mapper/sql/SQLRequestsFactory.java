@@ -8,6 +8,4 @@ public interface SQLRequestsFactory {
 
     SQLRequestBuilder insert();
 
-    SQLRequestBuilder delete();
-
 }

@@ -3,6 +3,8 @@ package ru.otus.jdbc.mapper.sql;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
+import ru.otus.jdbc.mapper.EntityClassMetaDataImpl;
+import ru.otus.jdbc.mapper.Id;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -17,9 +19,13 @@ class SimpleRequestsFactoryTest {
 
     @BeforeEach
     void before() {
-        var fields = Arrays.stream(Client.class.getDeclaredFields()).map(Field::getName).toList();
-        var tableName = Client.class.getSimpleName().toLowerCase(Locale.ROOT);
-        srf = new SimpleRequestsFactory(fields, tableName);
+        var requestFields = new RequestFields(new EntityClassMetaDataImpl<Client>(Id.class) {
+            @Override
+            public Class<Client> getEntityClass() {
+                return Client.class;
+            }
+        });
+        srf = new SimpleRequestsFactory(requestFields);
     }
 
     @Test
@@ -30,15 +36,12 @@ class SimpleRequestsFactoryTest {
     @Test
     void update() {
         var param = new QueryParameter("id", ParameterOperators.EQUAL);
-        assertEquals("update client set id = ?, name = ? where id = ?", srf.update().buildWithParameters(param));
+        assertEquals("update client set name = ? where id = ?", srf.update().buildWithParameters(param));
     }
 
     @Test
     void insert() {
-        assertEquals("insert into client (id, name) values (?, ?)", srf.insert().build());
+        assertEquals("insert into client (name) values (?)", srf.insert().build());
     }
 
-    @Test
-    void delete() {
-    }
 }

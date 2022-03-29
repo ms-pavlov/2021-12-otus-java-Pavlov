@@ -1,33 +1,26 @@
 package ru.otus.jdbc.mapper.sql;
 
-import java.util.List;
-
 public class SimpleRequestsFactory implements SQLRequestsFactory {
-    private final List<String> fields;
-    private final String tableName;
+    private final RequestFieldsData requestFieldsData;
 
-    public SimpleRequestsFactory(List<String> fields, String tableName) {
-        this.fields = fields;
-        this.tableName = tableName;
+    public SimpleRequestsFactory(RequestFieldsData requestFieldsData) {
+        this.requestFieldsData = requestFieldsData;
     }
+
 
     @Override
     public SQLRequestBuilder select() {
-        return new SelectRequestBuilder(fields, tableName);
+        return new SelectRequestBuilder(requestFieldsData.getAllFields(), requestFieldsData.getName());
     }
 
     @Override
     public SQLRequestBuilder update() {
-        return new UpdateRequestBuilder(fields, tableName);
+        return new UpdateRequestBuilder(requestFieldsData.getFieldsWithoutId(), requestFieldsData.getName());
     }
 
     @Override
     public SQLRequestBuilder insert() {
-        return new InsertRequestBuilder(fields, tableName);
+        return new InsertRequestBuilder(requestFieldsData.getFieldsWithoutId(), requestFieldsData.getName());
     }
 
-    @Override
-    public SQLRequestBuilder delete() {
-        return null;
-    }
 }

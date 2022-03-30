@@ -5,11 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
 import ru.otus.jdbc.mapper.sql.ParameterOperators;
 import ru.otus.jdbc.mapper.sql.QueryParameter;
-import ru.otus.jdbc.mapper.sql.RequestFields;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +14,7 @@ class EntitySQLMetaDataImplTest {
 
     @BeforeEach
     void before() {
-        var entityClassMetaData = new EntityClassMetaDataImpl<Client>(Id.class) {
+        var entityClassMetaData = new EntityClassMetaDataImpl<Client>() {
             @Override
             public Class<Client> getEntityClass() {
                 return Client.class;

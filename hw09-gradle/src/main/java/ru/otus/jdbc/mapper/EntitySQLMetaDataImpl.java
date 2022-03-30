@@ -2,8 +2,6 @@ package ru.otus.jdbc.mapper;
 
 import ru.otus.jdbc.mapper.sql.*;
 
-import java.util.List;
-
 public class EntitySQLMetaDataImpl implements EntitySQLMetaData {
     private final SQLRequestsFactory requestsFactory;
     private final SQLParameter id;

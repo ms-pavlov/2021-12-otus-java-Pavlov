@@ -9,23 +9,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
-    private final Class<? extends Annotation> annotation;
+    private final static Class<? extends Annotation> ID_ANNOTATION = Id.class;
     private final String name;
     private final Field IdField;
     private final List<Field> allFields;
     private final List<Field> fieldsWithoutId;
     private final Constructor<T> constructor;
 
-    protected EntityClassMetaDataImpl(Class<? extends Annotation> annotation) {
-        this.annotation = annotation;
+    protected EntityClassMetaDataImpl() {
         this.name = getEntityClass().getSimpleName();
         this.IdField = Arrays.stream(getEntityClass().getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(annotation))
+                .filter(field -> field.isAnnotationPresent(ID_ANNOTATION))
                 .findFirst()
                 .orElseThrow(() -> new BadEntityException("Нет поля id"));
         this.allFields = Arrays.stream(getEntityClass().getDeclaredFields()).toList();
         this.fieldsWithoutId = Arrays.stream(getEntityClass().getDeclaredFields())
-                .filter(field -> !field.isAnnotationPresent(annotation))
+                .filter(field -> !field.isAnnotationPresent(ID_ANNOTATION))
                 .toList();
         try {
             this.constructor = getEntityClass().getConstructor();

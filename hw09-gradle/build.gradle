@@ -6,8 +6,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    dependencies {
+        implementation project(':utils')
         implementation 'ch.qos.logback:logback-classic'
         implementation 'org.flywaydb:flyway-core'
         implementation 'com.zaxxer:HikariCP'
@@ -20,8 +19,6 @@ dependencies {
 
         testImplementation 'org.testcontainers:junit-jupiter'
         testImplementation 'org.testcontainers:postgresql'
-
-    }
 }
 
 test {

@@ -1,7 +1,5 @@
 package ru.otus.jdbc.mapper;
 
-import ru.otus.jdbc.mapper.sql.SQLParameter;
-
 /**
  * Создает SQL - запросы
  */

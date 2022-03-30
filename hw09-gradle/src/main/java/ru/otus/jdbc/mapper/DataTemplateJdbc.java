@@ -4,12 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.repository.executor.DbExecutor;
-import ru.otus.jdbc.mapper.exception.BadEntityException;
+import ru.otus.helpers.ReflectionHelper;
 import ru.otus.jdbc.mapper.exception.BadSQLRequestException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,30 +22,20 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     private final DbExecutor dbExecutor;
     private final EntitySQLMetaData entitySQLMetaData;
     private final EntityClassMetaData<T> entityClassMetaData;
+    private final Mapper<T> mapper;
 
     public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData, EntityClassMetaData<T> entityClassMetaData) {
         this.dbExecutor = dbExecutor;
         this.entitySQLMetaData = entitySQLMetaData;
         this.entityClassMetaData = entityClassMetaData;
+        this.mapper = new Mapper<>(entityClassMetaData);
     }
 
     @Override
     public Optional<T> findById(Connection connection, long id) {
-        try (var pst = connection.prepareStatement(entitySQLMetaData.getSelectByIdSql())) {
-            pst.setLong(1, id);
-            try (var rs = pst.executeQuery()) {
-                T result = null;
-                if (rs.next()) {
-                    result = makeEntity(rs);
-                }
-                logger.info("findById: {}", result);
-                return Optional.ofNullable(result);
-            } catch (SQLException e) {
-                throw new BadSQLRequestException(e);
-            }
-        } catch (SQLException e) {
-            throw new BadSQLRequestException(e);
-        }
+        List<Object> params = new ArrayList<>();
+        params.add(id);
+        return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectByIdSql(), params, mapper::makeEntity);
     }
 
     @Override
@@ -56,7 +44,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
             try (var rs = pst.executeQuery()) {
                 List<T> result = new ArrayList<>();
                 while (rs.next()) {
-                    result.add(makeEntity(rs));
+                    result.add(mapper.makeEntity(rs));
                 }
                 logger.info("find: {}", result);
                 return result;
@@ -70,26 +58,21 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public long insert(Connection connection, T client) {
-        throw new UnsupportedOperationException();
+        return dbExecutor.executeStatement(connection, entitySQLMetaData.getInsertSql(), getParameterFromEntityWithoutId(client));
     }
 
     @Override
     public void update(Connection connection, T client) {
-        throw new UnsupportedOperationException();
+        dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(), getParameterFromEntityWithId(client));
     }
 
-    private T makeEntity(ResultSet resultSet) {
-        try {
-            var args = entityClassMetaData.getAllFields().stream().map(field -> {
-                try {
-                    return resultSet.getObject(field.getName());
-                } catch (SQLException e) {
-                    throw new BadSQLRequestException(e);
-                }
-            }).toArray();
-            return entityClassMetaData.getConstructor().newInstance(args);
-        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new BadEntityException(e);
-        }
+    private List<Object> getParameterFromEntityWithId(T client) {
+        var params = getParameterFromEntityWithoutId(client);
+        params.add(ReflectionHelper.getFieldValue(client, this.entityClassMetaData.getIdField().getName()));
+        return params;
+    }
+
+    private List<Object> getParameterFromEntityWithoutId(T client) {
+        return entityClassMetaData.getFieldsWithoutId().stream().map(field -> ReflectionHelper.getFieldValue(client, field.getName())).toList();
     }
 }

@@ -1,11 +1,11 @@
 package ru.otus.jdbc.mapper.sql;
 
 public class ParameterOperators {
-    public static String EQUAL = " = ";
-    public static String LARGER = " > ";
-    public static String SMALLER = " < ";
-    public static String LIKE = " like ";
+    public static final String EQUAL = " = ";
+    public static final String LARGER = " > ";
+    public static final String SMALLER = " < ";
+    public static final String LIKE = " like ";
 
-    public static String OR = " or ";
-    public static String AND = " and ";
+    public static final String OR = " or ";
+    public static final String AND = " and ";
 }

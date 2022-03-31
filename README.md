@@ -31,3 +31,6 @@ Structural patterns. ДЗ
 
 hw08-gradle -
 Сериализация. ДЗ 
+
+hw09-gradle -
+Самодельный ORM

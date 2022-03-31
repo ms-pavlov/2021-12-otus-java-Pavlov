@@ -2,6 +2,7 @@ package ru.otus.jdbc.mapper;
 
 import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
+import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +15,7 @@ class ReflectionMappingStrategyTest {
 
     @Test
     void toEntityObject() throws SQLException {
-        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
+        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         var rowset = mock(ResultSet.class);
         when(rowset.getObject("id")).thenReturn(1L);
         when(rowset.getObject("name")).thenReturn("name");

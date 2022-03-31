@@ -16,12 +16,7 @@ class SimpleRequestsFactoryTest {
 
     @BeforeEach
     void before() {
-        var requestFields = new RequestFields(new EntityClassMetaDataImpl<Client>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        });
+        var requestFields = new RequestFields(new EntityClassMetaDataImpl<>(Client.class));
         srf = new SimpleRequestsFactory(requestFields);
     }
 

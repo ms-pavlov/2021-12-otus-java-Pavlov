@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.repository.executor.DbExecutor;
+import ru.otus.jdbc.mapper.strategy.MappingStrategyFactory;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -21,12 +22,15 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     private final Mapper<T> mapper;
     private final ParameterFromEntity<T> parameters;
 
-    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData, EntityClassMetaData<T> entityClassMetaData, Mapper<T> mapper) {
+    public DataTemplateJdbc(DbExecutor dbExecutor, Class<T> entityClass, MappingStrategyFactory<T> mappingStrategyFactory) {
         this.dbExecutor = dbExecutor;
-        this.entitySQLMetaData = entitySQLMetaData;
+        var entityClassMetaData = new EntityClassMetaDataImpl<>(entityClass);
+        this.entitySQLMetaData = new EntitySQLMetaDataImpl(entityClassMetaData);
         this.parameters = new ParameterFromEntityForJdbc<>(entityClassMetaData);
-        this.mapper = mapper;
+        this.mapper = new Mapper<>(mappingStrategyFactory.getMappingStrategy(entityClassMetaData));
     }
+
+
 
     @Override
     public Optional<T> findById(Connection connection, long id) {

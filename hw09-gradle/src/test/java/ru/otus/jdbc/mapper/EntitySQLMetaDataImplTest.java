@@ -14,12 +14,7 @@ class EntitySQLMetaDataImplTest {
 
     @BeforeEach
     void before() {
-        var entityClassMetaData = new EntityClassMetaDataImpl<Client>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
+        var entityClassMetaData = new EntityClassMetaDataImpl<>(Client.class);
         crud = new EntitySQLMetaDataImpl(entityClassMetaData);
     }
 

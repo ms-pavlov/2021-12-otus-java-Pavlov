@@ -15,12 +15,7 @@ class ParameterFromEntityForJdbcTest {
 
     @BeforeEach
     void before() {
-        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
+        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         this.parameters = new ParameterFromEntityForJdbc<>(entityClassMetaDataClient);
         this.testClient = new Client(1L, "name");
     }

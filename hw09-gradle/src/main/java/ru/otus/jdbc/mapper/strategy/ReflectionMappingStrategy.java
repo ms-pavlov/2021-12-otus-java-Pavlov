@@ -1,8 +1,10 @@
-package ru.otus.jdbc.mapper;
+package ru.otus.jdbc.mapper.strategy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.helpers.ReflectionHelper;
+import ru.otus.jdbc.mapper.EntityClassMetaData;
+import ru.otus.jdbc.mapper.Mapper;
 import ru.otus.jdbc.mapper.exception.BadEntityException;
 import ru.otus.jdbc.mapper.exception.BadSQLRequestException;
 
@@ -25,9 +27,7 @@ public class ReflectionMappingStrategy<T> implements MappingStrategy<T> {
             T result = entityClassMetaData.getConstructor().newInstance();
             entityClassMetaData.getAllFields().stream()
                     .map(Field::getName)
-                    .forEach(fieldName -> {
-                        ReflectionHelper.setFieldValue(result, fieldName, getValue(resultSet, fieldName));
-                    });
+                    .forEach(fieldName -> ReflectionHelper.setFieldValue(result, fieldName, getValue(resultSet, fieldName)));
             logger.info("mapped: {}", result);
             return result;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {

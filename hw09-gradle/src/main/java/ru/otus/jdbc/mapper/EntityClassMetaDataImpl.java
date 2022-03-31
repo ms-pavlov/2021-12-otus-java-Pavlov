@@ -1,5 +1,6 @@
 package ru.otus.jdbc.mapper;
 
+import ru.otus.jdbc.mapper.annotations.Id;
 import ru.otus.jdbc.mapper.exception.BadEntityException;
 
 import java.lang.annotation.Annotation;
@@ -8,7 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
+public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     private final static Class<? extends Annotation> ID_ANNOTATION = Id.class;
     private final String name;
     private final Field IdField;
@@ -16,25 +17,23 @@ public abstract class EntityClassMetaDataImpl<T> implements EntityClassMetaData<
     private final List<Field> fieldsWithoutId;
     private final Constructor<T> constructor;
 
-    protected EntityClassMetaDataImpl() {
-        this.name = getEntityClass().getSimpleName();
-        this.IdField = Arrays.stream(getEntityClass().getDeclaredFields())
+    public EntityClassMetaDataImpl(Class<T> entityClass) {
+        this.name = entityClass.getSimpleName();
+        this.IdField = Arrays.stream(entityClass.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(ID_ANNOTATION))
                 .findFirst()
                 .orElseThrow(() -> new BadEntityException("Нет поля id"));
-        this.allFields = Arrays.stream(getEntityClass().getDeclaredFields()).toList();
-        this.fieldsWithoutId = Arrays.stream(getEntityClass().getDeclaredFields())
+        this.allFields = Arrays.stream(entityClass.getDeclaredFields()).toList();
+        this.fieldsWithoutId = Arrays.stream(entityClass.getDeclaredFields())
                 .filter(field -> !field.isAnnotationPresent(ID_ANNOTATION))
                 .toList();
         try {
-            this.constructor = getEntityClass().getConstructor();
+            this.constructor = entityClass.getConstructor();
         } catch (NoSuchMethodException e) {
             throw new BadEntityException(e);
         }
 
     }
-
-    public abstract Class<T> getEntityClass();
 
     @Override
     public String getName() {

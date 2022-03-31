@@ -3,6 +3,7 @@ package ru.otus.jdbc.mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
+import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,12 +18,7 @@ class MapperTest {
 
     @BeforeEach
     void before () {
-        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
+        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         var strategy = new ReflectionMappingStrategy<>(entityClassMetaDataClient);
         this.mapper = new Mapper<>(strategy);
     }
@@ -32,6 +28,7 @@ class MapperTest {
         var rowSet = mock(ResultSet.class);
         when(rowSet.getObject("id")).thenReturn(1L);
         when(rowSet.getObject("name")).thenReturn("name");
+        when(rowSet.next()).thenReturn(true).thenReturn(false);
         Client result = mapper.makeEntity(rowSet);
         assertEquals(1, result.getId());
         assertEquals("name", result.getName());

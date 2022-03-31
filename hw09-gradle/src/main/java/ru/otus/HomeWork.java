@@ -11,6 +11,7 @@ import ru.otus.crm.model.Manager;
 import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.crm.service.DbServiceManagerImpl;
 import ru.otus.jdbc.mapper.*;
+import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import javax.sql.DataSource;
 
@@ -29,17 +30,10 @@ public class HomeWork {
         var dbExecutor = new DbExecutorImpl();
 
 // Работа с клиентом
-        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
-        EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
-        var dataTemplateClient = new DataTemplateJdbc<>(dbExecutor,
-                entitySQLMetaDataClient,
-                entityClassMetaDataClient,
-                new Mapper<>(new ReflectionMappingStrategy<>(entityClassMetaDataClient))); //реализация DataTemplate, универсальная
+//        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
+//        EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
+//      EntityClassMetaData<Client> зависит от  Client, DataTemplateJdbc зависит от EntityClassMetaData<Client>.
+        var dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, Client.class, ReflectionMappingStrategy::new); //реализация DataTemplate, универсальная
 
 // Код дальше должен остаться
         var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
@@ -51,18 +45,10 @@ public class HomeWork {
         log.info("clientSecondSelected:{}", clientSecondSelected);
 
 // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
-
-        EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Manager> getEntityClass() {
-                return Manager.class;
-            }
-        };
-        EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
-        var dataTemplateManager = new DataTemplateJdbc<>(dbExecutor,
-                entitySQLMetaDataManager,
-                entityClassMetaDataManager,
-                new Mapper<>(new ReflectionMappingStrategy<>(entityClassMetaDataManager)));
+//        EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>(Manager.class);
+//        EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
+//      EntityClassMetaData<Client> зависит от  Client, DataTemplateJdbc зависит от EntityClassMetaData<Client>.
+        var dataTemplateManager = new DataTemplateJdbc<>(dbExecutor, Manager.class, ReflectionMappingStrategy::new);
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));

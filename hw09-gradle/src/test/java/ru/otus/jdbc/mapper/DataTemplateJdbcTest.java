@@ -2,7 +2,6 @@ package ru.otus.jdbc.mapper;
 
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -12,11 +11,10 @@ import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.crm.datasource.DriverManagerDataSource;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.service.DbServiceClientImpl;
+import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import javax.sql.DataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -41,17 +39,9 @@ class DataTemplateJdbcTest {
         this.transactionRunner = new TransactionRunnerJdbc(dataSource);
 
         var dbExecutor = new DbExecutorImpl();
-        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>() {
-            @Override
-            public Class<Client> getEntityClass() {
-                return Client.class;
-            }
-        };
+        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
-        this.dataTemplateClient = new DataTemplateJdbc<>(dbExecutor,
-                entitySQLMetaDataClient,
-                entityClassMetaDataClient,
-                new Mapper<>(new ReflectionMappingStrategy<>(entityClassMetaDataClient)));
+        this.dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, Client.class, ReflectionMappingStrategy::new);
 
         this.dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
     }

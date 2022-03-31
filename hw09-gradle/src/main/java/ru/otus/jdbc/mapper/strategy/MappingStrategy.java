@@ -1,4 +1,4 @@
-package ru.otus.jdbc.mapper;
+package ru.otus.jdbc.mapper.strategy;
 
 import java.sql.ResultSet;
 

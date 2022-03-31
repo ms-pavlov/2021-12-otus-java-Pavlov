@@ -1,4 +1,4 @@
-package ru.otus.jdbc.mapper.sql;
+package ru.otus.jdbc.mapper.sql.requests;
 
 import java.util.List;
 

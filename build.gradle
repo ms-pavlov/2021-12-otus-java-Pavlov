@@ -65,3 +65,8 @@ task managedVersions {
         }
     }
 }
+
+dependencies {
+    implementation 'com.github.nbbrd.java-sql-util:java-sql-jdbc:1.0.2'
+    testImplementation 'org.java-sql-generator:java-sql-generator:0.2'
+}

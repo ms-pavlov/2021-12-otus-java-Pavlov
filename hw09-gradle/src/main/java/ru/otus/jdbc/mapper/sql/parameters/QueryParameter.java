@@ -1,8 +1,8 @@
-package ru.otus.jdbc.mapper.sql;
+package ru.otus.jdbc.mapper.sql.parameters;
 
 import java.util.Objects;
 
-public class QueryParameter implements SQLParameter{
+public class QueryParameter implements SQLParameter {
     private static final String QUESTION_MARK= "?";
 
     private final String name;

@@ -1,6 +1,9 @@
 package ru.otus.jdbc.mapper.sql;
 
 import org.junit.jupiter.api.Test;
+import ru.otus.jdbc.mapper.sql.parameters.ParameterOperators;
+import ru.otus.jdbc.mapper.sql.parameters.QueryParameter;
+import ru.otus.jdbc.mapper.sql.parameters.QueryParameterGroup;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,7 @@
 package ru.otus.jdbc.mapper.sql;
 
+import ru.otus.jdbc.mapper.sql.requests.*;
+
 public class SimpleRequestsFactory implements SQLRequestsFactory {
     private final RequestFieldsData requestFieldsData;
 

@@ -1,4 +1,4 @@
-package ru.otus.jdbc.mapper.sql;
+package ru.otus.jdbc.mapper.sql.parameters;
 
 import java.util.ArrayList;
 import java.util.List;

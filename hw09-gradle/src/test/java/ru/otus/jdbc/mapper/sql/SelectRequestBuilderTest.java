@@ -2,6 +2,7 @@ package ru.otus.jdbc.mapper.sql;
 
 import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
+import ru.otus.jdbc.mapper.sql.requests.SelectRequestBuilder;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

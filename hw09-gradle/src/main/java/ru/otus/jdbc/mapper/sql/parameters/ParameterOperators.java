@@ -1,4 +1,4 @@
-package ru.otus.jdbc.mapper.sql;
+package ru.otus.jdbc.mapper.sql.parameters;
 
 public class ParameterOperators {
     public static final String EQUAL = " = ";

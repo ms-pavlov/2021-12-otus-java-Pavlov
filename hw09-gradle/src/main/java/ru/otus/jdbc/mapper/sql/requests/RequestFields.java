@@ -1,4 +1,4 @@
-package ru.otus.jdbc.mapper.sql;
+package ru.otus.jdbc.mapper.sql.requests;
 
 import ru.otus.jdbc.mapper.EntityClassMetaData;
 

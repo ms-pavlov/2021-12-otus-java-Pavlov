@@ -1,6 +1,10 @@
 package ru.otus.jdbc.mapper;
 
 import ru.otus.jdbc.mapper.sql.*;
+import ru.otus.jdbc.mapper.sql.parameters.ParameterOperators;
+import ru.otus.jdbc.mapper.sql.parameters.QueryParameter;
+import ru.otus.jdbc.mapper.sql.parameters.SQLParameter;
+import ru.otus.jdbc.mapper.sql.requests.RequestFields;
 
 public class EntitySQLMetaDataImpl implements EntitySQLMetaData {
     private final SQLRequestsFactory requestsFactory;

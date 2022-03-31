@@ -22,29 +22,31 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     private final Mapper<T> mapper;
     private final ParameterFromEntity<T> parameters;
 
-    public DataTemplateJdbc(DbExecutor dbExecutor, Class<T> entityClass, MappingStrategyFactory<T> mappingStrategyFactory) {
+    public DataTemplateJdbc(DbExecutor dbExecutor, MetaDataAbstractFactory<T> metaDataAbstractFactory) {
         this.dbExecutor = dbExecutor;
-        var entityClassMetaData = new EntityClassMetaDataImpl<>(entityClass);
-        this.entitySQLMetaData = new EntitySQLMetaDataImpl(entityClassMetaData);
-        this.parameters = new ParameterFromEntityForJdbc<>(entityClassMetaData);
-        this.mapper = new Mapper<>(mappingStrategyFactory.getMappingStrategy(entityClassMetaData));
+        this.entitySQLMetaData = metaDataAbstractFactory.getEntitySQLMetaData();
+        this.parameters = metaDataAbstractFactory.getParameters();
+        this.mapper = metaDataAbstractFactory.getMapper();
     }
 
 
 
     @Override
     public Optional<T> findById(Connection connection, long id) {
+        logger.info("findById sql {}", entitySQLMetaData.getSelectByIdSql());
         return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectByIdSql(), parameters.addID(new ArrayList<>(), id), mapper::makeEntity);
     }
 
     @Override
     public List<T> findAll(Connection connection) {
+        logger.info("findAll sql {}", entitySQLMetaData.getSelectByIdSql());
         return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectAllSql(), new ArrayList<>(), mapper::makeEntityList)
                 .orElse(new ArrayList<>());
     }
 
     @Override
     public long insert(Connection connection, T client) {
+        logger.info("insert sql {}", entitySQLMetaData.getSelectByIdSql());
         var result = dbExecutor.executeStatement(connection, entitySQLMetaData.getInsertSql(), parameters.getParameterFromEntityWithoutId(client));
         logger.info("inserted: {}", result);
         return result;
@@ -52,6 +54,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public void update(Connection connection, T client) {
+        logger.info("update sql {}", entitySQLMetaData.getSelectByIdSql());
         var result = dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(), parameters.getParameterFromEntityWithId(client));
         logger.info("updated: {}", result);
     }

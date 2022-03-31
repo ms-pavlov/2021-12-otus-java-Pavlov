@@ -30,10 +30,8 @@ public class HomeWork {
         var dbExecutor = new DbExecutorImpl();
 
 // Работа с клиентом
-//        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
-//        EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
-//      EntityClassMetaData<Client> зависит от  Client, DataTemplateJdbc зависит от EntityClassMetaData<Client>.
-        var dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, Client.class, ReflectionMappingStrategy::new); //реализация DataTemplate, универсальная
+        var clientMetaDataAbstractFactory = new EntityMetaDataAbstractFactory<>(Client.class, ReflectionMappingStrategy::new);
+        var dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, clientMetaDataAbstractFactory); //реализация DataTemplate, универсальная
 
 // Код дальше должен остаться
         var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
@@ -45,10 +43,8 @@ public class HomeWork {
         log.info("clientSecondSelected:{}", clientSecondSelected);
 
 // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
-//        EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>(Manager.class);
-//        EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
-//      EntityClassMetaData<Client> зависит от  Client, DataTemplateJdbc зависит от EntityClassMetaData<Client>.
-        var dataTemplateManager = new DataTemplateJdbc<>(dbExecutor, Manager.class, ReflectionMappingStrategy::new);
+        var managerMetaDataAbstractFactory = new EntityMetaDataAbstractFactory<>(Manager.class, ReflectionMappingStrategy::new);
+        var dataTemplateManager = new DataTemplateJdbc<>(dbExecutor, managerMetaDataAbstractFactory);
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));

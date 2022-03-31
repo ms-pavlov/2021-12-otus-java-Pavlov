@@ -7,14 +7,12 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
-    implementation 'com.github.nbbrd.java-sql-util:java-sql-jdbc:1.0.2'
     testImplementation ('org.junit.jupiter:junit-jupiter-api')
     testImplementation ('org.junit.jupiter:junit-jupiter-engine')
     testImplementation ('org.junit.jupiter:junit-jupiter-params')
     testImplementation ('org.assertj:assertj-core')
     testImplementation ('org.mockito:mockito-core')
     testImplementation ('org.mockito:mockito-junit-jupiter')
-    testImplementation 'org.java-sql-generator:java-sql-generator:0.2'
 }
 
 shadowJar {

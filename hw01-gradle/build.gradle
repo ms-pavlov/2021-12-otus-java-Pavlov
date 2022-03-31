@@ -9,8 +9,6 @@ targetCompatibility = JavaVersion.VERSION_17
 dependencies {
     implementation 'com.google.guava:guava'
     implementation 'com.ibm.icu:icu4j'
-    implementation 'com.github.nbbrd.java-sql-util:java-sql-jdbc:1.0.2'
-    testImplementation 'org.java-sql-generator:java-sql-generator:0.2'
 }
 
 shadowJar {

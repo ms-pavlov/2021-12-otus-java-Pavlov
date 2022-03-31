@@ -8,10 +8,8 @@ targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     implementation 'org.assertj:assertj-core'
-    implementation 'com.github.nbbrd.java-sql-util:java-sql-jdbc:1.0.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.assertj:assertj-core'
-    testImplementation 'org.java-sql-generator:java-sql-generator:0.2'
 }
 
 shadowJar {

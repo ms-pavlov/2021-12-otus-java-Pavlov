@@ -12,7 +12,6 @@ dependencies {
     implementation 'javax.json:javax.json-api'
     implementation 'org.glassfish:javax.json'
     implementation 'com.google.protobuf:protobuf-java-util'
-    implementation 'com.github.nbbrd.java-sql-util:java-sql-jdbc:1.0.2'
 
     testImplementation ('org.junit.jupiter:junit-jupiter-api')
     testImplementation ('org.junit.jupiter:junit-jupiter-engine')
@@ -20,7 +19,6 @@ dependencies {
     testImplementation ('org.assertj:assertj-core')
     testImplementation ('org.mockito:mockito-core')
     testImplementation ('org.mockito:mockito-junit-jupiter')
-    testImplementation 'org.java-sql-generator:java-sql-generator:0.2'
 }
 
 test {

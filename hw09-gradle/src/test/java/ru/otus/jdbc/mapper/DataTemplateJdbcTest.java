@@ -41,14 +41,10 @@ class DataTemplateJdbcTest {
         var dbExecutor = new DbExecutorImpl();
         EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
-        this.dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, Client.class, ReflectionMappingStrategy::new);
+        var clientMetaDataAbstractFactory = new EntityMetaDataAbstractFactory<>(Client.class, ReflectionMappingStrategy::new);
+        this.dataTemplateClient = new DataTemplateJdbc<>(dbExecutor, clientMetaDataAbstractFactory);
 
         this.dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
-    }
-
-    @AfterEach
-    void after() throws SQLException {
-        dataSource.getConnection().close();
     }
 
     private static void flywayMigrations(DataSource dataSource) {
@@ -79,6 +75,7 @@ class DataTemplateJdbcTest {
         var client = dbServiceClient.saveClient(new Client("dbServiceSecond"));
 
         var list = transactionRunner.doInTransaction(connection -> {
+            log.info("try findAll");
             var clientOptional = dataTemplateClient.findAll(connection);
             log.info("findAll: {}", clientOptional);
             return clientOptional;

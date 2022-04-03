@@ -27,14 +27,13 @@ class DataTemplateJdbcTest {
     private static final String PASSWORD = "";
     private static final Logger log = LoggerFactory.getLogger(DataTemplateJdbcTest.class);
 
-    TransactionRunnerJdbc transactionRunner;
-    DataTemplateJdbc<Client> dataTemplateClient;
-    DbServiceClientImpl dbServiceClient;
-    DriverManagerDataSource dataSource;
+    private TransactionRunnerJdbc transactionRunner;
+    private DataTemplateJdbc<Client> dataTemplateClient;
+    private DbServiceClientImpl dbServiceClient;
 
     @BeforeEach
     void before() {
-        this.dataSource = new DriverManagerDataSource(URL, USER, PASSWORD);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USER, PASSWORD);
         flywayMigrations(dataSource);
         this.transactionRunner = new TransactionRunnerJdbc(dataSource);
 

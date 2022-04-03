@@ -15,6 +15,9 @@ shadowJar {
     }
 }
 
+dependencies {
+}
+
 tasks.build.dependsOn tasks.shadowJar
 
 tasks.withType(JavaCompile) {

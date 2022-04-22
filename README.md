@@ -34,3 +34,6 @@ hw08-gradle -
 
 hw09-gradle -
 Самодельный ORM
+
+hw10-gradle -
+JPQL. ДЗ

@@ -20,16 +20,18 @@ public class DbServiceClientWithCacheImpl extends DbServiceClientImpl {
     public Optional<Client> getClient(long id) {
         return Optional.ofNullable(
                 Optional.ofNullable(cache.get(id))
-                        .orElseGet(() -> {
-                            var response = super.getClient(id);
-                            response.ifPresent(client -> cache.put(id, client));
-                            return response.orElse(null);
-                        }));
+                        .orElseGet(() -> getClientFromDB(id)));
+    }
+
+    private Client getClientFromDB(long id) {
+        var response = super.getClient(id);
+        response.ifPresent(client -> cache.put(id, client));
+        return response.orElse(null);
     }
 
     @Override
     public Client saveClient(Client client) {
-        var result  = super.saveClient(client);
+        var result = super.saveClient(client);
         cache.put(result.getId(), result);
         return result;
     }

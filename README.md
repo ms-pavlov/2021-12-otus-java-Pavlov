@@ -37,3 +37,6 @@ hw09-gradle -
 
 hw10-gradle -
 JPQL. ДЗ
+
+hw11-gradle -
+Типы ссылок. Кэширование. ДЗ

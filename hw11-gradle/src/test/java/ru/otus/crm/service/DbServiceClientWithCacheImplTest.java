@@ -1,4 +1,4 @@
-package ru.otus.jdbc.crm.service;
+package ru.otus.crm.service;
 
 import org.flywaydb.core.Flyway;
 import org.h2.util.MathUtils;
@@ -13,6 +13,8 @@ import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.jdbc.crm.datasource.DriverManagerDataSource;
 import ru.otus.jdbc.crm.model.Client;
+import ru.otus.jdbc.crm.service.DbServiceClientImpl;
+import ru.otus.jdbc.crm.service.DbServiceClientWithCacheImpl;
 import ru.otus.jdbc.mapper.*;
 import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 

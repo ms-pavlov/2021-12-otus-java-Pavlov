@@ -5,11 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
-import ru.otus.crm.datasource.DriverManagerDataSource;
-import ru.otus.crm.model.Client;
-import ru.otus.crm.model.Manager;
-import ru.otus.crm.service.DbServiceClientImpl;
-import ru.otus.crm.service.DbServiceManagerImpl;
+import ru.otus.jdbc.crm.datasource.DriverManagerDataSource;
+import ru.otus.jdbc.crm.model.Client;
+import ru.otus.jdbc.crm.model.Manager;
+import ru.otus.jdbc.crm.service.DbServiceClientImpl;
+import ru.otus.jdbc.crm.service.DbServiceManagerImpl;
 import ru.otus.jdbc.mapper.*;
 import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 

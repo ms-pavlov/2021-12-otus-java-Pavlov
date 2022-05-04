@@ -1,21 +1,19 @@
 package ru.otus.jdbc.mapper;
 
 import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
-import ru.otus.crm.datasource.DriverManagerDataSource;
-import ru.otus.crm.model.Client;
-import ru.otus.crm.service.DbServiceClientImpl;
+import ru.otus.jdbc.crm.datasource.DriverManagerDataSource;
+import ru.otus.jdbc.crm.model.Client;
+import ru.otus.jdbc.crm.service.DbServiceClientImpl;
 import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import javax.sql.DataSource;
 
-import java.sql.SQLException;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;

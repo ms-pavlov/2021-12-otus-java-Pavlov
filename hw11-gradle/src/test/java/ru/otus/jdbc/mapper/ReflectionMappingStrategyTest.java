@@ -1,7 +1,7 @@
 package ru.otus.jdbc.mapper;
 
 import org.junit.jupiter.api.Test;
-import ru.otus.jdbc.crm.model.Client;
+import ru.otus.crm.model.Client;
 import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import java.sql.ResultSet;

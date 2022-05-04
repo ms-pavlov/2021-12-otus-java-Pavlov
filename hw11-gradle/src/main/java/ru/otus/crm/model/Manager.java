@@ -1,4 +1,4 @@
-package ru.otus.jdbc.crm.model;
+package ru.otus.crm.model;
 
 import ru.otus.jdbc.mapper.annotations.Id;
 

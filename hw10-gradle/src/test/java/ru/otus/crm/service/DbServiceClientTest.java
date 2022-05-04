@@ -1,4 +1,4 @@
-package ru.otus.jdbc.crm.service;
+package ru.otus.crm.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,8 +23,8 @@ class DbServiceClientTest extends AbstractHibernateTest {
 
         //then
         var loadedSavedClient = dbServiceClient.getClient(savedClient.getId());
-        Assertions.assertThat(loadedSavedClient).isPresent();
-        Assertions.assertThat(loadedSavedClient.get()).usingRecursiveComparison().isEqualTo(savedClient);
+        assertThat(loadedSavedClient).isPresent();
+        assertThat(loadedSavedClient.get()).usingRecursiveComparison().isEqualTo(savedClient);
 
         //when
         var savedClientUpdated = loadedSavedClient.get().clone();
@@ -33,15 +33,15 @@ class DbServiceClientTest extends AbstractHibernateTest {
 
         //then
         var loadedClient = dbServiceClient.getClient(savedClientUpdated.getId());
-        Assertions.assertThat(loadedClient).isPresent();
-        Assertions.assertThat(loadedClient.get()).usingRecursiveComparison().isEqualTo(savedClientUpdated);
+        assertThat(loadedClient).isPresent();
+        assertThat(loadedClient.get()).usingRecursiveComparison().isEqualTo(savedClientUpdated);
         System.out.println(loadedClient);
 
         //when
         var clientList = dbServiceClient.findAll();
 
         //then
-        Assertions.assertThat(clientList.size()).isEqualTo(1);
-        Assertions.assertThat(clientList.get(0)).usingRecursiveComparison().isEqualTo(loadedClient.get());
+        assertThat(clientList.size()).isEqualTo(1);
+        assertThat(clientList.get(0)).usingRecursiveComparison().isEqualTo(loadedClient.get());
     }
 }

@@ -5,10 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.WebApplication;
@@ -57,20 +54,21 @@ class WebServerSimpleTest {
     private static WebServer webServer;
     private static HttpClient http;
 
-    @BeforeAll
-    static void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         http = HttpClient.newHttpClient();
 
         DataConfig dataConfig = mock(DataConfig.class);
         UserDao userDao = mock(UserDao.class);
 
         given(userDao.findById(DEFAULT_USER_ID)).willReturn(Optional.of(DEFAULT_USER));
+        given(userDao.findRandomUser()).willReturn(Optional.of(DEFAULT_USER));
         given(dataConfig.getUserDao()).willReturn(userDao);
 
         WebServerConfig serverConfig = new WebServerConfigImpl(webServerConfig -> initServlets(webServerConfig, dataConfig),
                 (webServerConfig) -> initSecurity(webServerConfig, dataConfig));
 
-        gson = new GsonBuilder().serializeNulls().create();
+        gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         webServer = new WebServerSimple(WEB_SERVER_PORT, serverConfig);
         webServer.start();
     }
@@ -94,8 +92,8 @@ class WebServerSimpleTest {
         webServerConfig.putServlet("/api/user/*", new UsersApiServlet(dataConfig.getUserDao(), gson));
     }
 
-    @AfterAll
-    static void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() throws Exception {
         webServer.stop();
     }
 

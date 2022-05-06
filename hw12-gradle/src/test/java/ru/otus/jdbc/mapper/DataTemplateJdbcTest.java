@@ -19,8 +19,8 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class DataTemplateJdbcTest {
-    private static final String URL = "jdbc:h2:~/test";
+public class DataTemplateJdbcTest {
+    private static final String URL = "jdbc:h2:mem:test";
     private static final String USER = "sa";
     private static final String PASSWORD = "";
     private static final Logger log = LoggerFactory.getLogger(DataTemplateJdbcTest.class);

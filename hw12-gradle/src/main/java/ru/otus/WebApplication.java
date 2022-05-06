@@ -11,13 +11,11 @@ import ru.otus.config.DataConfig;
 import ru.otus.config.DataConfigImpl;
 import ru.otus.config.WebServerConfig;
 import ru.otus.config.WebServerConfigImpl;
+import ru.otus.jdbc.crm.model.Client;
 import ru.otus.web.server.WebServer;
 import ru.otus.web.server.WebServerSimple;
 import ru.otus.web.services.UserAuthServiceImpl;
-import ru.otus.web.servlet.AuthorizationFilter;
-import ru.otus.web.servlet.CustomizeLoginServlet;
-import ru.otus.web.servlet.UsersApiServlet;
-import ru.otus.web.servlet.UsersServlet;
+import ru.otus.web.servlet.*;
 
 public class WebApplication {
     private static final String URL = "jdbc:postgresql://localhost:5430/demoDB";
@@ -35,6 +33,7 @@ public class WebApplication {
 
         WebServer server = new WebServerSimple(WEB_SERVER_PORT, serverConfig);
 
+        dataConfig.getDbClientService().save(new Client("Vasa"));
         server.start();
         server.join();
     }
@@ -51,5 +50,6 @@ public class WebApplication {
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         webServerConfig.putServlet("/users", new UsersServlet(webServerConfig.getTemplateProcessor(), dataConfig.getUserDao()));
         webServerConfig.putServlet("/api/user/*", new UsersApiServlet(dataConfig.getUserDao(), gson));
+        webServerConfig.putServlet("/clients", new ClientServlet(webServerConfig, dataConfig));
     }
 }

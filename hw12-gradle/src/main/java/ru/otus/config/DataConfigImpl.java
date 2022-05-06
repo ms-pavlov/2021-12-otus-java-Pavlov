@@ -5,8 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.WebApplication;
 import ru.otus.jdbc.crm.datasource.DriverManagerDataSource;
-import ru.otus.jdbc.crm.service.DBManager;
+import ru.otus.jdbc.crm.model.Client;
+import ru.otus.jdbc.crm.service.DBService;
 import ru.otus.jdbc.crm.service.JdbcDBManager;
+import ru.otus.jdbc.crm.service.JdbcDBService;
+import ru.otus.jdbc.mapper.EntityMetaDataAbstractFactory;
+import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 import ru.otus.web.dao.InMemoryUserDao;
 import ru.otus.web.dao.UserDao;
 
@@ -17,19 +21,19 @@ public class DataConfigImpl implements DataConfig {
 
     private static final Logger log = LoggerFactory.getLogger(WebApplication.class);
 
-    private final DBManager dbClientManager;
+    private final DBService<Client> dbClientService;
     private final UserDao userDao;
 
     public DataConfigImpl(String url, String user, String password) {
         var dataSource = new DriverManagerDataSource(url, user, password);
         flywayMigrations(dataSource);
-        this.dbClientManager = new  JdbcDBManager(dataSource);
+        this.dbClientService = new JdbcDBService<>(new EntityMetaDataAbstractFactory<>(Client.class, ReflectionMappingStrategy::new), new JdbcDBManager(dataSource));
         this.userDao = new InMemoryUserDao();
     }
 
     @Override
-    public DBManager getDbClientManager() {
-        return dbClientManager;
+    public DBService<Client> getDbClientService() {
+        return dbClientService;
     }
 
     @Override

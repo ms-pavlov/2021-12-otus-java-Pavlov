@@ -13,6 +13,9 @@ import ru.otus.jdbc.mapper.strategy.ReflectionMappingStrategy;
 
 import javax.sql.DataSource;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JdbcDBServiceTest {
@@ -25,10 +28,13 @@ class JdbcDBServiceTest {
 
     @BeforeEach
     void before() {
+        log.debug("init db");
         var dbManager = initDBManager();
         var clientMetaDataAbstractFactory = new EntityMetaDataAbstractFactory<>(Client.class, ReflectionMappingStrategy::new);
         service = new JdbcDBService<>(clientMetaDataAbstractFactory, dbManager);
     }
+
+
 
 
     @Test
@@ -52,12 +58,17 @@ class JdbcDBServiceTest {
 
     @Test
     void findAll() {
-        for(long i = 0; i< COUNT; i++ ) {
-            service.save(new Client("Client" + (i+1)));
+        var begin = service.findAll().size() + 1;
+        for(long i = begin; i< COUNT + 1; i++ ) {
+            service.save(new Client("Client" + (i)));
         }
         var clients = service.findAll();
-        clients.forEach(client -> assertEquals("Client" + client.getId(), client.getName()));
-        assertEquals(COUNT, clients.size());
+        clients.forEach(client -> {
+            if (client.getId() > begin) {
+                assertEquals("Client" + client.getId(), client.getName());
+            }
+        });
+        assertEquals(COUNT , clients.size());
     }
 
     private static DBManager initDBManager() {

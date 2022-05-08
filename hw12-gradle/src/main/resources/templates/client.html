@@ -7,19 +7,17 @@
 <body>
 <h4>Список клиентов</h4>
 </body>
-${clients}
-<table style="width: 400px">
-    <thead>
-    <tr>
-        <td style="width: 50px">Id</td>
-        <td style="width: 150px">Имя</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
+    <form action="/api/clients" method="post">
+        <label>
+            Имя клиента:<br/>
+            <input type="text" name="name" value="user7">
+        </label>
+        <br/>
+        <br/>
+        <input type="submit" value="Добавить клиента">
+    </form>
+    <div>
+        <h4> Список клиентов</h4>
+        ${clients}
+    </div>
 </html>

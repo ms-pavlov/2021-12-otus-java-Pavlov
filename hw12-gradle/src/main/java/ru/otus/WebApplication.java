@@ -33,7 +33,6 @@ public class WebApplication {
 
         WebServer server = new WebServerSimple(WEB_SERVER_PORT, serverConfig);
 
-        dataConfig.getDbClientService().save(new Client("Vasa"));
         server.start();
         server.join();
     }
@@ -47,9 +46,9 @@ public class WebApplication {
     }
 
     private static void initServlets(WebServerConfig webServerConfig, DataConfig dataConfig) {
-        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         webServerConfig.putServlet("/users", new UsersServlet(webServerConfig.getTemplateProcessor(), dataConfig.getUserDao()));
-        webServerConfig.putServlet("/api/user/*", new UsersApiServlet(dataConfig.getUserDao(), gson));
+        webServerConfig.putServlet("/api/user/*", new UsersApiServlet(dataConfig.getUserDao(), dataConfig.getGson()));
         webServerConfig.putServlet("/clients", new ClientServlet(webServerConfig, dataConfig));
+        webServerConfig.putServlet("/api/clients/*", new ClientsApiServlet(dataConfig));
     }
 }

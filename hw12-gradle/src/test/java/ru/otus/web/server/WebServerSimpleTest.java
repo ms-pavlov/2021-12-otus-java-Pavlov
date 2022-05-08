@@ -17,10 +17,7 @@ import ru.otus.web.model.User;
 import ru.otus.web.services.TemplateProcessor;
 import ru.otus.web.services.UserAuthService;
 import ru.otus.web.services.UserAuthServiceImpl;
-import ru.otus.web.servlet.AuthorizationFilter;
-import ru.otus.web.servlet.CustomizeLoginServlet;
-import ru.otus.web.servlet.UsersApiServlet;
-import ru.otus.web.servlet.UsersServlet;
+import ru.otus.web.servlet.*;
 
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
@@ -64,11 +61,13 @@ class WebServerSimpleTest {
         given(userDao.findById(DEFAULT_USER_ID)).willReturn(Optional.of(DEFAULT_USER));
         given(userDao.findRandomUser()).willReturn(Optional.of(DEFAULT_USER));
         given(dataConfig.getUserDao()).willReturn(userDao);
+        given(dataConfig.getGson()).willReturn(new GsonBuilder().serializeNulls().setPrettyPrinting().create());
+
 
         WebServerConfig serverConfig = new WebServerConfigImpl(webServerConfig -> initServlets(webServerConfig, dataConfig),
                 (webServerConfig) -> initSecurity(webServerConfig, dataConfig));
 
-        gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+        gson = dataConfig.getGson();
         webServer = new WebServerSimple(WEB_SERVER_PORT, serverConfig);
         webServer.start();
     }
@@ -80,16 +79,17 @@ class WebServerSimpleTest {
         given(userAuthService.authenticate(INCORRECT_USER_LOGIN, DEFAULT_USER_PASSWORD)).willReturn(false);
 
         webServerConfig.getServletContextHandler()
-                .addServlet(new ServletHolder(new CustomizeLoginServlet(webServerConfig, userAuthService)), "/login");
+                .addServlet(new ServletHolder(new LoginServlet(webServerConfig.getTemplateProcessor(), userAuthService)), "/login");
         AuthorizationFilter authorizationFilter = new AuthorizationFilter();
         webServerConfig.getPaths().forEach(path -> webServerConfig.getServletContextHandler().addFilter(new FilterHolder(authorizationFilter), path, null));
         return webServerConfig.getServletContextHandler();
     }
 
     private static void initServlets(WebServerConfig webServerConfig, DataConfig dataConfig) {
-        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         webServerConfig.putServlet("/users", new UsersServlet(webServerConfig.getTemplateProcessor(), dataConfig.getUserDao()));
         webServerConfig.putServlet("/api/user/*", new UsersApiServlet(dataConfig.getUserDao(), gson));
+        webServerConfig.putServlet("/clients", new ClientServlet(webServerConfig, dataConfig));
+        webServerConfig.putServlet("/api/clients/*", new ClientsApiServlet(dataConfig));
     }
 
     @AfterEach

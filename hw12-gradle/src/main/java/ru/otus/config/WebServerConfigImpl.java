@@ -13,13 +13,14 @@ import ru.otus.web.services.TemplateProcessorImpl;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class WebServerConfigImpl implements WebServerConfig {
-    //todo перенести настройки в ресурсы
-    private static final String START_PAGE_NAME = "index.html";
-    private static final String COMMON_RESOURCES_DIR = "static";
-    private static final String TEMPLATES_DIR = "/templates/";
+    private static final String APPLICATION_PROPERTIES = "application";
+    private static final String START_PAGE_NAME =  ResourceBundle.getBundle(APPLICATION_PROPERTIES).getString("web.startPageName");
+    private static final String COMMON_RESOURCES_DIR = ResourceBundle.getBundle(APPLICATION_PROPERTIES).getString("web.commonResourcesDir");
+    private static final String TEMPLATES_DIR = ResourceBundle.getBundle(APPLICATION_PROPERTIES).getString("web.templatesDir");
 
     private final Map<String, ServletHolder> servletHolders = new HashMap<>();
     private final TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);

@@ -22,13 +22,13 @@ public class ClientServlet extends HttpServlet {
     private static final String CLIENT_PAGE_TEMPLATE = "client.html";
     private static final String TEMPLATE_ATTR_CLIENTS = "clients";
 
-    private final DBService<Client> clientDBService;
+    private final DataConfig data;
     private final TemplateProcessor templateProcessor;
 
     private static final Logger log = LoggerFactory.getLogger(ClientServlet.class);
 
     public ClientServlet(WebServerConfig webServerConfig, DataConfig dataConfig) {
-        this.clientDBService = dataConfig.getDbClientService();
+        this.data = dataConfig;
         this.templateProcessor = webServerConfig.getTemplateProcessor();
     }
 
@@ -36,8 +36,8 @@ public class ClientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
         log.info("Find clients data");
         Map<String, Object> paramsMap = new HashMap<>();
-        var clients = Optional.ofNullable(clientDBService.findAll());
-        clients.ifPresent(list -> paramsMap.put(TEMPLATE_ATTR_CLIENTS, list.toString()));
+        var clients = Optional.ofNullable(data.getDbClientService().findAll());
+        clients.ifPresent(list -> paramsMap.put(TEMPLATE_ATTR_CLIENTS, data.getGson().toJson(list)));
         log.info("paramsMap: {}", paramsMap);
 
         response.setContentType("text/html");

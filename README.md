@@ -40,3 +40,9 @@ JPQL. ДЗ
 
 hw11-gradle -
 Типы ссылок. Кэширование. ДЗ
+
+hw12-gradle -
+Самодельный ORM
+
+hw13-gradle -
+Dependency injection. ДЗ

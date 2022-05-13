@@ -63,6 +63,7 @@ allprojects {
             dependency("org.springdoc:springdoc-openapi-ui:${Versions.springDocOpenapiUi}")
 
             dependency("com.google.code.findbugs:jsr305:${Versions.jsr305}")
+            dependency("org.reflections:reflections:${Versions.reflections}")
         }
     }
 

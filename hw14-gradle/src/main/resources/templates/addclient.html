@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})">
+<title>Добавление клиента</title>
+<menu>
+    <a th:href="@{/}" th:text="Главная"></a>
+</menu>
+<content>
+    <div class="card">
+        <div class="card-header">
+            <h4>Добавление клиента</h4>
+        </div>
+        <div class="card-body">
+            <form action="#" th:action="@{/api/clients/}" th:object="${clientRequest}" method="post">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input class="form-control" type="text" th:name="name"/>
+                </div>
+                <div class="form-group">
+                    <label>Порядок отображения</label>
+                    <input class="form-control" type="text" th:name="orderColumn"/>
+                </div>
+                <button id="save" type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+    </div>
+</content>
+<script>
+</script>
+</html>

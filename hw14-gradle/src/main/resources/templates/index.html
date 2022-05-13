@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})">
+<title>Главная</title>
+<menu>
+    <a th:href="@{/addclient/}" th:text="Добавить"></a>
+</menu>
+<content>
+    <div class="card">
+        <div class="card-header">
+            <h4>Список клиентов</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID Клиента</th>
+                    <th>Имя</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="client: ${clients}">
+                    <td th:text="${client.id}"></td>
+                    <td th:text="${client.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</content>
+<script>
+</script>
+</html>

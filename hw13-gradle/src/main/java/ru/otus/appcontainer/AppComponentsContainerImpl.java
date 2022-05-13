@@ -62,10 +62,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private Object invokeComponent(Method method, Object component) {
         try {
             method.setAccessible(true);
-            if (method.getParameterTypes().length > 0) {
-                return method.invoke(component, prepareArguments(method.getParameterTypes()));
-            }
-            return method.invoke(component);
+            return method.invoke(component, prepareArguments(method.getParameterTypes()));
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +77,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     @Override
     public <C> C getAppComponent(Class<C> componentClass) {
         return (C) appComponents.stream()
-                .filter(o -> o.getClass().equals(componentClass) || Arrays.stream(o.getClass().getInterfaces()).toList().contains(componentClass))
+                .filter(o -> o.getClass().isAssignableFrom(componentClass) || Arrays.stream(o.getClass().getInterfaces()).toList().contains(componentClass))
                 .findAny().orElse(null);
     }
 

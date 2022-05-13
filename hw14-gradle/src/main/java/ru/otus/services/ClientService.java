@@ -25,15 +25,15 @@ public class ClientService {
 
         return clientModels.stream()
                 .sorted(Comparator.comparingInt(ClientModel::getOrder))
-                .map(ClientResponse::new).toList();
+                .map(ClientModel::toClientResponse).toList();
     }
 
     public ClientResponse create(ClientRequest clientRequest) {
         var client = clientsData.save(new ClientModel(null, clientRequest).toClient());
-        return new ClientResponse(new ClientModel(client));
+        return new ClientModel(client).toClientResponse();
     }
     public ClientResponse update(Long id, ClientRequest clientRequest) {
         var client = clientsData.save(new ClientModel(id, clientRequest).toClient());
-        return new ClientResponse(new ClientModel(client));
+        return new ClientModel(client).toClientResponse();
     }
 }

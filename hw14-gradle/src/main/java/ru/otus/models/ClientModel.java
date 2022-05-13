@@ -2,6 +2,7 @@ package ru.otus.models;
 
 import lombok.Data;
 import ru.otus.dto.request.ClientRequest;
+import ru.otus.dto.response.ClientResponse;
 import ru.otus.entities.Client;
 
 @Data
@@ -26,5 +27,8 @@ public class ClientModel {
 
     public Client toClient() {
         return new Client(this.id, this.name, this.order);
+    }
+    public ClientResponse toClientResponse() {
+        return new ClientResponse(this.id, this.name);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.otus.dto.request.ClientRequest;
 import ru.otus.dto.response.ClientResponse;
 import ru.otus.services.ClientService;
+import ru.otus.services.JdbcService;
 
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientsController {
     private static final Logger log = LoggerFactory.getLogger(ClientsController.class);
-    private final ClientService clientService;
+    private final JdbcService<ClientResponse, ClientRequest> clientService;
 
     public ClientsController(ClientService clientService) {
         this.clientService = clientService;

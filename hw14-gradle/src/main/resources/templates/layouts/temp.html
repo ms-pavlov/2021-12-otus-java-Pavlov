@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="common_header(title, menu, content, script)">
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/css/addstyle.css" type="text/css" />
+        <title th:replace="${title}">Главная</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="col-md">
+
+                    </div>
+
+                </div>
+            </header>
+            <content>
+                <div class="row">
+                    <div id="fmenu" class="col-sm col-sm-3">
+                        <div id="menu">
+                            <th:block th:replace="${menu}" />
+                        </div>
+                        <div id="filter"></div>
+                    </div>
+                    <div class="col-md">
+                        <div class="card" id="content">
+                            <th:block th:replace="${content}" />
+                        </div>
+                    </div>
+                </div>
+            </content>
+            <footer>
+                <div class="row"><div class="col-md"></div></div>
+            </footer>
+
+        </div>
+        <div id="formodal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content" id="modal-content">
+                </div>
+            </div>
+        </div>
+        <script th:replace="${script}">
+        </script>
+    </body>
+</html>

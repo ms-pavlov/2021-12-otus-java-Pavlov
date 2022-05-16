@@ -46,3 +46,9 @@ hw12-gradle -
 
 hw13-gradle -
 Dependency injection. ДЗ
+
+hw14-gradle -
+Spring Data Jdbc. ДЗ
+
+hw15-gradle -
+Executors. ДЗ

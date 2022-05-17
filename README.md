@@ -52,3 +52,6 @@ Spring Data Jdbc. ДЗ
 
 hw15-gradle -
 Executors. ДЗ
+
+hw16-gradle -
+Потокобезопасные коллекции. ДЗ

@@ -18,7 +18,9 @@ public class NumberObserver implements StreamObserver<DataMessage> {
 
     @Override
     public void onNext(DataMessage value) {
-        number.setNumber(value.getNumber());
+        synchronized (this) {
+            number.setNumber(value.getNumber());
+        }
         log.info("new value: {}", value.getNumber());
     }
 

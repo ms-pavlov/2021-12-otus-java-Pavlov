@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ru.otus.protobuf.generated;
+
+option java_multiple_files = true;
+
+message DataMessage {
+  int64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+}
+
+message Empty {}
+
+service RemoteDataSourceService {
+  rpc getData(Empty) returns (stream DataMessage);
+}

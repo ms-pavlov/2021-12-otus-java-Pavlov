@@ -5,13 +5,14 @@ package ru.otus.protobuf.generated;
 option java_multiple_files = true;
 
 message DataMessage {
-  int64 id = 1;
-  string firstName = 2;
-  string lastName = 3;
+  int64 number = 1;
 }
 
-message Empty {}
+message Interval {
+  int64 firstValue = 1;
+  int64 lastValue = 2;
+}
 
 service RemoteDataSourceService {
-  rpc getData(Empty) returns (stream DataMessage);
+  rpc getData(Interval) returns (stream DataMessage);
 }

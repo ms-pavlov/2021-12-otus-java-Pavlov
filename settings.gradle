@@ -18,4 +18,6 @@ include 'hw13-gradle'
 include 'hw14-gradle'
 include 'hw15-gradle'
 include 'hw16-gradle'
+include 'hw17-gradle'
+include 'server'
 

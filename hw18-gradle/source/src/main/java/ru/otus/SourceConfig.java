@@ -37,7 +37,7 @@ public class SourceConfig {
                     @Override
                     public Thread newThread(@NonNull Runnable task) {
                         var thread = new Thread(task);
-                        thread.setName("datasource-thread-" + threadIdGenerator.incrementAndGet());
+                        thread.setName("eventLoop-thread-" + threadIdGenerator.incrementAndGet());
                         return thread;
                     }
                 });

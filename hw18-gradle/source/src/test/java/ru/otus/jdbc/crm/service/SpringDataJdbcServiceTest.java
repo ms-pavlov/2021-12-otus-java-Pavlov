@@ -1,6 +1,5 @@
 package ru.otus.jdbc.crm.service;
 
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,16 +12,12 @@ import ru.otus.services.data.SpringDataJdbcService;
 import ru.otus.services.data.sessionmanager.TransactionManager;
 import ru.otus.services.data.sessionmanager.TransactionManagerSpring;
 
-import javax.sql.DataSource;
-
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 class SpringDataJdbcServiceTest {
     private static final String URL = "jdbc:h2:mem:test";
@@ -33,13 +28,11 @@ class SpringDataJdbcServiceTest {
     private DBService<Client> service;
     private CrudRepository<Client, Long> crudRepository;
 
-
-
     @BeforeEach
     void before() {
         this.crudRepository = (CrudRepository<Client, Long>) mock(CrudRepository.class);
 
-        Client[] list = {new Client(1L,"Vasa", 2 ), new Client("Kolya", 0 )};
+        Client[] list = {new Client(1L, "Vasa", 2), new Client("Kolya", 0)};
 
         when(crudRepository.findAll()).thenReturn(Arrays.asList(list));
         when(crudRepository.findById(1L)).thenReturn(Optional.ofNullable(list[0]));
@@ -48,11 +41,9 @@ class SpringDataJdbcServiceTest {
         service = new SpringDataJdbcService<>(transactionManager, crudRepository);
     }
 
-
-
     @Test
     void saveAndFindOne() {
-        var client  = new Client("Vasa", 0);
+        var client = new Client("Vasa", 0);
         service.save(client);
         verify(crudRepository, Mockito.times(1)).save(client);
 
@@ -71,7 +62,7 @@ class SpringDataJdbcServiceTest {
         var firstClient = clients.stream().sorted(Comparator.comparingInt(Client::getOrderColumn)).toList().get(0);
 
         assertEquals("Kolya", firstClient.getName());
-        assertEquals(COUNT , clients.size());
+        assertEquals(COUNT, clients.size());
     }
 
 }

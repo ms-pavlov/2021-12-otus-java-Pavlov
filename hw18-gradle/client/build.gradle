@@ -12,7 +12,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation('com.google.code.findbugs:jsr305')
     implementation("ch.qos.logback:logback-classic")
-    implementation('org.flywaydb:flyway-core')
     implementation('org.springframework.boot:spring-boot-starter-validation')
 
     compileOnly('org.projectlombok:lombok')
@@ -37,11 +36,11 @@ test {
 }
 
 shadowJar {
-    archiveBaseName.set('hw18-source-gradle')
+    archiveBaseName.set('hw18-client-gradle')
     archiveVersion.set('0.1')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'ru.otus.SourceApplication'
+        attributes 'Main-Class': 'ru.otus.WebApplication'
     }
 }
 

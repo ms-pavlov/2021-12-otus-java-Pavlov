@@ -2,7 +2,6 @@ package ru.otus.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.otus.dto.request.ClientRequestDto;
 import ru.otus.dto.response.ClientResponseDto;
@@ -11,9 +10,7 @@ import ru.otus.services.executers.WebCommandFactory;
 import ru.otus.services.request.WebRequest;
 import ru.otus.services.request.WebRequestFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 
 class SameNetServiceTest {

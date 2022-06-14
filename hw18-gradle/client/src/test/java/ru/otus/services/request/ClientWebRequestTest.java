@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.reactive.function.BodyInserters;
 import ru.otus.dto.request.ClientRequestDto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ClientWebRequestTest {
     private static final Logger log = LoggerFactory.getLogger(ClientWebRequestTest.class);

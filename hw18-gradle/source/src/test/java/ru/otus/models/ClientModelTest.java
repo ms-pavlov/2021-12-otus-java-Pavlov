@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.otus.dto.request.ClientRequest;
 import ru.otus.entities.Client;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClientModelTest {
 

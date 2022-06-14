@@ -29,8 +29,8 @@ public class ClientsController {
 
     @GetMapping(value = "/all/")
     public Flux<ClientResponse> findAll() {
-        return Mono.fromFuture(CompletableFuture
-                .supplyAsync(clientService::findAll, executor)).flatMapMany(clientResponses -> Flux.fromStream(clientResponses.stream()));
+        return Mono.fromFuture(CompletableFuture.supplyAsync(clientService::findAll, executor))
+                .flatMapMany(clientResponses -> Flux.fromStream(clientResponses.stream()));
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

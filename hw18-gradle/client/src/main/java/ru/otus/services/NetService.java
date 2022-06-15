@@ -3,9 +3,11 @@ package ru.otus.services;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 public interface NetService<R, Q> {
 
-    Flux<R> findAll();
+    Flux<List<R>> findAll();
 
     Mono<R> create(Q request);
 

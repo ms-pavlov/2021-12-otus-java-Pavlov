@@ -10,6 +10,8 @@ import ru.otus.controllers.ClientController;
 import ru.otus.services.executers.WebCommandFactory;
 import ru.otus.services.request.WebRequestFactory;
 
+import java.util.List;
+
 public class SameNetService<R, Q> implements NetService<R, Q> {
     private static final Logger log = LoggerFactory.getLogger(ClientController.class);
     private final WebClient client;
@@ -25,7 +27,7 @@ public class SameNetService<R, Q> implements NetService<R, Q> {
     }
 
     @Override
-    public Flux<R> findAll() {
+    public Flux<List<R>> findAll() {
         return commandFactory.prepGet()
                 .execute(client, requestFactory.prepGetRequest())
                 .bodyToFlux(new ParameterizedTypeReference<>() {

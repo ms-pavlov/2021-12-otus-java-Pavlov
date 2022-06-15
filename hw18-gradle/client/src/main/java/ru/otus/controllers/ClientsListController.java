@@ -28,14 +28,15 @@ public class ClientsListController {
                                  ClientService clientService) {
         this.template = template;
         this.clientService = clientService;
+        broadcastClientsList();
     }
 
-    @Scheduled
+
     public void broadcastClientsList() {
         log.info("broadcastClientsList start");
-        var responseFlux = clientService.findAll()
-                .doOnNext(clients -> template.convertAndSend(TOPIC, clients))
-                .doOnNext(clients -> log.info("clients{}", clients));
+        var responseFlux = clientService.findAll().subscribe(clients -> log.info("clients{}", clients));
+//                .doOnNext(clients -> template.convertAndSend(TOPIC, clients))
+//                .doOnNext(clients -> log.info("clients{}", clients));
     }
 
 }

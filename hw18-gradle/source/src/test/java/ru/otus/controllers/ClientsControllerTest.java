@@ -1,5 +1,7 @@
 package ru.otus.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -7,20 +9,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import reactor.core.scheduler.Scheduler;
 import ru.otus.dto.request.ClientRequestDto;
 import ru.otus.dto.response.ClientResponseDto;
 import ru.otus.services.ClientService;
 
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,22 +44,29 @@ class ClientsControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    private Scheduler timer;
+
     @BeforeEach
     void setUp() {
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        this.controller = new ClientsController(clientService, executor);
+        this.controller = new ClientsController(clientService, executor, timer);
     }
 
     @Test
     void findAll() {
         when(clientService.findAll()).thenReturn(List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2));
 
-        var clients = controller.findAll().collectList().block();
+        var result = controller.findAll()
+                .take(2)
+                .doOnNext(clients -> log.info("result {}", clients))
+                .collectList()
+                .block();
 
-        assertNotNull(clients);
-        assertEquals(2, clients.size());
-        assertEquals(CLIENT_RESPONSE1, clients.get(0));
-        assertEquals(CLIENT_RESPONSE2, clients.get(1));
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertTrue(result.get(0).contains(CLIENT_RESPONSE1));
+        assertTrue(result.get(0).contains(CLIENT_RESPONSE2));
     }
 
     @Test
@@ -70,34 +82,24 @@ class ClientsControllerTest {
     }
 
     @Test
-    void findAllWebTest() {
-        when(clientService.findAll()).thenReturn(List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2));
+    void findAllWebTest() throws JsonProcessingException {
+        var clients =List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2);
+        when(clientService.findAll()).thenReturn(clients);
 
-        List<Thread> threads = new ArrayList<>();
-
-        for (var i = 0; i < 100; i++) {
-            var thread = new Thread(this::execute);
-            thread.start();
-            threads.add(thread);
-        }
-        for (var thread : threads) {
-            assertDoesNotThrow(() -> thread.join());
-        }
-    }
-
-    private void execute() {
         log.info("request start");
         var result = get("/api/clients/all/")
                 .exchange()
-                .expectBodyList(ClientResponseDto.class)
-                .hasSize(2)
-                .returnResult()
-                .getResponseBody();
-        log.info("response {}", result);
+                .expectStatus().isOk()
+                .returnResult(String.class)
+                .getResponseBody()
+                .take(1)
+                .collectList()
+                .block();
 
         assertNotNull(result);
-        assertTrue(result.contains(CLIENT_RESPONSE1));
-        assertTrue(result.contains(CLIENT_RESPONSE2));
+        assertEquals(1, result.size());
+        ObjectMapper mapper = new ObjectMapper();
+        assertEquals(mapper.writeValueAsString(clients), result.get(0));
     }
 
     @Test
@@ -137,19 +139,19 @@ class ClientsControllerTest {
     private WebTestClient.RequestHeadersSpec<?> get(String url) {
         return webTestClient.get()
                 .uri(url)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_NDJSON);
     }
 
     private WebTestClient.RequestBodySpec post(String url) {
         return webTestClient.post()
                 .uri(url)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_NDJSON);
     }
 
     private WebTestClient.RequestBodySpec put(String url) {
         return webTestClient.put()
                 .uri(url)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_NDJSON);
     }
 
 }

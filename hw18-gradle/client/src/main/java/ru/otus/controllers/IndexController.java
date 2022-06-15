@@ -10,7 +10,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String showMainPage(Model model) {
-        return "clients";
+        return "index";
     }
 
     @RequestMapping("/create")

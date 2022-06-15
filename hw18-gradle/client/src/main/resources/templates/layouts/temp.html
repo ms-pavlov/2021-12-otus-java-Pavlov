@@ -2,9 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       th:fragment="common_header(title, menu, content, script)">
     <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/css/addstyle.css" type="text/css" />
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="/app.js"></script>
         <title th:replace="${title}">Главная</title>
     </head>
-    <body>
+    <body onload="getClientsList();">
         <div class="container">
             <header>
                 <div class="row">

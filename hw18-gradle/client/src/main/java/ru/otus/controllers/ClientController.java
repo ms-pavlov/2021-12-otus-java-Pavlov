@@ -15,7 +15,7 @@ import ru.otus.services.ClientService;
 
 @Controller
 public class ClientController {
-    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientController.class);
 
     private final ClientService clientService;
 
@@ -26,6 +26,7 @@ public class ClientController {
     @MessageMapping("/clients/create")
     @SendTo("/topic/clients/create")
     public Mono<ClientResponseDto> create(ClientRequestDto request) {
+        log.info("request {}", request);
         return clientService.create(request);
     }
 

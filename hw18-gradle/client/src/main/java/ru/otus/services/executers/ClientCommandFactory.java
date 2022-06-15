@@ -11,7 +11,7 @@ public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto>
     public WebCommand<ClientRequestDto> prepGet() {
         return (client, webResponse) -> client.get()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_NDJSON)
                 .retrieve();
     }
 
@@ -19,7 +19,7 @@ public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto>
     public WebCommand<ClientRequestDto> prepPost() {
         return (client, webResponse) -> client.post()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_NDJSON)
                 .body(webResponse.getBodyInserter())
                 .retrieve();
     }
@@ -28,7 +28,7 @@ public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto>
     public WebCommand<ClientRequestDto> prepPut() {
         return (client, webResponse) -> client.put()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_NDJSON)
                 .body(webResponse.getBodyInserter())
                 .retrieve();
     }

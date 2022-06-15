@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})">
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org">
 <title>Добавление клиента</title>
 <menu>
     <a th:href="@{/}" th:text="Главная"></a>
 </menu>
 <content>
     <div class="card">
+        <div class="col-1">
+            <button id="connect" class="btn btn-default" onclick="connect()">Connect</button>
+        </div>
+        <div class="col-1">
+            <button id="disconnect" class="btn btn-default" onclick="disconnect()" disabled="disabled">Disconnect
+            </button>
+        </div>
+        <div class="col-8">
+        </div>
+    </div>
+    <div class="card">
         <div class="card-header">
             <h4>Добавление клиента</h4>
         </div>
         <div class="card-body">
-            <form action="#" th:action="@{/api/clients/}" th:object="${clientRequest}" method="post">
+            <div class="info" id="info"></div>
+            <form onsubmit="create()" th:object="${clientRequest}" id="form" action="javascript:void(0);">
                 <div class="form-group">
                     <label>Имя</label>
-                    <input class="form-control" type="text" th:name="name"/>
+                    <input class="form-control" type="text" th:name="name" id="name"/>
                 </div>
                 <div class="form-group">
                     <label>Порядок отображения</label>
-                    <input class="form-control" type="text" th:name="orderColumn"/>
+                    <input class="form-control" type="text" th:name="orderColumn" id="orderColumn"/>
                 </div>
                 <button id="save" type="submit" class="btn">Добавить</button>
             </form>
@@ -26,5 +39,9 @@
     </div>
 </content>
 <script>
+    function getClientsList() {
+        connect();
+    }
+
 </script>
 </html>

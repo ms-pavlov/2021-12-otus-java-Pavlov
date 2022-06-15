@@ -1,22 +1,23 @@
-package ru.otus;
+package ru.otus.config;
 
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.embedded.netty.NettyReactiveWebServerFactory;
 import org.springframework.boot.web.reactive.server.ReactiveWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorResourceFactory;
-import org.springframework.lang.NonNull;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Configuration
 public class ClientConfig {
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final static int EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE = 2;
     private final static int DATA_SOURCE_THREAD_POOL_DEFAULT_SIZE = 4;
     private final int webServiceEventLoopThreadPoolSize;
@@ -52,17 +53,7 @@ public class ClientConfig {
     }
 
     private NioEventLoopGroup prepNioEventLoopGroup(int poolSize, String threadsName) {
-        return new NioEventLoopGroup(poolSize,
-                new ThreadFactory() {
-                    private final AtomicLong threadIdGenerator = new AtomicLong(0);
-
-                    @Override
-                    public Thread newThread(@NonNull Runnable task) {
-                        var thread = new Thread(task);
-                        thread.setName(threadsName + threadIdGenerator.incrementAndGet());
-                        return thread;
-                    }
-                });
+        return new NioEventLoopGroup(poolSize, new SimplerThreadFactory(threadsName));
     }
 
     @Bean
@@ -72,6 +63,14 @@ public class ClientConfig {
 
     @Bean
     public ExecutorService getDataSourceExecutor() {
-        return Executors.newFixedThreadPool(dataSourceExecutorThreadPoolSize);
+        return Executors.newFixedThreadPool(dataSourceExecutorThreadPoolSize, new SimplerThreadFactory("executor-"));
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+        return builder -> {
+            builder.simpleDateFormat(DATE_TIME_FORMAT);
+            builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
+        };
     }
 }

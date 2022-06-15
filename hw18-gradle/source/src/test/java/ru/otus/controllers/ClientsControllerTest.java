@@ -11,10 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import ru.otus.dto.request.ClientRequest;
-import ru.otus.dto.response.ClientResponse;
+import ru.otus.dto.request.ClientRequestDto;
+import ru.otus.dto.response.ClientResponseDto;
 import ru.otus.services.ClientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,10 +27,10 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class ClientsControllerTest {
     private static final Logger log = LoggerFactory.getLogger(ClientsControllerTest.class);
-    private static final ClientRequest CLIENT_1 = new ClientRequest("Vasya", 2);
-    private static final ClientRequest CLIENT_2 = new ClientRequest("Kolya", 1);
-    private static final ClientResponse CLIENT_RESPONSE1 = new ClientResponse(1L, "Vasya");
-    private static final ClientResponse CLIENT_RESPONSE2 = new ClientResponse(2L, "Kolya");
+    private static final ClientRequestDto CLIENT_1 = new ClientRequestDto("Vasa", 2);
+    private static final ClientRequestDto CLIENT_2 = new ClientRequestDto("Kolya", 1);
+    private static final ClientResponseDto CLIENT_RESPONSE1 = new ClientResponseDto(1L, "Vasa");
+    private static final ClientResponseDto CLIENT_RESPONSE2 = new ClientResponseDto(2L, "Kolya");
     private ClientsController controller;
 
     @MockBean
@@ -58,13 +59,13 @@ class ClientsControllerTest {
 
     @Test
     void create() {
-        when(clientService.create(CLIENT_1)).thenReturn(new ClientResponse(1L, "Vasya"));
+        when(clientService.create(CLIENT_1)).thenReturn(CLIENT_RESPONSE1);
         assertEquals(CLIENT_RESPONSE1, controller.create(CLIENT_1).block());
     }
 
     @Test
     void update() {
-        when(clientService.update(1L, CLIENT_1)).thenReturn(new ClientResponse(1L, "Vasya"));
+        when(clientService.update(1L, CLIENT_1)).thenReturn(CLIENT_RESPONSE1);
         assertEquals(CLIENT_RESPONSE1, controller.update(1L, CLIENT_1).block());
     }
 
@@ -72,12 +73,27 @@ class ClientsControllerTest {
     void findAllWebTest() {
         when(clientService.findAll()).thenReturn(List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2));
 
+        List<Thread> threads = new ArrayList<>();
+
+        for (var i = 0; i < 100; i++) {
+            var thread = new Thread(this::execute);
+            thread.start();
+            threads.add(thread);
+        }
+        for (var thread : threads) {
+            assertDoesNotThrow(() -> thread.join());
+        }
+    }
+
+    private void execute() {
+        log.info("request start");
         var result = get("/api/clients/all/")
                 .exchange()
-                .expectBodyList(ClientResponse.class)
+                .expectBodyList(ClientResponseDto.class)
                 .hasSize(2)
                 .returnResult()
                 .getResponseBody();
+        log.info("response {}", result);
 
         assertNotNull(result);
         assertTrue(result.contains(CLIENT_RESPONSE1));
@@ -91,7 +107,7 @@ class ClientsControllerTest {
         var result = post("/api/clients/")
                 .body(BodyInserters.fromValue(CLIENT_2))
                 .exchange()
-                .expectBody(ClientResponse.class)
+                .expectBody(ClientResponseDto.class)
                 .returnResult()
                 .getResponseBody();
 
@@ -108,7 +124,7 @@ class ClientsControllerTest {
         var result = put("/api/clients/1/")
                 .body(BodyInserters.fromValue(CLIENT_2))
                 .exchange()
-                .expectBody(ClientResponse.class)
+                .expectBody(ClientResponseDto.class)
                 .returnResult()
                 .getResponseBody();
 

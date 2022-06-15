@@ -1,8 +1,8 @@
 package ru.otus.models;
 
 import lombok.Data;
-import ru.otus.dto.request.ClientRequest;
-import ru.otus.dto.response.ClientResponse;
+import ru.otus.dto.request.ClientRequestDto;
+import ru.otus.dto.response.ClientResponseDto;
 import ru.otus.entities.Client;
 
 @Data
@@ -21,14 +21,14 @@ public class ClientModel {
         this(client.getId(), client.getName(), client.getOrderColumn());
     }
 
-    public ClientModel(Long id, ClientRequest client) {
+    public ClientModel(Long id, ClientRequestDto client) {
         this(id, client.getName(), client.getOrderColumn());
     }
 
     public Client toClient() {
         return new Client(this.id, this.name, this.order);
     }
-    public ClientResponse toClientResponse() {
-        return new ClientResponse(this.id, this.name);
+    public ClientResponseDto toClientResponse() {
+        return new ClientResponseDto(this.id, this.name);
     }
 }

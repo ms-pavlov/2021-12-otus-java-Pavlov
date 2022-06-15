@@ -3,7 +3,7 @@ package ru.otus.dto.request;
 import lombok.Data;
 
 @Data
-public class ClientRequest {
+public class ClientRequestDto {
     private final String name;
     private final Integer orderColumn;
 }

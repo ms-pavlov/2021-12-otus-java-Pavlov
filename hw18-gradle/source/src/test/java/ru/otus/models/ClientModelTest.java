@@ -1,7 +1,7 @@
 package ru.otus.models;
 
 import org.junit.jupiter.api.Test;
-import ru.otus.dto.request.ClientRequest;
+import ru.otus.dto.request.ClientRequestDto;
 import ru.otus.entities.Client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +20,7 @@ class ClientModelTest {
 
     @Test
     void toClientResponse() {
-        var request = new ClientRequest("Vasa", 0);
+        var request = new ClientRequestDto("Vasa", 0);
         var model = new ClientModel(1L, request);
 
         assertEquals(1L, model.getId());

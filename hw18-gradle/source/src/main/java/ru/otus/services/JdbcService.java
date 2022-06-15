@@ -1,11 +1,11 @@
 package ru.otus.services;
 
-import ru.otus.dto.response.ClientResponse;
+import ru.otus.dto.response.ClientResponseDto;
 
 import java.util.List;
 
 public interface JdbcService <Res, Req>{
-    List<ClientResponse> findAll();
+    List<ClientResponseDto> findAll();
 
     Res create(Req clientRequest);
 

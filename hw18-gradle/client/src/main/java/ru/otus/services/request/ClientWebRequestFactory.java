@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import ru.otus.dto.request.ClientRequestDto;
 
 @Component
-public class ClientWebRequestFactory implements WebRequestFactory<ClientRequestDto>{
+public class ClientWebRequestFactory implements WebRequestFactory<ClientRequestDto> {
     private final String requestGetUrl;
     private final String requestPostUrl;
     private final String requestPutUrl;
 
     public ClientWebRequestFactory(
             @Value("${url.get}") String requestGetUrl,
-            @Value("${url.post}")String requestPostUrl,
-            @Value("${url.put}")String requestPutUrl) {
+            @Value("${url.post}") String requestPostUrl,
+            @Value("${url.put}") String requestPutUrl) {
         this.requestGetUrl = requestGetUrl;
         this.requestPostUrl = requestPostUrl;
         this.requestPutUrl = requestPutUrl;

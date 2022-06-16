@@ -27,6 +27,6 @@ class ClientWebRequestTest {
         assertEquals(BodyInserters.empty(), request.getBodyInserter());
 
         request = new ClientWebRequest(URL, CLIENT_REQUEST);
-        assertNotEquals(BodyInserters.empty(),request.getBodyInserter());
+        assertNotEquals(BodyInserters.empty(), request.getBodyInserter());
     }
 }

@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -19,13 +18,11 @@ import ru.otus.dto.request.ClientRequestDto;
 import ru.otus.dto.response.ClientResponseDto;
 import ru.otus.services.ClientService;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -83,11 +80,11 @@ class ClientsControllerTest {
 
     @Test
     void findAllWebTest() throws JsonProcessingException {
-        var clients =List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2);
+        var clients = List.of(CLIENT_RESPONSE1, CLIENT_RESPONSE2);
         when(clientService.findAll()).thenReturn(clients);
 
         log.info("request start");
-        var result = get("/api/clients/all/")
+        var result = get()
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(String.class)
@@ -106,7 +103,7 @@ class ClientsControllerTest {
     void createWebTest() {
         when(clientService.create(CLIENT_2)).thenReturn(CLIENT_RESPONSE1);
 
-        var result = post("/api/clients/")
+        var result = post()
                 .body(BodyInserters.fromValue(CLIENT_2))
                 .exchange()
                 .expectBody(ClientResponseDto.class)
@@ -123,7 +120,7 @@ class ClientsControllerTest {
     void updateWebTest() {
         when(clientService.update(1L, CLIENT_2)).thenReturn(CLIENT_RESPONSE1);
 
-        var result = put("/api/clients/1/")
+        var result = put()
                 .body(BodyInserters.fromValue(CLIENT_2))
                 .exchange()
                 .expectBody(ClientResponseDto.class)
@@ -136,21 +133,21 @@ class ClientsControllerTest {
         assertEquals(CLIENT_RESPONSE1, result);
     }
 
-    private WebTestClient.RequestHeadersSpec<?> get(String url) {
+    private WebTestClient.RequestHeadersSpec<?> get() {
         return webTestClient.get()
-                .uri(url)
+                .uri("/api/clients/all/")
                 .accept(MediaType.APPLICATION_NDJSON);
     }
 
-    private WebTestClient.RequestBodySpec post(String url) {
+    private WebTestClient.RequestBodySpec post() {
         return webTestClient.post()
-                .uri(url)
+                .uri("/api/clients/")
                 .accept(MediaType.APPLICATION_NDJSON);
     }
 
-    private WebTestClient.RequestBodySpec put(String url) {
+    private WebTestClient.RequestBodySpec put() {
         return webTestClient.put()
-                .uri(url)
+                .uri("/api/clients/1/")
                 .accept(MediaType.APPLICATION_NDJSON);
     }
 

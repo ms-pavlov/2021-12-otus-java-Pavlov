@@ -6,12 +6,13 @@ import ru.otus.dto.request.ClientRequestDto;
 
 @Component
 public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto> {
+    private final static MediaType MEDIA_TYPE = MediaType.APPLICATION_NDJSON;
 
     @Override
     public WebCommand<ClientRequestDto> prepGet() {
         return (client, webResponse) -> client.get()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_NDJSON)
+                .accept(MEDIA_TYPE)
                 .retrieve();
     }
 
@@ -19,7 +20,7 @@ public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto>
     public WebCommand<ClientRequestDto> prepPost() {
         return (client, webResponse) -> client.post()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_NDJSON)
+                .accept(MEDIA_TYPE)
                 .body(webResponse.getBodyInserter())
                 .retrieve();
     }
@@ -28,7 +29,7 @@ public class ClientCommandFactory implements WebCommandFactory<ClientRequestDto>
     public WebCommand<ClientRequestDto> prepPut() {
         return (client, webResponse) -> client.put()
                 .uri(webResponse.getUrl())
-                .accept(MediaType.APPLICATION_NDJSON)
+                .accept(MEDIA_TYPE)
                 .body(webResponse.getBodyInserter())
                 .retrieve();
     }

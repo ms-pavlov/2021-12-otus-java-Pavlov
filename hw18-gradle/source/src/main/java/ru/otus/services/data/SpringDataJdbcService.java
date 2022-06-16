@@ -16,8 +16,8 @@ public class SpringDataJdbcService<E> implements DBService<E> {
     private final TransactionManager transactionManager;
 
     public SpringDataJdbcService(TransactionManager transactionManager, CrudRepository<E, Long> crudRepository) {
-        this.crudRepository=crudRepository;
-        this.transactionManager=transactionManager;
+        this.crudRepository = crudRepository;
+        this.transactionManager = transactionManager;
     }
 
     @Override

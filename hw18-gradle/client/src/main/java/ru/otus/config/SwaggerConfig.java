@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
     @Bean
-    public GroupedOpenApi publicApi(@Value("${application.api.prefix}")String prefix) {
+    public GroupedOpenApi publicApi(@Value("${application.api.prefix}") String prefix) {
         return GroupedOpenApi.builder()
                 .group("DemoApplication")
                 .pathsToMatch(String.format("%s/**", prefix))

@@ -1,5 +1,6 @@
 package ru.otus.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -32,7 +33,7 @@ class SameNetServiceTest {
         command = mock(WebCommand.class);
         request = mock(WebRequest.class);
         responseSpec = mock(WebClient.ResponseSpec.class);
-        netService = new SameNetService<>(client, commandFactory, requestFactory);
+        netService = new SameNetService<>(client, commandFactory, requestFactory, new ObjectMapper());
     }
 
     @Test

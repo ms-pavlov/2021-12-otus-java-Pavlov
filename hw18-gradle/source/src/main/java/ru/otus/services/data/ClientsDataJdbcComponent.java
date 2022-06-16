@@ -6,7 +6,7 @@ import ru.otus.repositories.ClientRepository;
 import ru.otus.services.data.sessionmanager.TransactionManager;
 
 @Component
-public class ClientsDataJdbcComponent extends SpringDataJdbcService<Client>{
+public class ClientsDataJdbcComponent extends SpringDataJdbcService<Client> {
     public ClientsDataJdbcComponent(TransactionManager transactionManager, ClientRepository crudRepository) {
         super(transactionManager, crudRepository);
     }

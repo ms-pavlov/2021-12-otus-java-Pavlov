@@ -1,12 +1,12 @@
 # otus_java_2021_12
+
 Курс Java Developer. Professional
 
 Группа 2021_12
 
 Павлов Михаил
 
-hw14-gradle -
-Spring Data Jdbc. ДЗ
+hw14-gradle - Spring Data Jdbc. ДЗ
 
     Домашнее задание
         Веб-приложение на Spring Boot

@@ -11,6 +11,6 @@ import reactor.core.scheduler.Schedulers;
 public class ScheduleConfig {
     @Bean
     public Scheduler timer() {
-        return Schedulers.newParallel("processor-thread", 2);
+        return Schedulers.newParallel("scheduler", 2);
     }
 }

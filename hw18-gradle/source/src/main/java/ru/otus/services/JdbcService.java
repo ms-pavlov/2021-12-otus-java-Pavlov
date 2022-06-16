@@ -4,7 +4,7 @@ import ru.otus.dto.response.ClientResponseDto;
 
 import java.util.List;
 
-public interface JdbcService <Res, Req>{
+public interface JdbcService<Res, Req> {
     List<ClientResponseDto> findAll();
 
     Res create(Req clientRequest);

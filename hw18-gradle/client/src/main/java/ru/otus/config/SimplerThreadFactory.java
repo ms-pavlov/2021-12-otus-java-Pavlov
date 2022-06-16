@@ -15,8 +15,6 @@ public class SimplerThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(@NonNull Runnable task) {
-        var thread = new Thread(task);
-        thread.setName(namePrefix + threadIdGenerator.incrementAndGet());
-        return thread;
+        return new Thread(task, namePrefix + threadIdGenerator.incrementAndGet());
     }
 }

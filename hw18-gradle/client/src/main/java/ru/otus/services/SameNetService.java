@@ -1,5 +1,9 @@
 package ru.otus.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,21 +21,34 @@ public class SameNetService<R, Q> implements NetService<R, Q> {
     private final WebClient client;
     private final WebCommandFactory<Q> commandFactory;
     private final WebRequestFactory<Q> requestFactory;
+    private final ObjectMapper mapper;
 
     public SameNetService(WebClient customWebClient,
                           WebCommandFactory<Q> commandFactory,
-                          WebRequestFactory<Q> requestFactory) {
+                          WebRequestFactory<Q> requestFactory, ObjectMapper mapper) {
         this.client = customWebClient;
         this.commandFactory = commandFactory;
         this.requestFactory = requestFactory;
+        this.mapper = mapper;
+        this.mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
     }
 
     @Override
     public Flux<List<R>> findAll() {
         return commandFactory.prepGet()
                 .execute(client, requestFactory.prepGetRequest())
-                .bodyToFlux(new ParameterizedTypeReference<>() {
-                });
+                .bodyToFlux(new ParameterizedTypeReference<String>() {
+                })
+                .map(this::parsJsonToList);
+    }
+
+    private List<R> parsJsonToList(String s) {
+        try {
+            return mapper.readValue(s, new TypeReference<List<R>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -28,6 +28,7 @@ public class ClientModel {
     public Client toClient() {
         return new Client(this.id, this.name, this.order);
     }
+
     public ClientResponseDto toClientResponse() {
         return new ClientResponseDto(this.id, this.name);
     }

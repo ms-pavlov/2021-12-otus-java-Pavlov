@@ -6,8 +6,6 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,10 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class ClientCommandFactoryTest {
-    private static final Logger log = LoggerFactory.getLogger(ClientCommandFactoryTest.class);
     private static final String URL = "/url/";
-    private static final String URL_PUT= "/url/%d";
-    private static final ClientRequestDto CLIENT_REQUEST = new ClientRequestDto( "Vasa", 1);
+    private static final String URL_PUT = "/url/%d";
+    private static final ClientRequestDto CLIENT_REQUEST = new ClientRequestDto("Vasa", 1);
     private static final TestResponse CLIENT_RESPONSE1 = new TestResponse(1L, "Vasa");
     private static final TestResponse CLIENT_RESPONSE2 = new TestResponse(2L, "Kolya");
 

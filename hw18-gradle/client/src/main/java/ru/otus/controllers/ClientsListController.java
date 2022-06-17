@@ -8,7 +8,7 @@ import ru.otus.services.ClientService;
 
 @Controller
 public class ClientsListController {
-    private static final Logger log = LoggerFactory.getLogger(ClientController.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientsListController.class);
     private static final String TOPIC = "/topic/clients";
     private final MessageSendingOperations<String> template;
     private final ClientService clientService;

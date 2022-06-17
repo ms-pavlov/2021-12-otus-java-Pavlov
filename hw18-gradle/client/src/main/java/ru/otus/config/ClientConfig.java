@@ -1,5 +1,6 @@
 package ru.otus.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,11 @@ import org.springframework.boot.web.reactive.server.ReactiveWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorResourceFactory;
+import org.springframework.http.codec.ServerCodecConfigurer;
+import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.lang.NonNull;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.format.DateTimeFormatter;
@@ -72,5 +78,27 @@ public class ClientConfig {
             builder.simpleDateFormat(DATE_TIME_FORMAT);
             builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
         };
+    }
+
+    @Bean
+    Jackson2JsonEncoder jackson2JsonEncoder(ObjectMapper mapper){
+        return new Jackson2JsonEncoder(mapper);
+    }
+
+    @Bean
+    Jackson2JsonDecoder jackson2JsonDecoder(ObjectMapper mapper){
+        return new Jackson2JsonDecoder(mapper);
+    }
+
+    @Bean
+    WebFluxConfigurer webFluxConfigurer(Jackson2JsonEncoder encoder, Jackson2JsonDecoder decoder){
+        return new WebFluxConfigurer() {
+            @Override
+            public void configureHttpMessageCodecs(@NonNull ServerCodecConfigurer configuration) {
+                configuration.defaultCodecs().jackson2JsonEncoder(encoder);
+                configuration.defaultCodecs().jackson2JsonDecoder(decoder);
+            }
+        };
+
     }
 }

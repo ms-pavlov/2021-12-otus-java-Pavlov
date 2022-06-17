@@ -14,6 +14,7 @@ import ru.otus.controllers.ClientController;
 import ru.otus.services.executers.WebCommandFactory;
 import ru.otus.services.request.WebRequestFactory;
 
+import java.time.Duration;
 import java.util.List;
 
 public class SameNetService<R, Q> implements NetService<R, Q> {
@@ -44,7 +45,7 @@ public class SameNetService<R, Q> implements NetService<R, Q> {
 
     private List<R> parsJsonToList(String s) {
         try {
-            return mapper.readValue(s, new TypeReference<List<R>>() {
+            return mapper.readValue(s, new TypeReference<>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

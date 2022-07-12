@@ -20,4 +20,6 @@ include 'hw15-gradle'
 include 'hw16-gradle'
 include 'hw17-gradle'
 include 'server'
+include 'hw18-gradle:source'
+include 'hw18-gradle:client'
 

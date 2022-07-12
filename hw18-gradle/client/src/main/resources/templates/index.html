@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})">
+<title>Главная</title>
+<menu>
+    <a th:href="@{/create/}" th:text="Добавить"></a>
+</menu>
+<content>
+    <div class="card">
+        <div class="card-header">
+            <h4>Список клиентов</h4>
+        </div>
+        <div class="card-body">
+            <div id="clientsList"></div>
+        </div>
+    </div>
+</content>
+<script>
+        function getClientsList() {
+          const stompClient = Stomp.over(new SockJS('/gs-guide-websocket'));
+          stompClient.connect({}, (frame) => {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/clients', (clientsList) => {
+                console.log('new clientsList');
+                console.log(clientsList);
+                document.getElementById("clientsList").innerHTML = clientsList.body
+            });
+
+          });
+        }
+
+</script>
+</html>

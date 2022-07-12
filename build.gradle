@@ -36,7 +36,6 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-core:${Versions.jmh}")
             dependency("org.openjdk.jmh:jmh-generator-annprocess:${Versions.jmh}")
             dependency("org.openjdk.jol:jol-core:${Versions.jol}")
-            dependency("org.ow2.asm:asm-commons:${Versions.asm}")
             dependency("org.glassfish:javax.json:${Versions.glassfishJson}")
             dependency("com.google.protobuf:protobuf-java-util:${Versions.protobuf}")
 
@@ -47,7 +46,7 @@ allprojects {
             dependency("com.google.code.gson:gson:${Versions.gson}")
             dependency("com.datastax.oss:java-driver-core:${Versions.cassandra}")
 
-            dependency ("org.mongodb:mongodb-driver-core:${Versions.mongodb}")
+            dependency("org.mongodb:mongodb-driver-core:${Versions.mongodb}")
             dependency("org.mongodb:mongodb-driver-sync:${Versions.mongodb}")
             dependency("org.mongodb:bson:${Versions.mongodb}")
 
@@ -73,6 +72,7 @@ allprojects {
             dependency("io.grpc:grpc-netty:${Versions.grpc}")
             dependency("io.grpc:grpc-protobuf:${Versions.grpc}")
             dependency("io.grpc:grpc-stub:${Versions.grpc}")
+
         }
     }
 
@@ -82,6 +82,8 @@ allprojects {
         }
         resolutionStrategy {
             force("javax.servlet:servlet-api:2.4")
+            force("org.checkerframework:checker-qual:3.12.0")
+            force("org.ow2.asm:asm:9.1")
             force("commons-logging:commons-logging:1.1.1")
             force("commons-lang:commons-lang:2.5")
             force("org.codehaus.jackson:jackson-core-asl:1.8.8")
@@ -91,6 +93,7 @@ allprojects {
             force("com.google.errorprone:error_prone_annotations:2.11.0")
             force("org.apiguardian:apiguardian-api:1.1.2")
             force("com.fasterxml.jackson:jackson-bom:2.13.2")
+            force("io.github.classgraph:classgraph:4.8.143")
         }
     }
 }

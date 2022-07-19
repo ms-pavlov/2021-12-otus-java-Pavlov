@@ -31,3 +31,6 @@ include 'hw19-gradle:rabbitmq:producer-adapter'
 include 'hw19-gradle:rabbitmq:consumer-adapter'
 include 'hw19-gradle:kafka:consumer-adapter'
 include 'hw19-gradle:kafka:producer-adapter'
+include 'hw19-gradle:log-consumer'
+include 'hw19-gradle:log-consumer'
+

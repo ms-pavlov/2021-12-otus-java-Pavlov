@@ -1,14 +1,12 @@
 package ru.otus.jpa.entities;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -17,7 +15,6 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "buildings")
-@EqualsAndHashCode
 @XmlRootElement
 public class Buildings implements Serializable {
     @Serial

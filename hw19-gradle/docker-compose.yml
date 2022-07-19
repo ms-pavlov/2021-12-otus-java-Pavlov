@@ -187,3 +187,14 @@ services:
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8092"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8091'
+  h2:
+    container_name: 'h2'
+    hostname: 'h2'
+    image: 1000kit/h2
+    ports:
+      - "8181:8181"
+      - "1521:1521"
+    volumes:
+      - h2-data:/opt/h2-data
+volumes:
+  h2-data:

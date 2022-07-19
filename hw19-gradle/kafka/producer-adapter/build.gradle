@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     implementation project(":hw19-gradle:models")
+    implementation project(":hw19-gradle:rest-service")
+
     implementation 'org.springframework.kafka:spring-kafka'
 
 

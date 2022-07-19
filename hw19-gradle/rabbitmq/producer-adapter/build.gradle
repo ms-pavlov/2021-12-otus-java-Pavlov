@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+    id 'org.springframework.boot' version '2.6.7'
+}
+
+group 'ru.otus'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":hw19-gradle:models")
+    implementation('org.springframework.boot:spring-boot-starter-amqp')
+
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation("ch.qos.logback:logback-classic")
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
+}
+
+shadowJar {
+    archiveBaseName.set('producer-adapter')
+    archiveVersion.set('0.1')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.MainApp'
+    }
+}
+
+test {
+    testLogging.showStandardStreams = true
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}

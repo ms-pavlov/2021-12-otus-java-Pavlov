@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org">
+<title>Добавление клиента</title>
+<menu>
+    <a th:href="@{/placements/}" th:text="Местоположения"></a>
+</menu>
+<content>
+    <div class="card">
+        <div class="card-header">
+            <h4>Новое отделение</h4>
+        </div>
+        <div class="card-body">
+            <div class="info" id="info"></div>
+            <form onsubmit="send()" th:object="${placementRequest}" id="form" action="javascript:void(0);">
+                <div class="form-group">
+                    <label>Отделение</label>
+                    <select class="form-control" th:name="departmentId" id="departmentId"></select>
+                </div>
+                <div class="form-group">
+                    <label>Здание</label>
+                    <select class="form-control" th:name="buildingId" id="buildingId"></select>
+                </div>
+                <button id="save" type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+    </div>
+</content>
+<script>
+    const url = "/app/placements/create";
+    const topic = "/topic/placements/create";
+
+    const verify = () => {
+        return {"departmentId": document.getElementById("buildingId").value,
+                "buildingId": document.getElementById("buildingId").value,
+                "active": true};
+    }
+
+    function onLoad() {
+        connect();
+        const stompClient = Stomp.over(new SockJS('/gs-guide-websocket'));
+        stompClient.connect({}, (frame) => {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/buildings/all', (buildings) => {
+                var select = document.getElementById("buildingId");
+                if (0 == select.length) {
+                    select.appendChild(document.createElement('option'));
+                    JSON.parse(buildings.body).forEach(building => {
+                        if (building.active) {
+                            var opt = document.createElement('option');
+                            opt.value = building.id;
+                            opt.innerHTML = building.name;
+                            select.appendChild(opt);
+                        }
+                    });
+                }
+            });
+
+            stompClient.subscribe('/topic/departments/all', (departments) => {
+                var select = document.getElementById("departmentId");
+                if (0 == select.length) {
+                    select.appendChild(document.createElement('option'));
+                    JSON.parse(departments.body).forEach(department => {
+                        if (department.active) {
+                            var opt = document.createElement('option');
+                            opt.value = department.id;
+                            opt.innerHTML = department.name;
+                            select.appendChild(opt);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+
+</script>
+</html>

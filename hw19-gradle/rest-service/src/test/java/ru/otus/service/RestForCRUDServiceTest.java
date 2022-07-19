@@ -71,7 +71,7 @@ class RestForCRUDServiceTest {
 
     @Test
     void findPageable() {
-        var page = new PageImpl<> (
+        var page = new PageImpl<>(
                 List.of(MODEL, MODEL),
                 PageRequest.of(0, 5),
                 2);

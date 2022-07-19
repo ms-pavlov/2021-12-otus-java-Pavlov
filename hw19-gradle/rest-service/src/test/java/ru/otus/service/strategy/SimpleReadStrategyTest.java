@@ -13,9 +13,9 @@ import ru.otus.service.ModelProcessor;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 class SimpleReadStrategyTest {
     private final Object MODEL = new Object();
@@ -53,7 +53,7 @@ class SimpleReadStrategyTest {
     void execute() {
         var readStrategy = new SimpleReadStrategy<>();
 
-        var result = readStrategy.execute(1L,  modelEnvironment);
+        var result = readStrategy.execute(1L, modelEnvironment);
 
         assertTrue(result.isPresent());
         assertEquals(MODEL, result.get());
@@ -61,7 +61,7 @@ class SimpleReadStrategyTest {
         verify(entityMapper, times(1)).toModel(MODEL);
         verify(repository, times(1)).findById(1L);
 
-        result = readStrategy.execute(2L,  modelEnvironment);
+        result = readStrategy.execute(2L, modelEnvironment);
         assertTrue(result.isEmpty());
     }
 }

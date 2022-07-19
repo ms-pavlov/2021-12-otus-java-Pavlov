@@ -56,7 +56,6 @@ class PlacementsRequestMapperTest {
     private DepartmentsEntityMapper departmentsEntityMapper;
 
 
-
     @BeforeEach
     void setUp() {
         BuildingsRepository buildingsRepository = mock(BuildingsRepository.class);

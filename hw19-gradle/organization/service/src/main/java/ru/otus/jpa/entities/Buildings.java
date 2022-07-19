@@ -1,12 +1,14 @@
 package ru.otus.jpa.entities;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,4 +37,16 @@ public class Buildings implements Serializable {
     @ToString.Exclude
     private Collection<Placements> placements;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Buildings buildings = (Buildings) o;
+        return id != null && Objects.equals(id, buildings.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

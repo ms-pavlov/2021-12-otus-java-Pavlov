@@ -31,9 +31,9 @@ public class PlacementsController extends SimpleRestForCRUDController<Placements
     public Mono<List<PlacementsMessage>> findAllASMessage() {
         return new SimpleMonoMaker<PlacementsMessage>()
                 .makeMonoList(() -> getService().findAll()
-                .stream()
-                .map(PlacementsMessage::new)
-                .toList(), getExecutor());
+                        .stream()
+                        .map(PlacementsMessage::new)
+                        .toList(), getExecutor());
 
     }
 }

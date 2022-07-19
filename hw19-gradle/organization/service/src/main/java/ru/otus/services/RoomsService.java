@@ -1,12 +1,12 @@
 package ru.otus.services;
 
 import org.springframework.stereotype.Service;
+import ru.otus.ModelEnvironmentImpl;
 import ru.otus.dto.requests.RoomsRequest;
 import ru.otus.dto.responses.RoomsResponse;
 import ru.otus.jpa.entities.Rooms;
 import ru.otus.messages.PlacementsMessage;
 import ru.otus.models.organization.RoomsModel;
-import ru.otus.ModelEnvironmentImpl;
 import ru.otus.service.RestForCRUDService;
 import ru.otus.service.commands.RestCommandFactoryImpl;
 import ru.otus.service.strategy.StrategyFactoryWithSoftDelete;

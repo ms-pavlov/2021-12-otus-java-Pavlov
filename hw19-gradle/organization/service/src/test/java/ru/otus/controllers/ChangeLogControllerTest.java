@@ -24,7 +24,6 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -57,6 +56,7 @@ class ChangeLogControllerTest {
 
     private final WebTestClient webTestClient;
     private final ChangeLogService service;
+
     @Autowired
     ChangeLogControllerTest(ChangeLogController changeLogController, WebTestClient webTestClient, MessagesQueue<PlacementsMessage> messagesQueue) {
         this.changeLogController = changeLogController;

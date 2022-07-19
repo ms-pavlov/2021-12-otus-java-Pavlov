@@ -2,8 +2,8 @@ package ru.otus.mappers.requests;
 
 import org.mapstruct.*;
 import ru.otus.dto.requests.DepartmentsRequest;
-import ru.otus.models.organization.DepartmentsModel;
 import ru.otus.mappers.RequestMapper;
+import ru.otus.models.organization.DepartmentsModel;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,

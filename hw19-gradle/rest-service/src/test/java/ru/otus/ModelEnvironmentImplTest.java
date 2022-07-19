@@ -8,7 +8,7 @@ import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 class ModelEnvironmentImplTest {

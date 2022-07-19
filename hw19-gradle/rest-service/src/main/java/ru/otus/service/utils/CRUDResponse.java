@@ -7,7 +7,7 @@ import org.springframework.validation.ObjectError;
 
 public class CRUDResponse {
     public static ResponseEntity<?> create(Object body, BindingResult bindingResult) {
-        return (null == body)||(bindingResult.hasErrors()) ?
+        return (null == body) || (bindingResult.hasErrors()) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult) :
                 ResponseEntity.status(HttpStatus.OK).body(body);
     }

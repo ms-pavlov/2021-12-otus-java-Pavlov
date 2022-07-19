@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Builder
 public class PlacementsRequest implements Serializable {
     @NotNull(message = "{placements.buildingId.notNull}")
-    @Min(value = 1L, message = "{placements.buildingId.tooLow}" )
+    @Min(value = 1L, message = "{placements.buildingId.tooLow}")
     private Long buildingId;
     @NotNull(message = "{placements.departmentId.notNull}")
-    @Min(value = 1L, message = "{placements.departmentId.tooLow}" )
+    @Min(value = 1L, message = "{placements.departmentId.tooLow}")
     private Long departmentId;
     private boolean active;
 }

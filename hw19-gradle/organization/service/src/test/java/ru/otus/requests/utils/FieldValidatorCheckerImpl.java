@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Validator;
 
-public class FieldValidatorCheckerImpl implements FieldValidatorChecker{
+public class FieldValidatorCheckerImpl implements FieldValidatorChecker {
     private static final Logger log = LoggerFactory.getLogger(FieldValidatorChecker.class);
 
     private final Validator validator;

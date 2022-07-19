@@ -3,11 +3,11 @@ package ru.otus.adapter;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
-public class SimpleRequestExecutor implements RequestExecutor {
+public class SimpleGetRequestExecutor implements RequestExecutor {
     private final static MediaType MEDIA_TYPE = MediaType.APPLICATION_NDJSON;
     private final WebClient customWebClient;
 
-    public SimpleRequestExecutor(WebClient customWebClient) {
+    public SimpleGetRequestExecutor(WebClient customWebClient) {
         this.customWebClient = customWebClient;
     }
 

@@ -3,7 +3,8 @@ package ru.otus.service.strategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.validation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import ru.otus.ModelEnvironment;
 import ru.otus.ModelEnvironmentImpl;
 import ru.otus.mappers.EntityMapper;
@@ -11,7 +12,7 @@ import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
 import ru.otus.service.ModelProcessor;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 

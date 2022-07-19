@@ -37,6 +37,7 @@ public class SimpleRestForCRUDController<E, M, R, Q> {
             @PathVariable("size") int size) {
         return monoMaker.makeMonoPage(() -> service.findPageable(PageRequest.of(page, size)), executor);
     }
+
     @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
     public Mono<R> findOne(
             @PathVariable("id") Long id) {

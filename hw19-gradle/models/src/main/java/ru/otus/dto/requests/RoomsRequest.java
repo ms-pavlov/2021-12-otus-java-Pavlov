@@ -21,6 +21,6 @@ public class RoomsRequest implements Serializable {
     private String description;
     private boolean active;
     @NotNull(message = "{rooms.placementId.notNull}")
-    @Min(value = 1L, message = "{rooms.placementId.tooLow}" )
+    @Min(value = 1L, message = "{rooms.placementId.tooLow}")
     private Long placementId;
 }

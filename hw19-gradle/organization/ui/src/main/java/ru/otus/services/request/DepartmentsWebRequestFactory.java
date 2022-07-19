@@ -6,7 +6,7 @@ import ru.otus.client.request.SimpleWebRequestFactory;
 import ru.otus.dto.requests.DepartmentsRequest;
 
 @Component
-public class DepartmentsWebRequestFactory  extends SimpleWebRequestFactory<DepartmentsRequest> {
+public class DepartmentsWebRequestFactory extends SimpleWebRequestFactory<DepartmentsRequest> {
     public DepartmentsWebRequestFactory(@Value("${departments.api.url}") String apiUpl) {
         super(apiUpl);
     }

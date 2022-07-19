@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 import ru.otus.dto.requests.PlacementsRequest;
 import ru.otus.jpa.repositories.BuildingsRepository;
 import ru.otus.jpa.repositories.DepartmentsRepository;
+import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.entity.BuildingsEntityMapper;
 import ru.otus.mappers.entity.DepartmentsEntityMapper;
 import ru.otus.models.organization.BuildingsModel;
 import ru.otus.models.organization.DepartmentsModel;
 import ru.otus.models.organization.PlacementsModel;
-import ru.otus.mappers.RequestMapper;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -24,9 +24,9 @@ public class PlacementsRequestMapper implements RequestMapper<PlacementsModel, P
 
     @Autowired
     public PlacementsRequestMapper(BuildingsRepository buildingsRepository,
-                                      DepartmentsRepository departmentsRepository,
-                                      BuildingsEntityMapper buildingsEntityMapper,
-                                      DepartmentsEntityMapper departmentsEntityMapper) {
+                                   DepartmentsRepository departmentsRepository,
+                                   BuildingsEntityMapper buildingsEntityMapper,
+                                   DepartmentsEntityMapper departmentsEntityMapper) {
         this.buildingsRepository = buildingsRepository;
         this.departmentsRepository = departmentsRepository;
         this.buildingsEntityMapper = buildingsEntityMapper;

@@ -51,7 +51,7 @@ class PlacementsServiceTest {
 
         var list = service.findAll();
 
-        assertEquals(COUNT+size, list.size());
+        assertEquals(COUNT + size, list.size());
     }
 
     @Test
@@ -69,7 +69,7 @@ class PlacementsServiceTest {
 
         var page = service.findPageable(PageRequest.of(0, 5));
 
-        assertEquals(COUNT+size, page.getTotalElements());
+        assertEquals(COUNT + size, page.getTotalElements());
         assertEquals(5, page.getContent().size());
 
         page.getContent().forEach(buildingsResponse -> {

@@ -8,7 +8,7 @@ import ru.otus.utils.PropertiesHelper;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class SimpleUpdateStrategy<E, M, R, Q> implements UpdateStrategy<E, M, R, Q>{
+public class SimpleUpdateStrategy<E, M, R, Q> implements UpdateStrategy<E, M, R, Q> {
     @Override
     public Optional<M> execute(Long id, Q request, ModelEnvironment<E, M, R, Q> modelEnvironment) {
         var bindingResult = new MapBindingResult(new HashMap<>(), this.toString());

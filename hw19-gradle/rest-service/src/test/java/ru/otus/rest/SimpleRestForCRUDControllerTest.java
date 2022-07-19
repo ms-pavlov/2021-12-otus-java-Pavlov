@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +22,7 @@ class SimpleRestForCRUDControllerTest {
     private static final Object TEST = new Object();
 
     private SimpleRestForCRUDController<Object, Object, Object, Object> controller;
-    private RestForCRUDService<Object, Object, Object, Object>  service;
+    private RestForCRUDService<Object, Object, Object, Object> service;
 
 
     @BeforeEach
@@ -58,7 +58,7 @@ class SimpleRestForCRUDControllerTest {
     @Test
     void findPageable() {
         var list = List.of(TEST, TEST);
-        var pageRequest= PageRequest.of(0, 5);
+        var pageRequest = PageRequest.of(0, 5);
         var page = new PageImpl<>(list, pageRequest, list.size());
         when(service.findPageable(pageRequest)).thenReturn(page);
 

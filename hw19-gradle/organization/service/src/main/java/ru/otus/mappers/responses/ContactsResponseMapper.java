@@ -5,12 +5,12 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.otus.dto.responses.ContactsResponse;
-import ru.otus.models.organization.ContactsModel;
 import ru.otus.mappers.ResponseMapper;
+import ru.otus.models.organization.ContactsModel;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public abstract class ContactsResponseMapper implements ResponseMapper<ContactsModel, ContactsResponse>  {
+public abstract class ContactsResponseMapper implements ResponseMapper<ContactsModel, ContactsResponse> {
     @Override
     @Mappings({
             @Mapping(target = "placementId", expression = "java(model.getPlacementId())")

@@ -32,7 +32,8 @@ public class ChangeLogController {
                 .uri(URL)
                 .accept(MEDIA_TYPE)
                 .retrieve()
-                .bodyToFlux(new ParameterizedTypeReference<>() {})
+                .bodyToFlux(new ParameterizedTypeReference<>() {
+                })
                 .doOnNext(message -> log.info("message {}", message))
                 .subscribe(message -> template.convertAndSend(TOPIC, message));
 

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.dto.requests.ContactsRequest;
 import ru.otus.jpa.repositories.PlacementsRepository;
+import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.entity.PlacementsEntityMapper;
 import ru.otus.models.organization.ContactsModel;
 import ru.otus.models.organization.PlacementsModel;
-import ru.otus.mappers.RequestMapper;
 
 import java.util.Optional;
 

@@ -27,7 +27,7 @@ class RoomsResponseMapperTest {
     @Test
     void toResponse() {
         var roomsModel = RoomsModel.builder().build();
-        var roomsResponse= roomsResponseMapper.toResponse(roomsModel);
+        var roomsResponse = roomsResponseMapper.toResponse(roomsModel);
         assertEqualsRoomsModelAndResponse(roomsModel, roomsResponse);
 
         roomsModel = RoomsModel.builder()

@@ -40,7 +40,6 @@ class DepartmentsResponseMapperTest {
     }
 
 
-
     private void assertEqualsDepartmentsModelAndResponse(DepartmentsModel model, DepartmentsResponse response) {
         assertEquals(model.getId(), response.getId());
         assertEquals(model.getName(), response.getName());

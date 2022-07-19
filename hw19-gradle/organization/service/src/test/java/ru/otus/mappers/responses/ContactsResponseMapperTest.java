@@ -27,7 +27,7 @@ class ContactsResponseMapperTest {
     @Test
     void toResponse() {
         var contactsModel = ContactsModel.builder().build();
-        var contactsResponse= contactsResponseMapper.toResponse(contactsModel);
+        var contactsResponse = contactsResponseMapper.toResponse(contactsModel);
         assertEqualsContactsModelAndResponse(contactsModel, contactsResponse);
 
         contactsModel = ContactsModel.builder()

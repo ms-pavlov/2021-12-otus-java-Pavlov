@@ -5,7 +5,7 @@ import ru.otus.service.ModelProcessor;
 
 import java.util.Optional;
 
-public class SaveServiceCommand<E, M, R, Q> implements ServiceCommand<E, M, R, Q>{
+public class SaveServiceCommand<E, M, R, Q> implements ServiceCommand<E, M, R, Q> {
     @Override
     public R execute(ModelEnvironment<E, M, R, Q> modelEnvironment,
                      ModelProcessor<M> modelProcessor,

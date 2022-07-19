@@ -6,7 +6,7 @@ import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
 
-public interface ModelEnvironment<E, M, R, Q>{
+public interface ModelEnvironment<E, M, R, Q> {
 
     JpaRepository<E, Long> getRepository();
 

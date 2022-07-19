@@ -3,8 +3,8 @@ package ru.otus.mappers.responses;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.otus.dto.responses.DepartmentsResponse;
-import ru.otus.models.organization.DepartmentsModel;
 import ru.otus.mappers.ResponseMapper;
+import ru.otus.models.organization.DepartmentsModel;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,

@@ -19,7 +19,7 @@ public class RoomsMessage implements Serializable {
     private Long id;
     private String name;
     private boolean active;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timestamp;
 
     public RoomsMessage(RoomsModel roomsModel) {

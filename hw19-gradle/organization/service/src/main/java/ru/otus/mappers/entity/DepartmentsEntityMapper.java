@@ -5,12 +5,12 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.otus.jpa.entities.Departments;
+import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.qualifiers.SubMapper;
 import ru.otus.models.organization.DepartmentsModel;
-import ru.otus.mappers.EntityMapper;
 
 @Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         uses = {PlacementsEntityMapper.class})
 public abstract class DepartmentsEntityMapper implements EntityMapper<DepartmentsModel, Departments> {
 

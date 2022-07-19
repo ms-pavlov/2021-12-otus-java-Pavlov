@@ -55,7 +55,7 @@ class PlacementsControllerTest {
         var list = controller.findAll().block();
 
         assertNotNull(list);
-        assertEquals(COUNT+size, list.size());
+        assertEquals(COUNT + size, list.size());
     }
 
     @Test
@@ -74,7 +74,7 @@ class PlacementsControllerTest {
         var page = controller.findPageable(0, 5).block();
 
         assertNotNull(page);
-        assertEquals(COUNT+size, page.getTotalElements());
+        assertEquals(COUNT + size, page.getTotalElements());
         assertEquals(5, page.getContent().size());
 
         page.getContent().forEach(buildingsResponse -> {

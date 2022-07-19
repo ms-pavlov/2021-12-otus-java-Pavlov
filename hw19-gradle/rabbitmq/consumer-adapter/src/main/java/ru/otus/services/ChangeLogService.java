@@ -1,13 +1,11 @@
-package otus.services;
+package ru.otus.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import ru.otus.config.RabbitConfiguration;
 import ru.otus.messages.SubscriberMessage;
-
-import static otus.config.RabbitConfiguration.CHANGE_LOG_ROUTING_KEY;
-import static otus.config.RabbitConfiguration.CLIENT_ID;
 
 @Service
 public class ChangeLogService {
@@ -22,6 +20,6 @@ public class ChangeLogService {
     }
 
     private void subscribe() {
-        rabbitTemplate.convertAndSend(SUBSCRIBE_ROUTING_KEY, new SubscriberMessage(CLIENT_ID, CHANGE_LOG_ROUTING_KEY));
+        rabbitTemplate.convertAndSend(SUBSCRIBE_ROUTING_KEY, new SubscriberMessage(RabbitConfiguration.CLIENT_ID, RabbitConfiguration.CHANGE_LOG_ROUTING_KEY));
     }
 }

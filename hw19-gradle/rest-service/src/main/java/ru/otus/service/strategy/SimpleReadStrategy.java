@@ -14,7 +14,7 @@ public class SimpleReadStrategy<E, M, R, Q> implements ReadStrategy<E, M, R, Q> 
         var bindingResult = new MapBindingResult(new HashMap<>(), this.toString());
         return modelEnvironment.getRepository()
                 .findById(id)
-                .map(entity -> modelEnvironment.getEntityMapper().toModel(entity) )
+                .map(entity -> modelEnvironment.getEntityMapper().toModel(entity))
                 .or(() -> {
                     CRUDResponse.addBindingResult("",
                             PropertiesHelper.getFormatMessages("entityNotFound", id),

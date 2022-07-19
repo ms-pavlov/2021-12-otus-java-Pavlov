@@ -5,9 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.otus.jpa.entities.Contacts;
+import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.qualifiers.SubMapper;
 import ru.otus.models.organization.ContactsModel;
-import ru.otus.mappers.EntityMapper;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,

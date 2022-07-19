@@ -1,4 +1,4 @@
-package otus.config;
+package ru.otus.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -81,17 +81,17 @@ public class ClientConfig {
     }
 
     @Bean
-    Jackson2JsonEncoder jackson2JsonEncoder(ObjectMapper mapper){
+    Jackson2JsonEncoder jackson2JsonEncoder(ObjectMapper mapper) {
         return new Jackson2JsonEncoder(mapper);
     }
 
     @Bean
-    Jackson2JsonDecoder jackson2JsonDecoder(ObjectMapper mapper){
+    Jackson2JsonDecoder jackson2JsonDecoder(ObjectMapper mapper) {
         return new Jackson2JsonDecoder(mapper);
     }
 
     @Bean
-    WebFluxConfigurer webFluxConfigurer(Jackson2JsonEncoder encoder, Jackson2JsonDecoder decoder){
+    WebFluxConfigurer webFluxConfigurer(Jackson2JsonEncoder encoder, Jackson2JsonDecoder decoder) {
         return new WebFluxConfigurer() {
             @Override
             public void configureHttpMessageCodecs(@NonNull ServerCodecConfigurer configuration) {

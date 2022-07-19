@@ -1,4 +1,4 @@
-package otus.config;
+package ru.otus.config;
 
 import reactor.util.annotation.NonNull;
 

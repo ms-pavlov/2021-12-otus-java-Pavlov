@@ -21,6 +21,6 @@ public class ContactsRequest implements Serializable {
     private String phone;
     private boolean active;
     @NotNull(message = "{contacts.placementId.notNull}")
-    @Min(value = 1L, message = "{contacts.placementId.tooLow}" )
+    @Min(value = 1L, message = "{contacts.placementId.tooLow}")
     private Long placementId;
 }

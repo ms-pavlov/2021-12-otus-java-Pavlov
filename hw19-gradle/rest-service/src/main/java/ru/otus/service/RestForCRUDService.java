@@ -62,7 +62,7 @@ public class RestForCRUDService<E, M, R, Q> implements RestForCRUD<E, M, R, Q> {
         return commandFactory.getSaveCommand()
                 .execute(modelEnvironment,
                         afterModifyProcessor,
-                        strategyFactory.getCreateStrategy().execute(request,  modelEnvironment));
+                        strategyFactory.getCreateStrategy().execute(request, modelEnvironment));
     }
 
     @Override

@@ -13,6 +13,7 @@ import ru.otus.messages.PlacementsMessage;
 import java.time.Duration;
 import java.util.List;
 
+import static org.springframework.kafka.support.KafkaHeaders.GROUP_ID;
 import static ru.otus.config.KafkaProducerConfig.CHANGE_LOG_TOPIC;
 
 @Service
@@ -41,7 +42,7 @@ public class ChangeLogService extends SimpleRequestExecutor {
 
     private void send(PlacementsMessage message) {
         log.info("send message {}", message);
-        template.send(CHANGE_LOG_TOPIC, message);
+        template.send(CHANGE_LOG_TOPIC, GROUP_ID, message);
     }
 
 }

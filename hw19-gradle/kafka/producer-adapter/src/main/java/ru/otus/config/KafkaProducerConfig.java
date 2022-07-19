@@ -1,7 +1,6 @@
 package ru.otus.config;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,11 +31,6 @@ public class KafkaProducerConfig {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         return new KafkaAdmin(configs);
-    }
-
-    @Bean
-    public NewTopic topic() {
-        return new NewTopic(CHANGE_LOG_TOPIC, 1, (short) 1);
     }
 
     @Bean

@@ -15,7 +15,7 @@ public class ChangeLogService {
     private static final Logger log = LoggerFactory.getLogger(ChangeLogService.class);
 
     @KafkaListener(topics = CHANGE_LOG_TOPIC, containerFactory="kafkaListenerContainerFactory")
-    public void listenGroupFoo(ConsumerRecord<Long, PlacementsMessage> message) {
+    public void listenGroupFoo(ConsumerRecord<String, String> message) {
         log.info("received: {}", message.value());
     }
 }

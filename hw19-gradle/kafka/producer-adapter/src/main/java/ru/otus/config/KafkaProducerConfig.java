@@ -39,10 +39,16 @@ public class KafkaProducerConfig {
         return new NewTopic(CHANGE_LOG_TOPIC, 1, (short) 1);
     }
 
-
     @Bean
     public ProducerFactory<String, PlacementsMessage> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "myKafkaProducer");
+        configProps.put(ProducerConfig.ACKS_CONFIG, "1");
+        configProps.put(ProducerConfig.RETRIES_CONFIG, 1);
+        configProps.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
+        configProps.put(ProducerConfig.LINGER_MS_CONFIG, 10);
+        configProps.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33_554_432);
+        configProps.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 1_000);
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 bootstrapAddress);

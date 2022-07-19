@@ -18,8 +18,8 @@ import java.util.UUID;
 
 @Configuration
 public class KafkaConsumerConfig {
-    public final static String CHANGE_LOG_TOPIC = "change-log";
     public final static String CLIENT_ID = UUID.randomUUID().toString();
+    public final static String CHANGE_LOG_TOPIC = "change-log";
     public final static String kafkaServer = "localhost:9092";
 
     @Bean

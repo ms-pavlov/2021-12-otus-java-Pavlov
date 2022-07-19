@@ -6,13 +6,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import ru.otus.messages.PlacementsMessage;
-import ru.otus.config.KafkaConsumerConfig;
+
+import static ru.otus.config.KafkaConsumerConfig.CHANGE_LOG_TOPIC;
 
 @Service
 public class ChangeLogService {
+
     private static final Logger log = LoggerFactory.getLogger(ChangeLogService.class);
 
-    @KafkaListener(topics = KafkaConsumerConfig.CHANGE_LOG_TOPIC)
+    @KafkaListener(topics = CHANGE_LOG_TOPIC, containerFactory="kafkaListenerContainerFactory")
     public void listenGroupFoo(ConsumerRecord<Long, PlacementsMessage> message) {
         log.info("received: {}", message.value());
     }

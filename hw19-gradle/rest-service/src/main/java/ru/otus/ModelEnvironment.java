@@ -5,16 +5,19 @@ import org.springframework.validation.Validator;
 import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
+import ru.otus.service.ModelProcessor;
+import ru.otus.service.repositories.CRUDModel;
+import ru.otus.service.strategy.RequestStrategy;
+import ru.otus.service.strategy.SoftDeleteMarker;
 
-public interface ModelEnvironment<E, M, R, Q> {
+public interface ModelEnvironment<M, Q> {
 
-    JpaRepository<E, Long> getRepository();
+    ModelProcessor<M> getAfterModifyProcessor();
 
-    Validator getValidator();
+    RequestStrategy<M, Q> getRequestStrategy();
 
-    EntityMapper<M, E> getEntityMapper();
+    CRUDModel<M> getDataSource();
 
-    ResponseMapper<M, R> getResponseMapper();
+    SoftDeleteMarker<M> getDeleteMarker();
 
-    RequestMapper<M, Q> getRequestMapper();
 }

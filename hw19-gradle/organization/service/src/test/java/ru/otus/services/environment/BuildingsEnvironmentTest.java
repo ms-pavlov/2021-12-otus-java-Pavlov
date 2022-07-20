@@ -17,10 +17,9 @@ class BuildingsEnvironmentTest {
     @Test
     void existInSpring() {
         assertNotNull(environment);
-        assertNotNull(environment.getRepository());
-        assertNotNull(environment.getValidator());
-        assertNotNull(environment.getResponseMapper());
-        assertNotNull(environment.getRequestMapper());
-        assertNotNull(environment.getEntityMapper());
+        assertNotNull(environment.getAfterModifyProcessor());
+        assertNotNull(environment.getDataSource());
+        assertNotNull(environment.getDeleteMarker());
+        assertNotNull(environment.getRequestStrategy());
     }
 }

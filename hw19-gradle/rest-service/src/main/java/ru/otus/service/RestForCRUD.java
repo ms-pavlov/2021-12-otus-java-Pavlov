@@ -5,16 +5,16 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface RestForCRUD<E, M, R, Q> {
-    List<R> findAll();
+public interface RestForCRUD<M, Q> {
+    List<M> findAll();
 
-    Page<R> findPageable(Pageable pageable);
+    Page<M> findPageable(Pageable pageable);
 
-    R findOne(Long id);
+    M findOne(Long id);
 
-    R create(Q request);
+    M create(Q request);
 
-    R update(Long id, Q request);
+    M update(Long id, Q request);
 
-    R delete(Long id);
+    M delete(Long id);
 }

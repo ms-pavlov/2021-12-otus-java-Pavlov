@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.NonNull;
+import ru.otus.mappers.ResponseMapper;
 import ru.otus.service.RestForCRUDService;
 
 import java.util.List;
@@ -21,9 +22,8 @@ import static org.mockito.Mockito.when;
 class SimpleRestForCRUDControllerTest {
     private static final Object TEST = new Object();
 
-    private SimpleRestForCRUDController<Object, Object, Object, Object> controller;
-    private RestForCRUDService<Object, Object, Object, Object> service;
-
+    private SimpleRestForCRUDController<Object, Object, Object> controller;
+    private RestForCRUDService<Object, Object, Object> service;
 
     @BeforeEach
     void setUp() {
@@ -42,7 +42,11 @@ class SimpleRestForCRUDControllerTest {
                     }
                 });
 
-        controller = new SimpleRestForCRUDController<>(service, executorService);
+        ResponseMapper<Object, Object> responseMapper = mock(ResponseMapper.class);
+
+        when(responseMapper.toResponse(TEST)).thenReturn(TEST);
+
+        controller = new SimpleRestForCRUDController<>(service, executorService, responseMapper);
     }
 
     @Test

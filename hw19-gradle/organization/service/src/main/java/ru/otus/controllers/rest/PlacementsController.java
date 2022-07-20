@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import ru.otus.dto.requests.PlacementsRequest;
+import ru.otus.dto.responses.BuildingsResponse;
 import ru.otus.dto.responses.PlacementsResponse;
 import ru.otus.jpa.entities.Placements;
+import ru.otus.mappers.ResponseMapper;
 import ru.otus.messages.PlacementsMessage;
+import ru.otus.models.organization.BuildingsModel;
 import ru.otus.models.organization.PlacementsModel;
 import ru.otus.rest.SimpleMonoMaker;
 import ru.otus.rest.SimpleRestForCRUDController;
@@ -21,10 +24,12 @@ import java.util.concurrent.ExecutorService;
 @RestController
 @RequestMapping(value = "/api/placements/",
         produces = MediaType.APPLICATION_NDJSON_VALUE)
-public class PlacementsController extends SimpleRestForCRUDController<Placements, PlacementsModel, PlacementsResponse, PlacementsRequest> {
+public class PlacementsController extends SimpleRestForCRUDController<PlacementsModel, PlacementsResponse, PlacementsRequest> {
     @Autowired
-    public PlacementsController(RestForCRUDService<Placements, PlacementsModel, PlacementsResponse, PlacementsRequest> service, ExecutorService executor) {
-        super(service, executor);
+    public PlacementsController(RestForCRUDService<PlacementsModel, PlacementsResponse, PlacementsRequest> service,
+                                ExecutorService executor,
+                                ResponseMapper<PlacementsModel, PlacementsResponse> responseMapper) {
+        super(service, executor, responseMapper);
     }
 
     @RequestMapping(value = "/as/message", method = RequestMethod.GET)

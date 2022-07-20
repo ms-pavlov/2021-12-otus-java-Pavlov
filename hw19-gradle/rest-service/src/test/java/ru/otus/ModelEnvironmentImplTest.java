@@ -7,48 +7,46 @@ import org.springframework.validation.Validator;
 import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
+import ru.otus.service.ModelProcessor;
+import ru.otus.service.repositories.CRUDModel;
+import ru.otus.service.strategy.RequestStrategy;
+import ru.otus.service.strategy.SoftDeleteMarker;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 class ModelEnvironmentImplTest {
 
-    private ModelEnvironmentImpl<Object, Object, Object, Object> modelEnvironment;
+    private ModelEnvironmentImpl<Object, Object> modelEnvironment;
 
     @BeforeEach
     void setUp() {
         this.modelEnvironment = ModelEnvironmentImpl.builder()
-                .entityMapper(mock(EntityMapper.class))
-                .requestMapper(mock(RequestMapper.class))
-                .responseMapper(mock(ResponseMapper.class))
-                .repository(mock(JpaRepository.class))
-                .validator(mock(Validator.class))
+                .afterModifyProcessor(mock(ModelProcessor.class))
+                .requestStrategy(mock(RequestStrategy.class))
+                .dataSource(mock(CRUDModel.class))
+                .deleteMarker(mock(SoftDeleteMarker.class))
                 .build();
     }
 
     @Test
-    void getRepository() {
-        assertNotNull(modelEnvironment.getRepository());
+    void getDataSource() {
+        assertNotNull(modelEnvironment.getDataSource());
     }
 
     @Test
-    void getValidator() {
-        assertNotNull(modelEnvironment.getValidator());
+    void getAfterModifyProcessor() {
+        assertNotNull(modelEnvironment.getAfterModifyProcessor());
     }
 
     @Test
-    void getEntityMapper() {
-        assertNotNull(modelEnvironment.getEntityMapper());
+    void getDeleteMarker() {
+        assertNotNull(modelEnvironment.getDeleteMarker());
     }
 
     @Test
-    void getResponseMapper() {
-        assertNotNull(modelEnvironment.getResponseMapper());
-    }
-
-    @Test
-    void getRequestMapper() {
-        assertNotNull(modelEnvironment.getRequestMapper());
+    void getRequestStrategy() {
+        assertNotNull(modelEnvironment.getRequestStrategy());
     }
 
 }

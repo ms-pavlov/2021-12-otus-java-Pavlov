@@ -11,16 +11,34 @@ import ru.otus.jpa.entities.Buildings;
 import ru.otus.mappers.EntityMapper;
 import ru.otus.mappers.RequestMapper;
 import ru.otus.mappers.ResponseMapper;
+import ru.otus.messages.PlacementsMessage;
 import ru.otus.models.organization.BuildingsModel;
+import ru.otus.service.ModelProcessor;
+import ru.otus.service.repositories.CRUDModel;
+import ru.otus.service.strategy.RequestStrategy;
+import ru.otus.service.strategy.SoftDeleteMarker;
+import ru.otus.services.ChangeLogService;
+
+import java.util.Optional;
 
 @Component
-public class BuildingsEnvironment extends ModelEnvironmentImpl<Buildings, BuildingsModel, BuildingsResponse, BuildingsRequest> {
+public class BuildingsEnvironment extends ModelEnvironmentImpl<BuildingsModel, BuildingsRequest> {
 
-    public BuildingsEnvironment(JpaRepository<Buildings, Long> repository,
-                                @Qualifier("getValidator") Validator validator,
-                                @Qualifier("buildingsEntityMapperImpl") EntityMapper<BuildingsModel, Buildings> entityMapper,
-                                ResponseMapper<BuildingsModel, BuildingsResponse> responseMapper,
-                                RequestMapper<BuildingsModel, BuildingsRequest> requestMapper) {
-        super(repository, validator, entityMapper, responseMapper, requestMapper);
+    public BuildingsEnvironment(@Qualifier("buildingsStrategy") RequestStrategy<BuildingsModel, BuildingsRequest> requestStrategy,
+                                @Qualifier("buildingsSource") CRUDModel<BuildingsModel> dataSource,
+                                ChangeLogService changeLogService) {
+        super(model -> {
+                    Optional.of(model)
+                            .map(BuildingsModel::getPlacements)
+                            .ifPresent(placementsModels -> placementsModels
+                                    .forEach(placement -> changeLogService.send(new PlacementsMessage(placement))));
+                    return model;
+                },
+                requestStrategy,
+                dataSource,
+                model -> {
+                    model.setActive(false);
+                    return model;
+                });
     }
 }

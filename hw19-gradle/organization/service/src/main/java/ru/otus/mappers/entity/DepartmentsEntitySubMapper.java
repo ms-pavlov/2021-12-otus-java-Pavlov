@@ -6,17 +6,19 @@ import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.otus.jpa.entities.Departments;
 import ru.otus.mappers.EntityMapper;
-import ru.otus.mappers.qualifiers.SubMapper;
 import ru.otus.models.organization.DepartmentsModel;
 
 @Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {PlacementsEntitySubMapper.class})
-public abstract class DepartmentsEntityMapper implements EntityMapper<DepartmentsModel, Departments> {
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public abstract class DepartmentsEntitySubMapper implements EntityMapper<DepartmentsModel, Departments> {
 
-    @Override
+    @Mappings({
+            @Mapping(target = "placements", ignore = true)
+    })
     public abstract Departments toEntity(DepartmentsModel model);
 
-    @Override
+    @Mappings({
+            @Mapping(target = "placements", ignore = true)
+    })
     public abstract DepartmentsModel toModel(Departments entity);
 }

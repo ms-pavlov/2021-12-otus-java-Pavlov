@@ -11,17 +11,17 @@ import ru.otus.models.organization.RoomsModel;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {PlacementsEntityMapper.class})
+        uses = {PlacementsEntitySubMapper.class})
 public abstract class RoomsEntityMapper implements EntityMapper<RoomsModel, Rooms> {
     @Override
     @Mappings({
-            @Mapping(target = "placement", source = "model.placement", qualifiedBy = {SubMapper.class})
+            @Mapping(target = "placement", source = "model.placement")
     })
     public abstract Rooms toEntity(RoomsModel model);
 
     @Override
     @Mappings({
-            @Mapping(target = "placement", source = "entity.placement", qualifiedBy = {SubMapper.class})
+            @Mapping(target = "placement", source = "entity.placement")
     })
     public abstract RoomsModel toModel(Rooms entity);
 }

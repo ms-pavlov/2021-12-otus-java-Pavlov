@@ -10,25 +10,16 @@ import ru.otus.mappers.qualifiers.SubMapper;
 import ru.otus.models.organization.BuildingsModel;
 
 @Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {PlacementsEntitySubMapper.class})
-public abstract class BuildingsEntityMapper implements EntityMapper<BuildingsModel, Buildings> {
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public abstract class BuildingsEntitySubMapper implements EntityMapper<BuildingsModel, Buildings> {
 
-    @Override
+    @Mappings({
+            @Mapping(target = "placements", ignore = true)
+    })
     public abstract Buildings toEntity(BuildingsModel model);
 
-    @Override
+    @Mappings({
+            @Mapping(target = "placements", ignore = true)
+    })
     public abstract BuildingsModel toModel(Buildings entity);
-
-    @SubMapper
-    @Mappings({
-            @Mapping(target = "placements", ignore = true)
-    })
-    public abstract Buildings toSubEntity(BuildingsModel model);
-
-    @SubMapper
-    @Mappings({
-            @Mapping(target = "placements", ignore = true)
-    })
-    public abstract BuildingsModel toSubModel(Buildings entity);
 }

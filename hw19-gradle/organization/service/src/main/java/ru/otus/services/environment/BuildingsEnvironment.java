@@ -18,7 +18,7 @@ public class BuildingsEnvironment extends ModelEnvironmentImpl<Buildings, Buildi
 
     public BuildingsEnvironment(JpaRepository<Buildings, Long> repository,
                                 @Qualifier("getValidator") Validator validator,
-                                EntityMapper<BuildingsModel, Buildings> entityMapper,
+                                @Qualifier("buildingsEntityMapperImpl") EntityMapper<BuildingsModel, Buildings> entityMapper,
                                 ResponseMapper<BuildingsModel, BuildingsResponse> responseMapper,
                                 RequestMapper<BuildingsModel, BuildingsRequest> requestMapper) {
         super(repository, validator, entityMapper, responseMapper, requestMapper);

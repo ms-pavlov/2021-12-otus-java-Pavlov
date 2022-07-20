@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow'
+    id 'org.springframework.boot' version '2.6.7'
 }
 
 group 'ru.otus'
@@ -28,7 +29,6 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor('org.projectlombok:lombok-mapstruct-binding')
     runtimeOnly('org.postgresql:postgresql')
-
 
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
     testImplementation('com.h2database:h2')

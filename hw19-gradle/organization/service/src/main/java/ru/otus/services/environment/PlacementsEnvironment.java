@@ -19,7 +19,7 @@ public class PlacementsEnvironment extends ModelEnvironmentImpl<Placements, Plac
     @Autowired
     public PlacementsEnvironment(JpaRepository<Placements, Long> repository,
                                  @Qualifier("getValidator") Validator validator,
-                                 EntityMapper<PlacementsModel, Placements> entityMapper,
+                                 @Qualifier("placementsEntityMapperImpl") EntityMapper<PlacementsModel, Placements> entityMapper,
                                  ResponseMapper<PlacementsModel, PlacementsResponse> responseMapper,
                                  RequestMapper<PlacementsModel, PlacementsRequest> requestMapper) {
         super(repository, validator, entityMapper, responseMapper, requestMapper);

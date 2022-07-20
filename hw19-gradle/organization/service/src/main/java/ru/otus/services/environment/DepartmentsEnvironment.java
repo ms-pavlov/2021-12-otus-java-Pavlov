@@ -19,7 +19,7 @@ public class DepartmentsEnvironment extends ModelEnvironmentImpl<Departments, De
     @Autowired
     public DepartmentsEnvironment(JpaRepository<Departments, Long> repository,
                                   @Qualifier("getValidator") Validator validator,
-                                  EntityMapper<DepartmentsModel, Departments> entityMapper,
+                                  @Qualifier("departmentsEntityMapperImpl") EntityMapper<DepartmentsModel, Departments> entityMapper,
                                   ResponseMapper<DepartmentsModel, DepartmentsResponse> responseMapper,
                                   RequestMapper<DepartmentsModel, DepartmentsRequest> requestMapper) {
         super(repository, validator, entityMapper, responseMapper, requestMapper);

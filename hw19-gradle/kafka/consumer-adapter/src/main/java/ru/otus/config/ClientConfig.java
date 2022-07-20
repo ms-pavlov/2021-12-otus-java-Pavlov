@@ -3,6 +3,7 @@ package ru.otus.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.netty.channel.nio.NioEventLoopGroup;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.embedded.netty.NettyReactiveWebServerFactory;
 import org.springframework.boot.web.reactive.server.ReactiveWebServerFactory;
@@ -25,16 +26,19 @@ public class ClientConfig {
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final static int EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE = 2;
     private final static int DATA_SOURCE_THREAD_POOL_DEFAULT_SIZE = 4;
-
-    private final static String URL_HOST = "http://localhost:8071";
     private final int webServiceEventLoopThreadPoolSize;
     private final int dataSourceEventLoopThreadPoolSize;
     private final int dataSourceExecutorThreadPoolSize;
 
-    public ClientConfig() {
-        this.dataSourceEventLoopThreadPoolSize = EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE;
-        this.webServiceEventLoopThreadPoolSize = EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE;
-        this.dataSourceExecutorThreadPoolSize = DATA_SOURCE_THREAD_POOL_DEFAULT_SIZE;
+    public ClientConfig(@Value("${eventLoopThreadPoolSize.webService}") int webServiceEventLoopThreadPoolSize,
+                        @Value("${eventLoopThreadPoolSize.dataSource}") int dataSourceEventLoopThreadPoolSize,
+                        @Value("${executorThreadPoolSize.dataSource}") int dataSourceExecutorThreadPoolSize) {
+        this.dataSourceEventLoopThreadPoolSize = (0 < dataSourceEventLoopThreadPoolSize) ?
+                dataSourceEventLoopThreadPoolSize : EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE;
+        this.webServiceEventLoopThreadPoolSize = (0 < webServiceEventLoopThreadPoolSize) ?
+                webServiceEventLoopThreadPoolSize : EVENT_LOOP_THREAD_POOL_DEFAULT_SIZE;
+        this.dataSourceExecutorThreadPoolSize = (0 < dataSourceExecutorThreadPoolSize) ?
+                dataSourceExecutorThreadPoolSize : DATA_SOURCE_THREAD_POOL_DEFAULT_SIZE;
     }
 
     @Bean
@@ -59,8 +63,8 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient getCustomWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(URL_HOST).build();
+    public WebClient getCustomWebClient(@Value("${url.host}") String url, WebClient.Builder builder) {
+        return builder.baseUrl(url).build();
     }
 
     @Bean

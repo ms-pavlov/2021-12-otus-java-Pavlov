@@ -1,5 +1,7 @@
 package ru.otus.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,7 +20,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
 public class SimpleRestForCRUDController<M, R, Q> {
-
+    private static final Logger log = LoggerFactory.getLogger(RestForCRUDService.class);
     private final RestForCRUD<M, Q> service;
     private final SimpleMonoMaker<R> monoMaker;
     private final ExecutorService executor;
@@ -69,7 +71,11 @@ public class SimpleRestForCRUDController<M, R, Q> {
     public Mono<R> update(
             @PathVariable("id") Long id,
             @RequestBody Q request) {
-        return monoMaker.makeMono(() -> toResponse(service.update(id, request)), executor);
+        return monoMaker.makeMono(() -> {
+            var result = service.update(id, request);
+            log.info("model {}", result);
+            return toResponse(result);
+        }, executor);
     }
 
     @RequestMapping(value = "/{id}/", method = RequestMethod.DELETE)

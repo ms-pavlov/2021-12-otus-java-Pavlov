@@ -10,14 +10,15 @@ import ru.otus.models.organization.PlacementsModel;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {BuildingsResponseMapper.class, DepartmentsResponseMapper.class})
+        uses = {BuildingsResponseMapper.class, DepartmentsResponseMapper.class, RoomsResponseMapper.class})
 public abstract class PlacementsResponseMapper implements ResponseMapper<PlacementsModel, PlacementsResponse> {
     @Override
     @Mappings({
             @Mapping(target = "departmentId", expression = "java(model.getDepartmentId())"),
             @Mapping(target = "departmentName", expression = "java(model.getDepartmentName())"),
             @Mapping(target = "buildingId", expression = "java(model.getBuildingId())"),
-            @Mapping(target = "buildingName", expression = "java(model.getBuildingName())")
+            @Mapping(target = "buildingName", expression = "java(model.getBuildingName())"),
+            @Mapping(target = "rooms", source = "model.rooms")
     })
     public abstract PlacementsResponse toResponse(PlacementsModel model);
 

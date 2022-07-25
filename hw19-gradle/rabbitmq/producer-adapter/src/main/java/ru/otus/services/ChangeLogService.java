@@ -26,15 +26,14 @@ public class ChangeLogService extends SimpleGetRequestExecutor {
     private final RabbitTemplate rabbitTemplate;
 
     public ChangeLogService(WebClient customWebClient,
-                            MessageSendingOperations<String> template,
                             RabbitTemplate rabbitTemplate) {
         super(customWebClient);
 
         this.rabbitTemplate = rabbitTemplate;
-        startChangeLog(customWebClient, template);
+        startChangeLog();
     }
 
-    private void startChangeLog(WebClient customWebClient, MessageSendingOperations<String> template) {
+    private void startChangeLog() {
         prepRequest(CHANGE_LOG_URL)
                 .bodyToFlux(PlacementsMessage.class)
                 .subscribe(this::send);

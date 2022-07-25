@@ -31,6 +31,11 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, PlacementsMessage> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+    }
+
+    @Bean
     public KafkaListenerContainerFactory<?> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, PlacementsMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
@@ -38,8 +43,4 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    @Bean
-    public ConsumerFactory<String, PlacementsMessage> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
-    }
 }

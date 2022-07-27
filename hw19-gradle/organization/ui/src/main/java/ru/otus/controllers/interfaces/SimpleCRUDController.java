@@ -23,7 +23,7 @@ public abstract class SimpleCRUDController<R, Q> implements CRUDController<R, Q>
         timer.schedulePeriodically(
                 () -> service.findAll()
                         .subscribe(responses -> template.convertAndSend(getMainTopic(), responses)),
-                0, 1, TimeUnit.SECONDS);
+                0, 10, TimeUnit.SECONDS);
     }
 
 

@@ -52,4 +52,14 @@ public class SimpleCRUDModel<M, E> implements CRUDModel<M>{
                 .map(entityMapper::toModel)
                 .orElse(null);
     }
+
+    @Override
+    public JpaRepository<E, Long> getRepository() {
+        return repository;
+    }
+
+    @Override
+    public EntityMapper<M, E> getEntityMapper() {
+        return entityMapper;
+    }
 }

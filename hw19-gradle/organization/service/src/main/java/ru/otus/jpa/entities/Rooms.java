@@ -1,6 +1,8 @@
 package ru.otus.jpa.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,7 +32,8 @@ public class Rooms implements Serializable {
     private String description;
     @Column(name = "rooms_active")
     private boolean active;
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "rooms_placements_id", referencedColumnName = "placement_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Placements placement;
 }

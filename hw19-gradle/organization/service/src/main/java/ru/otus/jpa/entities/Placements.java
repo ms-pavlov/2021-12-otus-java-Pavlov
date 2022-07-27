@@ -1,6 +1,8 @@
 package ru.otus.jpa.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,6 +19,10 @@ import java.util.Optional;
 @Entity
 @Table(name = "placements")
 @XmlRootElement
+@NamedEntityGraph(name = "Placements.default",
+        attributeNodes = {
+        @NamedAttributeNode("rooms")
+})
 public class Placements implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -28,14 +34,18 @@ public class Placements implements Serializable {
     private Long id;
     @Column(name = "placement_active")
     private boolean active;
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "placement_department_id", referencedColumnName = "department_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Departments department;
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "placement_building_id", referencedColumnName = "building_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Buildings building;
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "placement")
     private Collection<Contacts> contacts;
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "placement")
     private Collection<Rooms> rooms;
 

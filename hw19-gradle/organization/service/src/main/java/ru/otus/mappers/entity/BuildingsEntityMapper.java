@@ -19,16 +19,4 @@ public abstract class BuildingsEntityMapper implements EntityMapper<BuildingsMod
 
     @Override
     public abstract BuildingsModel toModel(Buildings entity);
-
-    @SubMapper
-    @Mappings({
-            @Mapping(target = "placements", ignore = true)
-    })
-    public abstract Buildings toSubEntity(BuildingsModel model);
-
-    @SubMapper
-    @Mappings({
-            @Mapping(target = "placements", ignore = true)
-    })
-    public abstract BuildingsModel toSubModel(Buildings entity);
 }

@@ -11,6 +11,8 @@ import ru.otus.dto.responses.PlacementsResponse;
 import ru.otus.models.organization.PlacementsModel;
 import ru.otus.service.RestForCRUDService;
 
+import java.util.List;
+
 @Service
 public class PlacementsService extends RestForCRUDService<PlacementsModel, PlacementsResponse, PlacementsRequest> {
     private static final Logger log = LoggerFactory.getLogger(ChangeLogController.class);

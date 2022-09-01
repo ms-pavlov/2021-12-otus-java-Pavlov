@@ -19,10 +19,6 @@ import java.util.Optional;
 @Entity
 @Table(name = "placements")
 @XmlRootElement
-@NamedEntityGraph(name = "Placements.default",
-        attributeNodes = {
-        @NamedAttributeNode("rooms")
-})
 public class Placements implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

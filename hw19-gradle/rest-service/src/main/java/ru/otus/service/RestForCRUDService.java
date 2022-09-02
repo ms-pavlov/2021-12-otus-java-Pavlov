@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.otus.ModelEnvironment;
+import ru.otus.aspects.ArgsLog;
 import ru.otus.mappers.ResponseMapper;
 import ru.otus.service.repositories.CRUDModel;
 import ru.otus.service.strategy.RequestStrategy;
@@ -44,6 +45,7 @@ public class RestForCRUDService< M, R, Q> implements RestForCRUD<M, Q> {
     }
 
     @Override
+    @ArgsLog
     public M create(Q request) {
         return requestStrategy
                 .execute(request)
@@ -52,6 +54,7 @@ public class RestForCRUDService< M, R, Q> implements RestForCRUD<M, Q> {
     }
 
     @Override
+    @ArgsLog
     public M update(Long id, Q request) {
         return requestStrategy
                 .execute(dataSource.findOne(id).orElse(null), request)
@@ -60,6 +63,7 @@ public class RestForCRUDService< M, R, Q> implements RestForCRUD<M, Q> {
     }
 
     @Override
+    @ArgsLog
     public M delete(Long id) {
         return dataSource.findOne(id)
                 .map(deleteMarker::markDeleted)

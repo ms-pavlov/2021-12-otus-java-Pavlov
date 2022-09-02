@@ -18,6 +18,4 @@ public class BuildingsService extends RestForCRUDService<BuildingsModel, Buildin
     public BuildingsService(ModelEnvironmentImpl<BuildingsModel, BuildingsRequest> modelEnvironment) {
         super(modelEnvironment);
     }
-
-
 }

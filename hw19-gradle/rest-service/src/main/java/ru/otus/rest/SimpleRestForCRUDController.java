@@ -73,7 +73,6 @@ public class SimpleRestForCRUDController<M, R, Q> {
             @RequestBody Q request) {
         return monoMaker.makeMono(() -> {
             var result = service.update(id, request);
-            log.info("model {}", result);
             return toResponse(result);
         }, executor);
     }

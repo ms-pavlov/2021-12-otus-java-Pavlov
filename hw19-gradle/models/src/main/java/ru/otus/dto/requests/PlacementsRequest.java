@@ -11,6 +11,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class PlacementsRequest implements Serializable {
     @NotNull(message = "{placements.buildingId.notNull}")
     @Min(value = 1L, message = "{placements.buildingId.tooLow}")

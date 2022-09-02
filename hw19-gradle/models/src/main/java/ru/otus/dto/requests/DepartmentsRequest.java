@@ -11,6 +11,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class DepartmentsRequest implements Serializable {
     @Size(max = 255, message = "{departments.name.tooLong}")
     @NotEmpty(message = "{departments.name.notNull}")

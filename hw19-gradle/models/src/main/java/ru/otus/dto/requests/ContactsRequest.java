@@ -13,6 +13,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class ContactsRequest implements Serializable {
     @Size(max = 255, message = "{contacts.name.tooLong}")
     @NotEmpty(message = "{contacts.name.notNull}")

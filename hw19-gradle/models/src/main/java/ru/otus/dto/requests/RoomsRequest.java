@@ -13,6 +13,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class RoomsRequest implements Serializable {
     @Size(max = 255, message = "{rooms.name.tooLong}")
     @NotEmpty(message = "{rooms.name.notNull}")

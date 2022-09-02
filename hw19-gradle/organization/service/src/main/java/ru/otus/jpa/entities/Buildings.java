@@ -20,7 +20,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "buildings")
 @XmlRootElement
-@NamedEntityGraph(name = "Buildings.default", attributeNodes = {@NamedAttributeNode("placements")})
 public class Buildings implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -36,7 +35,8 @@ public class Buildings implements Serializable {
     private String description;
     @Column(name = "building_active")
     private boolean active;
-    @OneToMany(mappedBy = "building")
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private Collection<Placements> placements;
 
     @Override

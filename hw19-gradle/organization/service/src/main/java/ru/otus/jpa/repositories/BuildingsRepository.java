@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface BuildingsRepository extends JpaRepository<Buildings, Long> {
     @Override
-    @EntityGraph("Buildings.default")
     List<Buildings> findAll();
 }

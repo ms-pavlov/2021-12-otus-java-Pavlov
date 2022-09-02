@@ -38,11 +38,11 @@ public class Placements implements Serializable {
     @JoinColumn(name = "placement_building_id", referencedColumnName = "building_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Buildings building;
-    @Fetch(FetchMode.JOIN)
-    @OneToMany(mappedBy = "placement")
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "placement", fetch = FetchType.LAZY)
     private Collection<Contacts> contacts;
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "placement")
+    @OneToMany(mappedBy = "placement", fetch = FetchType.LAZY)
     private Collection<Rooms> rooms;
 
     public Long getDepartmentId() {

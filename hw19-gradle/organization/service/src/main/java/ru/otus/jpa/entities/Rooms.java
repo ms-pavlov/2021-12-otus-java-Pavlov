@@ -32,7 +32,7 @@ public class Rooms implements Serializable {
     private String description;
     @Column(name = "rooms_active")
     private boolean active;
-    @Fetch(FetchMode.JOIN)
+
     @JoinColumn(name = "rooms_placements_id", referencedColumnName = "placement_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Placements placement;

@@ -18,7 +18,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "departments")
 @XmlRootElement
-@NamedEntityGraph(name = "Departments.default", attributeNodes = {@NamedAttributeNode("placements")})
 public class Departments implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,6 +33,7 @@ public class Departments implements Serializable {
     private String description;
     @Column(name = "department_active")
     private boolean active;
-    @OneToMany(mappedBy = "department")
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private Collection<Placements> placements;
 }

@@ -33,7 +33,7 @@ public class Contacts implements Serializable {
     private String phone;
     @Column(name = "contact_active")
     private boolean active;
-    @Fetch(FetchMode.JOIN)
+
     @JoinColumn(name = "contact_placements_id", referencedColumnName = "placement_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Placements placement;

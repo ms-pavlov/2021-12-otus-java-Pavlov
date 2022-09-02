@@ -15,7 +15,7 @@ import ru.otus.models.organization.PlacementsModel;
 public abstract class PlacementsEntitySubMapper implements EntityMapper<PlacementsModel, Placements> {
 
     @Mappings({
-            @Mapping(target = "department", source = "model.building"),
+            @Mapping(target = "department", source = "model.department"),
             @Mapping(target = "building", source = "model.building"),
             @Mapping(target = "contacts", ignore = true),
             @Mapping(target = "rooms", ignore = true)

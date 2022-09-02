@@ -33,7 +33,7 @@ class SameNetServiceTest {
         command = mock(WebCommand.class);
         request = mock(WebRequest.class);
         responseSpec = mock(WebClient.ResponseSpec.class);
-        netService = new SameNetService<>(client, commandFactory, requestFactory, new ObjectMapper());
+        netService = new SameNetService<>(client, commandFactory, requestFactory);
     }
 
     @Test

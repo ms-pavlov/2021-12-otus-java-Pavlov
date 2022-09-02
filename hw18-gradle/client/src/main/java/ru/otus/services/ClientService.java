@@ -12,8 +12,7 @@ import ru.otus.services.request.WebRequestFactory;
 public class ClientService extends SameNetService<ClientResponseDto, ClientRequestDto> {
     public ClientService(WebClient customWebClient,
                          WebCommandFactory<ClientRequestDto> commandFactory,
-                         WebRequestFactory<ClientRequestDto> requestFactory,
-                         ObjectMapper mapper) {
-        super(customWebClient, commandFactory, requestFactory, mapper);
+                         WebRequestFactory<ClientRequestDto> requestFactory) {
+        super(customWebClient, commandFactory, requestFactory);
     }
 }

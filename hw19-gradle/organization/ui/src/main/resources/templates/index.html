@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/temp :: common_header(~{::title},~{::menu}, ~{::content}, ~{::script})">
+<title>Главная</title>
+<menu>
+    <oi>
+        <ol>
+            <a th:href="@{/departments/}" th:text="Одтеления"></a>
+        </ol>
+        <ol>
+            <a th:href="@{/buildings/}" th:text="Здания"></a>
+        </ol>
+        <ol>
+            <a th:href="@{/placements/}" th:text="Местоположения"></a>
+        </ol>
+        <ol>
+            <a th:href="@{/rooms/}" th:text="Кабинеты"></a>
+        </ol>
+    </oi>
+</menu>
+<content>
+    <div class="card">
+        <div class="card-header">
+            <h4>Список клиентов</h4>
+        </div>
+        <div class="card-body">
+            <div id="clientsList"></div>
+        </div>
+    </div>
+</content>
+<script>
+        function onLoad() {
+          const stompClient = Stomp.over(new SockJS('/gs-guide-websocket'));
+          stompClient.connect({}, (frame) => {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/changes/', (changes) => {
+                console.log(changes);
+                var div = document.createElement('div');
+                div.innerHTML = changes.body;
+                document.getElementById("clientsList").appendChild(div);
+            });
+
+          });
+        }
+
+
+
+</script>
+</html>

@@ -73,6 +73,9 @@ allprojects {
             dependency("io.grpc:grpc-protobuf:${Versions.grpc}")
             dependency("io.grpc:grpc-stub:${Versions.grpc}")
 
+            dependency("org.mapstruct:mapstruct:${Versions.mapstruct}")
+            dependency("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
+            dependency("org.projectlombok:lombok-mapstruct-binding:${Versions.lombokMapstructBinding}")
         }
     }
 
@@ -94,6 +97,9 @@ allprojects {
             force("org.apiguardian:apiguardian-api:1.1.2")
             force("com.fasterxml.jackson:jackson-bom:2.13.2")
             force("io.github.classgraph:classgraph:4.8.143")
+            force("org.scala-lang:scala-reflect:2.13.3")
+            force("org.scala-lang:scala-library:2.13.4")
+            force("com.fasterxml.jackson:jackson-bom:2.13.2.1")
         }
     }
 }
